@@ -1,0 +1,918 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>$.tool - API / Documentation - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../index.css" />
+
+	<script src="../avine-js.js"></script>
+	<script src="../unit-test.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../prism/prism.css" />
+	<script src="../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../index.html" class="logo" style="width:32px;"><img src="../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>$.tool <span>- API / Documentation</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines">AvineJS met à disposition un ensemble de fonctions utilitaires simples et pratiques.</h4>
+
+		<div id="index"><h4>Index</h4></div>
+
+		<p><a href="#" class="ut-trigger">masquer/afficher les extraits de code.</a></p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.console.log(<span>output1, output2, output3</span>)</h2>
+<p>Appelle la fonction native <code>console.log</code> de manière non bloquante, même dans Internet Explorer.</p>
+
+<h2>tool.console.error(<span>output1, output2, output3</span>)</h2>
+<p>Appelle la fonction native <code>console.error</code> de manière non bloquante, même dans Internet Explorer.</p>
+
+<p class="msg-info">Contrairement à la fonction native, <code>tool.console</code> accepte au plus 3 arguments.</p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.asset(<span>key, val</span>)</h2>
+<p>Stocke des paires clé/valeur.
+	Le paramètre <code>val</code> est optionnel et permet d'utiliser la fonction comme <em>"setter"</em> ou <em>"getter"</em>.</p>
+<p>Par exemple, les fonctions de <em>"easing"</em> utilisées par la classe <code>dom.animate</code> sont stockées dans <code>$.tool.asset('easing')</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+$.tool.asset('addon', function () { return "addon"; }); // Setter
+log($.tool.asset('addon')); // Getter
+
+	});</script>
+
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.context.has(<span>feature, context</span>)</h2>
+<p>Retourne <code>true</code> si la fonctionnalité <code>feature</code> est disponible dans le contexte d'exécution <code>context</code> et <code>false</code> sinon.
+	Le contexte par défaut est l'objet <code>window</code>.</p>
+<p>Si elle est disponible, la fonctionnalité peut alors être masquée par la directive de configuration <code>tool.context[feature] = false</code>.
+	Sinon la directive de configuration n'a aucun effet.</p>
+<p class="msg-info">Le paramètre <code>feature</code> de type chaîne de caractères, peut contenir une liste de fonctionnalités à vérifier, séparées par des virgules et sans espace.</p>
+<h2 data-index="tool.context">tool.context[<span>feature</span>] = <span>boolean</span></h2>
+<p>Fixe la directive de configuration de la fonctionnalité <code>feature</code> à la valeur <code>boolean</code> quel que soit le contexte.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+// Check the feature 'navigator' in window
+log($.tool.context.has('navigator')); // true
+
+// Configure and check again
+$.tool.context['navigator'] = false;
+log($.tool.context.has('navigator')); // false
+
+// The real feature is not affected
+log('navigator' in window); // true
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.is*(<span>data</span>)</h2>
+<p>Les fonctions <code>tool.isBoolean()</code>, <code>tool.isNumber()</code>,
+	<code>tool.isString()</code>, <code>tool.isArray()</code>,
+	<code>tool.isObject()</code>, <code>tool.isFunction()</code>, permettent de vérifier le type de la variable <code>data</code> passée en paramètre.</p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.stringify(<span>data</span>)</h2>
+<p>Emule la fonction native <code>JSON.stringify</code>.</p>
+<h2>tool.parse(<span>data</span>)</h2>
+<p>Emule la fonction native <code>JSON.parse</code>.</p>
+<p class="msg-info">En fait l'émulation des fonctions natives est plus souple quant aux valeurs supportées en paramètre.
+	Par exemple, il est possible d'utiliser <code>undefined</code>, alors que ce mot clé est illégal dans un fichier JSON.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = [], test = [{
+	a:null, b:true, c:1, d:"Hello", e:undefined, f:function(){ alert("world!"); }
+}];
+samp.push(
+	$.tool.parse($.tool.stringify(test)) // Use Avine
+);
+if ('JSON' in window) samp.push(
+	JSON.parse(JSON.stringify(test)) // Use native
+);
+for (var i = 0; i < samp.length; i++) log($.tool.stringify(samp[i]));
+
+	});</script>
+</div>
+
+<p>La directive <code>avine.tool.context.JSON</code> permet de choisir entre une implémentation interne et les fonctions natives <code>JSON.stringify</code> et <code>JSON.parse</code>, si elles sont disponibles.</p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.cleanString(<span>str</span>)</h2>
+<p>Néttoie la chaîne de charactères <code>str</code>, en supprimant les espaces au début et à la fin ainsi que les espaces multiples au milieu.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = $.tool.cleanString('   Hello   world !   ');
+log(samp.replace(/\s/g, '<b>#</b>'));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.splitString(<span>str, sep, skipEmpty</span>)</h2>
+<p>Scinde la chaîne de charactères <code>str</code> en fonction du séparateur <code>sep</code> et retourne un tableau formé des sous-chaînes ainsi obtenues.
+	Au passage, les sous-chaînes sont nettoyées avec la fonction <code>tool.cleanString</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = ['a,b,c', '   d   ,   e   ,   f   ', 'g,,,h'];
+for (var i = 0; i < test.length; i++) {
+	log(test[i] + ': <b>' +
+		$.tool.stringify(
+			$.tool.splitString(test[i], ',') // Split string
+		) + '</b>'
+	);
+}
+
+	});</script>
+</div>
+
+<p>Par défaut les sous-chaînes vides sont omises du tableau retourné.
+	Le paramètre <code>skipEmpty</code> renseigné à <code>false</code> permet de les conserver.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = 'g,,h', skipEmpty = false;
+log(test + ': <b>' +
+	$.tool.stringify(
+		$.tool.splitString(test, ',', skipEmpty) // Split string
+	) + '</b>');
+
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.merge2Array(<span>array, arr1, arr2, ..., arrN</span>)</h2>
+<p>Concatène les tableaux <code>arrN</code> au tableau <code>array</code> fourni en premier paramètre.
+	Contrairement à la fonction native <code>Array.concat</code>, le tableau d'origine est modifié par la fonction.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [1,2,3], samp = $.tool.merge2Array(test, [4,5,6]);
+
+log('<b>test: </b>' + $.tool.stringify(test) + ' <b>(modified)</b>');
+log('<b>samp: </b>' + $.tool.stringify(samp));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.toArray(<span>data</span>)</h2>
+<p>Retourne le paramètre <code>data</code> tel quel, si c'est un tableau.
+	Sinon, la fonction enveloppe le paramètre dans un tableau et retourne donc <code>[data]</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [["a"], "b"];
+for (var i = 0; i < test.length; i++) log(
+	$.tool.stringify(
+		$.tool.toArray(test[i])
+	));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.inArray(<span>value, array, strict</span>)</h2>
+<p>Recherche la valeur <code>value</code> dans le tableau <code>array</code>.
+	Par défaut la comparaison des éléments est stricte et utilise l'opérateur <code>===</code>.
+	Le paramètre <code>strict</code> renseigné à <code>false</code> permet de les comparer de manière souple avec l'opérateur <code>==</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var list = [1,2,3], test = [1, "1"];
+for (var i = 0; i < test.length; i++) {
+	log($.tool.inArray(test[i], list));
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.arrayRemove(<span>array, index, affect</span>)</h2>
+<p>Retourne un nouveau tableau après avoir supprimé du tableau <code>array</code> l'élément à la position <code>index</code>.
+	Si l'index est négatif, la position de l'élément à supprimer est alors calculée à partir de la fin du tableau.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [1, 2, "oups", 3, 4, 5, "oups", 6, 7];
+log('<b>Original:</b> ' +
+	$.tool.stringify(test));
+
+log('<b>Remove at index 2:</b> ' +
+	$.tool.stringify($.tool.arrayRemove(test, 2)));
+
+log('<b>Remove at index -3:</b> ' +
+	$.tool.stringify($.tool.arrayRemove(test, -3)));
+
+	});</script>
+</div>
+
+<p>Si le paramètre <code>affect</code> est renseigné à <code>true</code>, alors le tableau d'origine <code>array</code> est modifié par la fonction.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [1, 2, "hello", 3, 4];
+
+$.tool.arrayRemove(test, 2); // Remove "hello" at index 2 from the begining
+log('<b>Original array (unchanged):</b> ' + $.tool.stringify(test));
+
+$.tool.arrayRemove(test, -3, true); // Remove "hello" at index 3 from the end
+log('<b>Original array (affected):</b> ' + $.tool.stringify(test));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.arrayUnique(<span>array, strict, affect</span>)</h2>
+<p>Retourne un nouveau tableau après avoir supprimé du tableau <code>array</code> les éléments en doublons.
+	Par défaut la comparaison des éléments est stricte, à moins que le paramètre <code>strict</code> soit renseigné à <code>false</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [1,2,3, 1,"2",3];
+
+log("<b>Strict comparaison:</b> " + $.tool.stringify($.tool.arrayUnique(test)));
+log("<b>Soft comparaison:</b> " + $.tool.stringify($.tool.arrayUnique(test, false)));
+
+	});</script>
+</div>
+
+<p>Si le paramètre <code>affect</code> est renseigné à <code>true</code>, alors le tableau d'origine <code>array</code> est modifié par la fonction.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [1, "a", 2, "a", 3];
+
+$.tool.arrayUnique(test);
+log('<b>Original array (unchanged):</b> ' + $.tool.stringify(test));
+
+$.tool.arrayUnique(test, true, true);
+log('<b>Original array (affected):</b> ' + $.tool.stringify(test));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.arrayEach(<span>array, callback, scope</span>)</h2>
+<p>Exécute la fonction <code>callback</code> sur chaque élément du tableau ayant une valeur assignée.
+	Elle n'est pas appelée pour les index qui ont été supprimés ou qui ont été initialisés à <code>undefined</code>.
+	Le paramètre <code>scope</code> permet de renseigner la valeur de <code>this</code> à l'intérieur du <code>callback</code>.</p>
+<p class="msg-info">La fonction <code>tool.each</code> est un alias de <code>tool.arrayEach</code>, mais accepte en paramètre un tableau ou un objet.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = ["a", "b", "c"], samp = [];
+
+$.tool.arrayEach(test, function (item, index) {
+	this.push('test[' + index + '] = ' + item); // this === samp
+}, samp);
+
+for (var i = 0; i < samp.length; i++) log(samp[i]);
+
+	});</script>
+</div>
+
+<p>Il est possible par exemple de modifier le tableau d'origine, en le renseignant également comme paramètre <code>scope</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = ["a", "b", "c"];
+
+$.tool.arrayEach(test, function (item, index) {
+	this[index] = item + '!';
+}, test);
+
+for (var i = 0; i < test.length; i++) log(test[i]);
+
+	});</script>
+</div>
+
+<p>La fonction <code>callback</code> accepte en fait 3 arguments : <code>item</code>, <code>index</code> et <code>array</code>.
+	Le code précédent peut alors être réécrit de la manière suivante.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = ["a", "b", "c"];
+
+$.tool.arrayEach(test, function (item, index, array) {
+	array[index] = item + '!';
+});
+
+for (var i = 0; i < test.length; i++) log(test[i]);
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.objectLength(<span>object, excludeList, stopAtFirst</span>)</h2>
+<p>Retourne le nombre de propriétés de <code>object</code>.
+	Seules les propriétés dont les valeurs ne sont pas dans la liste <code>excludeList</code> sont prises en compte (la comparaison est stricte).
+	Si le paramètre <code>stopAtFirst</code> vaut <code>true</code> alors le compte s'arrête à la première propriété dont la valeur est dans la liste d'exclusion.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = { a:1, b:undefined, c:3, d:undefined };
+
+log($.tool.objectLength(test)); // 4
+log($.tool.objectLength(test, [undefined])); // 2
+log($.tool.objectLength(test, [undefined], true)); // 1
+log($.tool.objectLength({})); // 0 (empty object)
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.objectEach(<span>object, callback, scope</span>)</h2>
+<p>Exécute la fonction <code>callback</code> sur chaque clé de l'object.
+	Elle est appelée même pour les index qui ont été initialisés à <code>undefined</code>.
+	Le paramètre <code>scope</code> permet de renseigner la valeur de <code>this</code> à l'intérieur du <code>callback</code>.</p>
+<p class="msg-info">La fonction <code>tool.each</code> est un alias de <code>tool.objectEach</code>, mais accepte en paramètre un objet ou un tableau.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = { p1: "v1", p2: "v2", p3: "v3" }, samp = [];
+
+$.tool.objectEach(test, function (value, prop, object) {
+	this.push('test.' + prop + ' = ' + value); // this = samp
+	object[prop] = value + '!'; // object = test
+}, samp);
+
+for (var i = 0; i < samp.length; i++) log(samp[i]);
+
+log('\ntest = ' + $.tool.stringify(test));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.extend(<span>data, addon1, addon2, ..., addonN</span>)</h2>
+<p>Fusionne un nombre quelconque de variables <code>addonN</code> avec la variable <code>data</code> fournie en premier paramètre à la fonction.
+	Le paramètre <code>data</code> modifié, est également retourné par la fonction.</p>
+<p class="msg-info">Les variables <code>addonN</code> sont dupliquées en profondeur (récursivement) avant d'être fusionnées à <code>data</code>.
+	En dautres termes, la fonction copie par valeur et non par référence (à l'exception des fonctions qui sont copiées par référence).</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = $.tool.extend(
+	{}, { a:null, b:undefined }, { c:true, d:1, e:'Hello', f:function(){}, g:[], h:{} }
+);
+log($.tool.stringify(samp));
+
+	});</script>
+</div>
+
+<p>Il est possible de fusionner un object à un tableau...</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = [1,2,3];
+$.tool.extend(samp, {prop:"test"}, [4,5,6]);
+log($.tool.stringify(samp));
+log(samp.prop);
+
+	});</script>
+</div>
+
+<p>... et inversement, fusionner un tableau à un object !</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = {a:"a"};
+$.tool.extend(samp, [0, 1], {b:"b"});
+log($.tool.stringify(samp));
+
+	});</script>
+</div>
+
+<p>Si le paramètre <code>data</code> est une valeur (et non une variable) comme par exemple <code>null</code> alors le type retourné par la fonction dépend du type du paramètre <code>addon1</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = $.tool.extend(null, [0, 1], [2, 3]);
+log($.tool.stringify(samp));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.signature(<span>args, types</span>)</h2>
+<p>Retourne une liste d'arguments basée sur le tableau <code>args</code> et dont la signature est déterminée par le tableau <code>types</code>.
+	Cette fonction permet de concevoir des fonctions acceptant des signatures multiples, en rendant optionnels tous ses paramètres attendus.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+// demo expects 3 differents arguments
+var demo = function (arr, func, bool) {
+	// Get arguments signature
+	var args = $.tool.signature(arguments, [
+		// Test arguments
+		$.tool.isArray, $.tool.isFunction, $.tool.isBoolean
+	]);
+	// Set parameters from signature
+	arr = args[0]; func = args[1]; bool = args[2];
+	// Use the parameters
+	return [arr, func, bool];
+};
+var test = [
+	demo(), // undefined, undefined, undefined
+	demo([1]), // arr, undefined, undefined
+	demo(function (a) { }), // undefined, func, undefined
+	demo(true), // undefined, undefined, bool
+	demo([2], function (b) { }), // arr, func, undefined
+	demo([3], false), // arr, undefined, bool
+	demo(function (c) { }, true), // undefined, func, bool
+	demo([4], function (d) { }, true) // arr, func, bool
+];
+for (var i = 0; i < test.length; i++) log($.tool.stringify(test[i]));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.matchAll(<span>pattern, string, unique</span>)</h2>
+<p>Retourne un tableau contenant toutes les occurences de l'expression régulière <code>pattern</code> trouvées dans la chaîne de caractères <code>string</code>.
+	Si le paramètre <code>unique</code> est renseigné à <code>true</code> alors le tableau retourné ne comporte pas de doublons.</p>
+<p class="msg-info">Le <code>pattern</code> fourni en paramètre doit obligatoirement effectuer une recherche globale, en utilisant le flag <code>"g"</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var string = "Je suis né le 7 mai 1971, dans les environs de Paris.";
+
+log(
+	'<b>All : </b> ' + $.tool.matchAll(/[0-9]/g, string).join(', ')
+);
+log(
+	'<b>Unique : </b> ' + $.tool.matchAll(/[0-9]/g, string, true).join(', ')
+);
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.uniqueId(<span>key, initVal</span>)</h2>
+<p>Retourne un nombre entier unique différent à chaque, en commençant par le chiffre 1.
+	Le paramètre <code>key</code> optionnel, permet de gérer des listes d'identifiants uniques distinctes.
+	Le paramètre <code>initVal</code> également optionnel, permet de fixer la valeur du premier identifiant retourné.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+for (var test1 = ['Default'], i = 0; i < 5; i++) test1.push($.tool.uniqueId());
+for (var test2 = ['Custo'], i = 0; i < 5; i++) test2.push($.tool.uniqueId('special', 0));
+
+test1.push($.tool.uniqueId());
+test2.push($.tool.uniqueId('special'));
+
+log(test1.join(' ~ '));
+log(test2.join(' ~ '));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.cssVendors(<span>name, onlyPrefixed</span>)</h2>
+<p>Retourne sous forme de tableau les valeurs de la propriété CSS <code>name</code> préfixées selon les différents Navigateurs du marché.
+	Par défaut, la propriété non préfixée est également ajoutée telle quelle en fin de liste.
+	Si le paramètre <code>onlyPrefixed</code> est renseigné à <code>true</code> alors seules les propriétés préfixées sont retournées.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [
+	$.tool.cssVendors('transition'),
+	$.tool.cssVendors('transition', true)
+];
+for (var i = 0; i < test.length; i++) {
+	log($.tool.stringify(test[i]));
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.css2List(<span>str1, str2, ...</span>)<br />
+	tool.css2List(<span>[str1, str2, ...], ...</span>)</h2>
+<p>Retourne un tableau dont chaque élément est une classe CSS distincte.
+	La fonctions accepte plusieurs signatures.</p>
+<p>Vous pouvez renseigner les paramètres sous forme de chaînes de caractères (chacune contenant une ou plusieurs classes séparées par des espaces),
+	ou bien sous forme d'éléments de tableaux, ou encore mélanger les deux signatures.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [
+	$.tool.css2List('  super  info  '),
+	$.tool.css2List('  highlight  ', '  big  '),
+	$.tool.css2List(['  very  ', '  important  '], '  detail  ')
+];
+for (var i = 0; i < test.length; i++) {
+	log($.tool.stringify(test[i]));
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.css2JsProperty(<span>name</span>)</h2>
+<p>Retourne la propriété JS correspondante à la propriété CSS <code>name</code> renseignée.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = ['color', 'background-color'];
+for (var i = 0; i < test.length; i++) {
+	log(test[i] + ': <b>' + $.tool.css2JsProperty(test[i]) + '</b>');
+}
+
+	});</script>
+</div>
+
+
+
+<p>L'utilisation conjointe avec la fonction <code>tool.cssVendors</code> permet de récupérer les propriétés JS préfixées selon les Navigateurs du marché.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = $.tool.cssVendors('transition');
+for (var i = 0; i < test.length; i++) {
+	log(test[i] + ': <b>' + $.tool.css2JsProperty(test[i]) + '</b>');
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.jsProperty2Css(<span>name</span>)</h2>
+<p>Retourne la propriété CSS correspondante à la propriété JS <code>name</code> renseignée.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = ['color', 'backgroundColor'];
+for (var i = 0; i < test.length; i++) {
+	log(test[i] + ': <b>' + $.tool.jsProperty2Css(test[i]) + '</b>');
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.css2JsStyle(<span>data</span>)<br />
+	tool.css2JsStyle(<span>rule1, rule2, ...</span>)</h2>
+<p>Retourne un objet de règles CSS.
+	Les propriétés CSS (ex. <code>background-color</code>) sont converties en leurs équivalents JS (ex. <code>backgroundColor</code>).
+	La fonction accepte deux signatures.</p>
+
+<p>Vous pouvez fournir un unique paramètre <code>data</code> sous forme d'objet, contenant l'ensemble des règles CSS.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = $.tool.css2JsStyle({ "color":"white", "background-color":"red" });
+log($.tool.stringify(samp));
+
+	});</script>
+</div>
+
+<p>Vous pouvez également fournir autant de paramètres <code>rule</code> que de règles CSS attendues, sous formes de chaînes de caractères.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = $.tool.css2JsStyle("color: grey", "background-color: blue");
+log($.tool.stringify(samp));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.css2Style(<span>rule1, rule2, ...</span>)</h2>
+<p>Retourne un objet de règles CSS.
+	Cependant, contrairement à la fonction <code>tool.css2JsStyle()</code>, les propriétés ne sont pas converties en leurs équivalents JS.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = $.tool.css2Style("color: grey", "background-color: blue");
+log($.tool.stringify(samp));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.sheet2Object(<span>sheet</span>)<br />
+	tool.sheet2Object(<span>selector, rules</span>)</h2>
+<p>Retourne une feuille de style sous forme d'objet. La fonction accepte deux signatures.</p>
+
+<p>Vous pouvez fournir un unique paramètre <code>sheet</code> sous forme d'objet, dont les propriétés représentent les sélecteurs et les valeurs, les règles associées.
+	Les règles peuvent elles-mêmes être renseignées sous forme d'objets attributs/valeurs.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = $.tool.sheet2Object({
+	"body": { "margin":"0", "font-family":"Arial" },
+	"p": { "font-size":"normal", "color":"grey" }
+});
+log($.tool.stringify(samp));
+
+	});</script>
+</div>
+
+<p>Si la feuille de style ne contient qu'un seul sélecteur, renseignez le <code>selector</code> en premier paramètre et les <code>rules</code> associées en second.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var samp = $.tool.sheet2Object("body", { "margin":"1em", "font-family":"Georgia" });
+log($.tool.stringify(samp));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.rgb2Hexa(<span>rgb, getNumber</span>)</h2>
+<p>Convertie la couleur RVB <code>rgb</code> au format hexadécimal.
+	Le paramètre <code>getNumber</code> permet de récupérer le nombre hexadécimal sans le préfixe <code>#</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = "rgb(44, 121, 179)";
+log('<b>' + test + '</b>');
+log($.tool.rgb2Hexa(test));
+log($.tool.rgb2Hexa(test, true));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.hexa2Rgb(<span>hexa, getArray</span>)</h2>
+<p>Convertie la couleur hexadécimal <code>hexa</code> au format RVB.
+	Le paramètre <code>getArray</code> permet de récupérer les composantes RVB dans un tableau.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = "#2C79B3";
+log('<b>' + test + '</b>');
+log($.tool.hexa2Rgb(test));
+log($.tool.stringify($.tool.hexa2Rgb(test, true)));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.hexaRanges(<span>colors, steps</span>)</h2>
+<p>Retourne sous forme de tableau, une palette de <code>steps</code> couleurs hexadécimales, bornées dans les intervalles définis par <code>colors</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<style>#hexa-ranges i { padding: 0 10px; }</style>
+
+<div id="hexa-ranges"></div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var wrap = document.getElementById('hexa-ranges'),
+	test = ['#FF0000', '#00FF00', '#0000FF'], // red, green, blue
+	samp = $.tool.hexaRanges(test, 9);
+for (var i = 0; i < samp.length; i++) {
+	wrap.innerHTML += '<i style="background-color:' + samp[i] + '"></i>';
+
+	if ($.tool.inArray(samp[i], test)) samp[i] = '<b>' + samp[i] + '</b>'; // Highlight
+	log(samp[i]);
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.parseUrl(<span>url</span>)</h2>
+<p>Retourne sous forme d'object les différentes composantes de l'<code>url</code> fournie en paramètre.</p>
+<p>Les informations disponible sont&nbsp;:
+	<code>pathname</code>, <code>origin</code>, <code>protocol</code>, <code>hostname</code>,
+	<code>port</code>, <code>host</code>, <code>search</code> et <code>hash</code>.
+	L'information supplémentaire <code>queries</code> liste sous forme d'object les clés/valeurs présentes dans la composante <code>search</code>.</p>
+<p class="msg-info">Le paramètre <code>url</code> n'a pas besoin d'être encodé en Javascript.
+	La composante <code>search</code> retournée est quant à elle une URL Javascript bien formée.
+	Les valeurs listées dans la composante <code>queries</code> sont quant à elles décodées.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var url = "http://js.avine.fr:8888/index.html?page=Découvrir AvineJS&article=Les outils#tag5",
+	test = $.tool.parseUrl(url);
+
+for (var name in test) {
+	var value = test[name]; // string
+	if ('queries' == name) value = $.tool.stringify(test[name]); // object
+	log('<b>' + name + ': </b> ' + value);
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>tool.buildSearch(<span>queries</span>)</h2>
+<p>Retourne une chaîne de caractères représentant la composante <code>search</code> bien formée d'une URL.
+	Le paramètre <code>queries</code> peut être renseigné sous forme de chaîne de caractères ou d'object.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [
+	'http://js.avine.fr/?page=Requêtes Ajax&article=Méthode POST',
+	{ produit: 'iPhone', couleur: 'blanc' }
+];
+for (var i = 0; i < test.length; i++) {
+	log($.tool.buildSearch(test[i]));
+}
+
+	});</script>
+</div>
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

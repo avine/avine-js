@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>??? - API / Documentation - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../../index.css" />
+
+	<script src="../../avine-js.js"></script>
+	<script src="../../unit-test.js"></script>
+
+	<style>
+		body {
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+		#dashboard {
+			position: fixed;
+			z-index: 99;
+			left: 0;
+			right: auto;
+			top: 0;
+			width: 150px;
+			margin: 5px;
+			padding: 5px;
+			box-shadow: 1px 1px 3px #ccc;
+			border-radius: 3px;
+			border: 1px solid #ccc;
+			background-color: white;
+			font: x-small Verdana;
+			line-height: 1.5em;
+		}
+		#dashboard.dashboard-flip {
+			left: auto;
+			right: 0;
+			box-shadow: -1px 1px 3px #ccc;
+		}
+		#dashboard em {
+			font-style: normal;
+			color: #999;
+		}
+		.inspect {
+			cursor: pointer;
+			border: 1px dotted transparent;
+		}
+		.inspect-focus {
+			border-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+
+		<script>
+			var Data = function () {
+				this.reset();
+			};
+			Data.prototype = {
+				reset: function () {
+					this.data = [];
+					return this;
+				},
+				add: function (content, title) {
+					this.data.push({
+						title: (title ? Data.wrap(title + ':', 'b') : null),
+						content: ($.tool.isObject(content) ? Data.obj2Str(content) : content)
+					});
+					return this;
+				},
+				merge: function (data) {
+					if (data instanceof Data) data = data.data;
+					$.tool.merge2Array(this.data, data);
+					return this;
+				},
+				view: function () {
+					var html = [];
+					for (var i = 0; i < this.data.length; i++) {
+						var t = this.data[i].title;
+						html.push((t ? t + '<br />' : '') + this.data[i].content);
+					}
+					return html.join('<br />');
+				}
+			};
+			Data.obj2Str = function (obj) {
+				var str = [];
+				for (var p in obj) str.push(Data.wrap(p + ': ', 'em') + obj[p]);
+				return str.join('<br />');
+			};
+			Data.wrap = function (d, w) {
+				return '<' + w + '>' + d + '</' + w + '>';
+			};
+
+			$.dom.ready(function () {
+
+				var dashboard = $('#dashboard').on('mouseover', function (e) {
+					if (e.mouseEventJustHappened) $(this).toggleClass('dashboard-flip');
+				});
+				var target/*, inspect = $('.inspect').each(function () {
+					$(this).drag().on('mouseover', function (e) {
+						if (!e.mouseEventJustHappened) return;
+						target = this;
+						inspect.removeClass('inspect-focus');
+						$(this).addClass('inspect-focus');
+					});
+				})*/;
+
+				var data = new Data(),
+				windowData = function () {
+					var c = $.dom.coords(window), content = {
+						'width': c.width, 'height': c.height, 'top': c.top, 'left': c.left
+					};
+					if ($.dom.isDocumentAtTop()) content['doc. at top'] = 'Yes';
+					if ($.dom.isDocumentScrolled()) content['doc. scrolled'] = 'Yes';
+					data.add(content, 'Window');
+				},
+				mouseData = (function () {
+					var md = new Data();
+					$.dom.on(window, 'mousemove', function (e) {
+						md.reset().add({
+							'clientX': e.clientX,
+							'clientY': e.clientY,
+							'offsetX (to parent)': e.offsetX,
+							'offsetY (to parent)': e.offsetY
+						}, 'Mouse');
+					});
+					return md;
+				})(),
+				targetData = function () {
+					if (!target) return;
+					var c = $.dom.coords(target), content = {
+						'width': c.width, 'height': c.height, 'top': c.top, 'left': c.left,
+						'top (to parent)': c.relative.top, 'left (to parent)': c.relative.left
+					};
+					if ($.dom.isInElement(target, $.dom.selector('#wrapper')[0])) content['in field'] = 'Yes';
+					data.add(content, target.title ? target.title : 'Target');
+				},
+				updateData = function () {
+					data.reset();
+					windowData();
+					data.merge(mouseData);
+					targetData();
+					dashboard.html(data.view());
+				};
+				setInterval(updateData, 50);
+
+			});
+		</script>
+
+		.......................................................................................................................................................................
+
+		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+	<div id="dashboard"></div>
+</body>
+</html>

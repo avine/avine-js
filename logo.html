@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+	<title>Welcome - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="index.css" />
+
+	<script src="avine-js.js"></script>
+	<script src="easing.js"></script>
+
+	<style>
+		html, body {
+			height: 100%;
+		}
+		body {
+			background-color: #2C79B3;
+			background-image: none;
+			background: -webkit-linear-gradient(bottom, #2C79B3, #5a9fdc);
+			background: linear-gradient(to bottom, #5a9fdc, #2C79B3);
+
+			font-size: medium;
+			text-shadow: 0 1px 0 #5a9fdc;
+			color: #222;
+		}
+		.wrapper {
+			min-width: 220px;
+			padding: 40px 0;
+			overflow: hidden;
+			text-align: center;
+		}
+		.logo {
+			margin: 0px auto;
+		}
+		.logo img {
+			top: 0px;
+		}
+		#welcome {
+			position: relative;
+			top: 0px;
+			line-height: 3em;
+			white-space: nowrap;
+		}
+		#count {
+			letter-spacing: 3px;
+			font-weight: bold;
+			color: #a3e4ff;
+			text-shadow: -1px 1px 0 #333;
+		}
+		#slogan {
+			line-height: 3em;
+			letter-spacing: 3px;
+			font-size: small;
+			color: #a3e4ff;
+			text-shadow: none;
+			display: none;
+		}
+	</style>
+	<!--[if IE]><style>#welcome { height: 48px; }</style><![endif]-->
+</head>
+<body>
+	<div class="wrapper">
+
+		<div class="logo-64">
+			<a href="index.html" class="logo">
+				<img src="images/logo/A-128.png" alt="A" class="logo-a" />
+				<img src="images/logo/V-128.png" alt="V" class="logo-v" />
+				<img src="images/logo/I-128.png" alt="I" class="logo-i" />
+				<img src="images/logo/N-128.png" alt="N" class="logo-n" />
+				<img src="images/logo/E-128.png" alt="E" class="logo-e" />
+			</a>
+		</div>
+
+		<p id="welcome">Welcome to AvineJS framework</p>
+		<p id="count"></p>
+		<p id="slogan">it's all about elegance</p>
+
+	</div>
+	<script>
+		$.dom.ready(function () {
+
+			$('#count').loop(3).delay(500).then(function () {
+				this.text(this.text() + '.');
+				this.done();
+			}).delay(500).then(function () {
+				if (!this.loopCount()) this.hide(250).then(function () {
+					this.remove();
+					this.triggerEvent('animEvent').done();
+				});
+				this.done();
+			});
+
+			$('.logo img').addListener('animEvent', function () {
+				this.each(function () {
+					var $logo = $(this);
+					$logo.data('start-from', $logo.css('left'));
+				}).delay(250).then(function () {
+					var $img = $('.logo img'), imgHeight = $img.css('height')[0],
+						$welcome = $('#welcome'), welcomeHeight = $welcome.css('height');
+					this.doneWhen(
+						$img.animate({ top: imgHeight }, 1500, 'easeOutElastic'),
+						$welcome.animate({ top: '-' + welcomeHeight }, 1500, 'easeOutElastic')
+					);
+				}).then(function () {
+					$('#slogan').delay(500).show(2000);
+					this.done();
+				}).loop().delay(4000).animate({
+					left: '0px'
+				}, 1500, 'easeOutCubic').delay(4000).then(function () {
+					var anim = function (selector) {
+						var $l = $(selector);
+						return $l.animate({
+							left: $l.data('start-from')
+						}, 1500, 'easeOutCubic');
+					};
+					this.doneWhen(anim('.logo-a'), anim('.logo-v'), anim('.logo-i'), anim('.logo-n'), anim('.logo-e'));
+				});
+			});
+
+		}, true);
+	</script>
+</body>
+</html>

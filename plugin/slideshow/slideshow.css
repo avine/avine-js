@@ -1,0 +1,38 @@
+/* Avine. Copyright (c) 2013-2015 Stéphane Francel (http://avine.fr). Dual licensed under the MIT and GPL Version 2 licenses. */
+
+.avnSlideshow-root {
+	clear: left;
+}
+
+.avnSlideshow-item {
+	clear: left;
+	list-style: none;
+}
+
+.avnSlideshow-navig {
+
+}
+
+.avnSlideshow-prev {
+
+}
+
+.avnSlideshow-next {
+
+}
+
+.avnSlideshow-counter {
+
+}
+
+.avnSlideshow-resume {
+
+}
+
+.avnSlideshow-anchor {
+
+}
+
+.avnSlideshow-active {
+
+}

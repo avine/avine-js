@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Test</title>
+
+	<script src="../../avine-js.js"></script>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html {
+			background-color: #999;
+			font: small Consolas;
+			text-shadow: 0 1px 0 white;
+		}
+		body {
+			margin-left: auto !important;
+			margin-right: auto !important;
+			width: 800px;
+			height: 1600px;
+			background-color: #eee;
+		}
+		.border {
+			border: 5px solid #ddd;
+		}
+		.margin {
+			margin: 20px;
+		}
+		.padding {
+			padding: 10px;
+		}
+		#actions {
+			position: fixed;
+			top: 0;
+			padding: 10px;
+			background-color: white;
+		}
+		#actions a {
+			color: grey;
+		}
+		#actions a.active {
+			color: black;
+		}
+		#infos {
+			position: fixed;
+			top: 50px;
+			padding: 10px;
+		}
+		#infos b {
+			display: inline-block;
+			width: 150px;
+			padding-right: 10px;
+			text-align: right;
+		}
+	</style>
+	<script>
+		$.dom.ready(function () {
+
+			$body = $('body');
+			$('#actions').click(function(e){
+				e.preventDefault();
+				if (!e.target.href) return;
+				var action = e.target.href.split('#')[1];
+				$body.toggleClass(action);
+				$(e.target).toggleClass('active');
+			});
+
+			function getInfos() {
+				var infos = [], add = function (title, content) { infos.push({ title: title, content: content }); };
+
+				add('viewport', $.dom.viewport());
+				add('documentHeight', $.dom.documentHeight());
+				add('pageOffset', $.dom.pageOffset());
+
+				add('coords', $.dom.coords($body.get(0)));
+				for (var i = 0; i < infos.length; i++) infos[i] = '<b>' + infos[i].title + '</b>' + $.tool.stringify(infos[i].content);
+				return infos.join('<br />');
+			}
+
+			$('#infos').loop().then(function () {
+				this.html(getInfos()).done();
+			}).delay(500);
+
+		});
+	</script>
+</head>
+<body>
+
+	<div id="actions">
+		<a href="#margin">Margin</a>
+		<a href="#padding">Padding</a>
+		<a href="#border">Border</a>
+	</div>
+
+	<div id="infos"></div>
+
+</body>
+</html>

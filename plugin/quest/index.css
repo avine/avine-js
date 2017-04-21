@@ -1,0 +1,54 @@
+body {
+	margin: 0;
+	background: url(../../images/body.jpg) repeat #eee;
+	font-size: x-small;
+	font-family: Verdana;
+	color: #999;
+	text-shadow: 0 1px 0 #fff;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+h1#header {
+	font-size: 1.8em;
+	text-align: center;
+}
+h1#header span {
+	color: #ccc;
+}
+
+#footer {
+	margin-top: 2em;
+	padding-bottom: 1em;
+	text-align: center;
+}
+#footer a {
+	color: #777 !important;
+	text-decoration: none !important;
+}
+
+p {
+	margin: 1.5em auto;
+	width: 100%;
+	max-width: 300px;
+	text-align: center;
+}
+
+a, a:link, a:visited {
+	text-decoration: underline;
+	color: #444;
+	outline: none;
+}
+a:hover, a:active, a:focus {
+	text-decoration: none;
+	color: #111;
+}
+
+a.icons-copyright {
+	position: fixed;
+	left: 5px;
+	bottom: 5px;
+}

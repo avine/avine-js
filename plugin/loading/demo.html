@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Loading plugin - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../../favicon.ico" />
+
+	<link rel="stylesheet" type="text/css" href="../../index.css" />
+
+	<!-- AvineJS Core -->
+	<script src="../../avine-js.js"></script>
+
+	<!-- Loading plugin -->
+	<script src="loading.js"></script>
+
+	<!-- Demo styles -->
+	<style>
+		.links a { margin-right: 10px; }
+		.test { margin: 20px 0; padding: 10px; border: 1px dotted #aaa; }
+		input, select { width: 20%; }
+	</style>
+
+	<script src="../../unit-test.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../prism/prism.css" />
+	<script src="../../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../../index.html" class="logo" style="width:32px;"><img src="../../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>Loading plugin <span>- AvineJS</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines"><em>Loading</em> permet d'afficher un retour visuel au chargement de données asynchrone.</h4>
+
+
+
+<hr />
+<h2>Contexte</h2>
+<p>Prenons une page web avec plusieurs contenus en cours de chargements asynchrones.
+	Disons que ces contenus dépendent les uns des autres, comme des champs de formulaires en cascade par exemple.
+	Ces contenus ne doivent donc êtres rendus accessibles qu'une fois tous les chargements terminés.</p>
+<p>Cependant pour que l'utilisateur ne s'impatiente pas, nous voulons lui indiquer dès que possible quels sont les contenus déjà chargés, même s'il ne peut pas encore les utiliser.
+	Le plugin <em>Loading</em> vient à la rescousse&nbsp;!</p>
+
+
+
+<hr />
+<h2>Fonctionnement</h2>
+<p><em>Loading</em> permet de griser les zones en cours de chargement ("progress").
+	Si le temps de réponse dépasse une certaine valeur (1&nbsp;seconde par défaut), une icône de chargement apparaît (loader.gif) indiquant qu'il se passe toujours quelque chose.</p>
+<p>Dès qu'un contenu est chargé, nous pouvons supprimer l'icône de chargement pour indiquer à l'utilisateur que la progression ("success").
+	Cepandant, la zone reste grisée car d'autres contenus sont toujours en cours de chargement.</p>
+<p>Lorsque toutes les dépendances sont chargées, nous pouvons dégriser l'ensemble des zones et rendre leurs contenus accessibles ("complete").</p>
+<p>Si l'un des chargements échoue ("error"), nous pouvons indiquer cet état par une icône (error.gif).</p>
+<p class="msg-info">Avec "complete", la zone grisée reste présente dans le DOM, même si elle n'est pas visible.
+	Si vous n'avez pas besoin de rafraîchir les zones, vous pouvez alors utiliser le statut "remove" pour surppimer du DOM les zones grisées.</p>
+
+
+
+<hr />
+<h2>Démo</h2>
+<p>L'exemple suivant permet de simuler les différents événements impliqués dans le chargement de données et les appliquent à 2 div.
+	Cliquez sur les boutons pour voir le plugin en action.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div class="online-demo">
+
+	<div class="test test-basic">
+		<label for="name">Your name :</label> <input type="text" id="name" />
+		&nbsp; &nbsp;
+		<label for="gender">Your gender :</label>
+		<select id="gender">
+			<option value="0">Woman</option>
+			<option value="1">Man</option>
+		</select>
+	</div>
+	<div class="test test-basic" style="background-color:#bbb; color:white; text-shadow:none;">
+		<label for="address">Your adress :</label> <input type="text" id="address" />
+		&nbsp; &nbsp;
+		<label for="zip">Your zip code :</label> <input type="text" id="zip" />
+	</div>
+
+	<h4>Actions :</h4>
+	<div class="links">
+		<a href="#" id="progress" class="method">Progress </a>
+		<a href="#" id="success" class="method">Success </a>
+		<a href="#" id="error" class="method">Errror </a>
+		<a href="#" id="complete" class="method">Complete </a>
+		<a href="#" id="remove" class="method">Remove </a>
+		<br /><br />
+		<a href="#" id="change-options">Change options </a>
+		<a href="#" id="restore-options">Restore options </a>
+	</div>
+
+</div>
+<script>
+$(".links .method").click(function (e) {
+	var method = this.id; // progress, success, error, complete, remove
+	$(".test-basic").loading(method);
+	e.preventDefault();
+});
+
+$("#change-options").click(function (e) {
+	$(".test-basic").loading({ bgColor: '#ffd800', opacity: .8 });
+	e.preventDefault();
+});
+
+$("#restore-options").click(function (e) {
+	var settings = $.fn.loading.settings; // Default plugin settings
+	$(".test-basic").loading({ bgColor: settings.bgColor, opacity: settings.opacity });
+	e.preventDefault();
+});
+</script>
+
+	</div>
+	<script>ut2(function(log) {});</script>
+</div>
+
+
+
+<hr />
+<h2>Paramétrage</h2>
+<p><em>Loading</em> est paramètrable.
+	Voici par exemple comment modifier la couleur de fond, l'opacité et l'image de progression.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<script>
+$.dom.ready(function () {
+	var bool = false;
+	$("#test-options").click(function () {
+		if (!bool) {
+			$(this).loading({
+				bgColor: "#ddd",
+				opacity: .8,
+				progress: 'images/loader2.gif'
+			});
+		} else {
+			$(this).loading('complete');
+		}
+		bool = !bool;
+	});
+});
+</script>
+
+<div class="online-demo">
+	<div class="test" id="test-options" style="cursor:pointer;">
+		Cliquer ici pour voir l'effet...
+	</div>
+</div>
+
+	</div>
+	<script>ut2(function(log) {});</script>
+</div>
+
+
+
+<hr />
+<h2>API</h2>
+<p>Personnalisez <em>Loading</em> à vos besoins en fournissant un object en paramètre de la méthode, dont voici les différentes propriétés.</p>
+<table>
+	<thead>
+		<tr><th>Property</th><th>Info</th><th>Default value</th></tr>
+	</thead>
+	<tr><th class="right">className</th><td>Addon CSS class of the loading DIV</td><td>""</td></tr>
+	<tr><th class="right">bgColor</th><td>Background color</td><td>"white"</td></tr>
+	<tr><th class="right">opacityDelay</th><td>Duration of the background opacity animation</td><td>100 (ms)</td></tr>
+	<tr><th class="right">opacity</th><td>Background opacity</td><td>.5</td></tr>
+	<tr><th class="right">progressDelay</th><td>Delay before showing the progress icon</td><td>1000 (ms)</td></tr>
+	<tr><th class="right">progress</th><td>URL of the progress icon</td><td>images/loader.gif</td></tr>
+	<tr><th class="right">error</th><td>URL of the error icon</td><td>images/error.png</td></tr>
+</table>
+
+
+
+<br />
+<p class="download"><a href="loading.js">Télécharger loading.js</a></p>
+
+
+
+<hr />
+<h2>Version jQuery</h2>
+<p>Il existe également une version jQuery du plugin <em>Loading</em>.
+	<a href="jquery-loading.html">Tester la version jQuery du plugin <em>Loading</em></a>.</p>
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

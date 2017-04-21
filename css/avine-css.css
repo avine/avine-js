@@ -1,0 +1,4641 @@
+/* Avine. Copyright (c) 2014-2015 S. Francel (http://avine.fr). Dual licensed under the MIT and GPL Version 2 licenses. */
+/* ----
+   Text
+   ---- */
+body {
+  margin: 0;
+  background-color: #ffffff;
+  text-shadow: 0 1px 0 transparent;
+  color: #737373 !important;
+  line-height: 1.5em;
+  font-family: AvineFontText, Tahoma, Geneva, sans-serif;
+}
+@media (min-width: 960px) {
+  body {
+    font-size: 16px;
+  }
+}
+@media (min-width: 480px) and (max-width: 959px) {
+  body {
+    font-size: 14px;
+  }
+}
+@media (max-width: 479px) {
+  body {
+    font-size: 13px;
+  }
+}
+.avn-text-margin,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul,
+blockquote,
+details,
+table,
+.avn-table-wrap,
+pre,
+.avn-text-box {
+  margin-top: 1em;
+  margin-bottom: 0.4em;
+}
+.avn-first-child {
+  margin-top: 0 !important;
+}
+h1 {
+  line-height: 1.15em;
+  font-size: 2.5em;
+}
+h2 {
+  line-height: 1.2375em;
+  font-size: 2.125em;
+}
+h3 {
+  line-height: 1.325em;
+  font-size: 1.75em;
+}
+h4 {
+  line-height: 1.4125em;
+  font-size: 1.375em;
+}
+h5,
+p {
+  line-height: 1.5em;
+  font-size: 1em;
+}
+h6 {
+  line-height: 1.5em;
+  font-size: 0.85em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  line-height: 1em;
+  font-size: 0.85em;
+}
+h2 {
+  border-bottom: 1px dotted transparent;
+  padding-bottom: 0.125em;
+}
+hgroup * + h2 {
+  border-bottom: initial;
+  padding-bottom: auto;
+}
+hgroup,
+hgroup > * {
+  margin: 0;
+}
+hgroup > :first-child {
+  margin-top: 1em;
+}
+hgroup > :last-child {
+  margin-bottom: 0.4em;
+}
+hgroup:first-child > :first-child {
+  margin-top: 0;
+}
+h1,
+h3,
+h5 {
+  color: #737373;
+}
+h1 small,
+h3 small,
+h5 small {
+  color: #cdcdcd;
+}
+hgroup h1 + *,
+hgroup h3 + *,
+hgroup h5 + * {
+  color: #cdcdcd;
+}
+h2,
+h4,
+h6 {
+  color: #6b8a5c;
+}
+h2 small,
+h4 small,
+h6 small {
+  color: #cdcdcd;
+}
+hgroup h2 + *,
+hgroup h4 + *,
+hgroup h6 + * {
+  color: #cdcdcd;
+}
+h2 {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+a {
+  outline: none;
+  text-decoration: underline;
+}
+a:hover,
+a:active,
+a:focus {
+  text-decoration: none;
+}
+a,
+a:link,
+a:visited {
+  color: #8a5c81;
+}
+a:hover,
+a:active,
+a:focus {
+  color: #b792af;
+}
+ol,
+ul {
+  padding-left: 2em;
+}
+ul.avn-list-unstyled {
+  padding-left: 1em;
+  list-style: none;
+}
+ul.avn-list-nav {
+  padding-left: 0;
+  list-style: none;
+}
+ul.avn-list-nav > li {
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.15);
+  padding: .25em 0;
+}
+ul.avn-list-nav > li > a {
+  text-decoration: none;
+}
+blockquote {
+  margin-left: 1em;
+  margin-right: 1em;
+  border-left: 4px solid rgba(0, 0, 0, 0.1);
+  padding-left: 1em;
+  text-align: justify;
+  font-style: italic;
+}
+img {
+  vertical-align: middle;
+}
+a img {
+  border: none;
+}
+hr {
+  margin: 1.5em 0;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+details {
+  border-radius: 3px;
+  border: 1px solid transparent;
+  padding: 0.75em 1em;
+}
+summary {
+  outline: none;
+}
+details[open] {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+details[open] summary {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+details,
+summary {
+  -webkit-transition: border ease 0.1s, background ease 0.1s;
+          transition: border ease 0.1s, background ease 0.1s;
+}
+/* text table */
+.avn-table-wrap {
+  width: 100%;
+  overflow: auto;
+}
+.avn-table-wrap > table {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.avn-table {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left;
+}
+.avn-table tr {
+  -webkit-transition: background-color 0.25s ease;
+          transition: background-color 0.25s ease;
+}
+.avn-table th {
+  background-color: #ffffff;
+}
+.avn-table th,
+.avn-table td {
+  padding: 0.75em 1em;
+  border: 1px solid #dddddd;
+  border-width: 1px 0;
+}
+.avn-table tr:first-child th,
+.avn-table tr:first-child td {
+  border-top-width: 0;
+}
+.avn-table tr:last-child th,
+.avn-table tr:last-child td {
+  border-bottom-width: 0;
+}
+table.avn-table.avn-table-bordered th,
+table.avn-table.avn-table-bordered td {
+  border-width: 1px;
+}
+table.avn-table th {
+  border-bottom-width: 2px /* !important*/;
+}
+.avn-table-align-left {
+  margin-left: initial;
+}
+.avn-table-align-right {
+  margin-right: initial;
+}
+.avn-table-condensed th,
+.avn-table-condensed td {
+  padding: 0.5em 0.66666667em;
+}
+.avn-table-striped tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+/* text code */
+pre,
+code,
+samp,
+kbd {
+  font-family: AvineFontCode, Consolas, Monaco, monospace;
+}
+pre {
+  white-space: pre-wrap;
+}
+code {
+  padding: .125em .25em;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+  line-height: 1em;
+  font-size: 0.85em;
+}
+pre code {
+  padding: 0;
+  border-radius: 0;
+  border: none !important;
+  background-color: transparent !important;
+  font-size: 1em;
+}
+/* text adds */
+.avn-text-box {
+  padding: 0.75em 1em;
+  border-radius: 5px;
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+}
+.avn-text-box > :first-child {
+  margin-top: 0;
+}
+.avn-font-size-bigger {
+  font-size: 1.15em !important;
+}
+.avn-font-size-smaller {
+  font-size: 0.85em !important;
+}
+.avn-align-center {
+  text-align: center !important;
+}
+.avn-align-left {
+  text-align: left !important;
+}
+.avn-align-right {
+  text-align: right !important;
+}
+.avn-align-justify {
+  text-align: justify !important;
+}
+@media (min-width: 720px) {
+  .avn-align-center-medium {
+    text-align: center !important;
+  }
+  .avn-align-left-medium {
+    text-align: left !important;
+  }
+  .avn-align-right-medium {
+    text-align: right !important;
+  }
+  .avn-align-justify-medium {
+    text-align: justify !important;
+  }
+}
+@media (min-width: 960px) {
+  .avn-align-center-large {
+    text-align: center !important;
+  }
+  .avn-align-left-large {
+    text-align: left !important;
+  }
+  .avn-align-right-large {
+    text-align: right !important;
+  }
+  .avn-align-justify-large {
+    text-align: justify !important;
+  }
+}
+/* ----
+   icon
+   ---- */
+.avn-icon {
+  position: relative;
+}
+.avn-icon:before,
+.avn-icon:after,
+.avn-icon-item-before,
+.avn-icon-item-after {
+  display: none;
+  content: none;
+  text-decoration: none;
+  line-height: 0 !important;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.5em !important;
+  color: inherit;
+}
+.avn-icon-item-before,
+.avn-icon-item-after {
+  vertical-align: middle;
+}
+.avn-icon-before:before,
+.avn-icon-item-before {
+  display: inline;
+  margin-right: 0.33333333em;
+}
+.avn-icon-after:after,
+.avn-icon-item-after {
+  display: inline;
+  margin-left: 0.33333333em;
+}
+@media (max-width: 719px) {
+  .avn-icon-block {
+    text-align: center;
+  }
+  .avn-icon-block:before,
+  .avn-icon-block:after,
+  .avn-icon-block .avn-icon-item-before,
+  .avn-icon-block .avn-icon-item-after {
+    width: 1.5em;
+    margin: 0 auto;
+    line-height: 1em !important;
+  }
+  .avn-icon-block.avn-icon-before:before,
+  .avn-icon-block .avn-icon-item-before {
+    display: block;
+    margin-bottom: 0.16666667em;
+  }
+  .avn-icon-block.avn-icon-after:after,
+  .avn-icon-block .avn-icon-item-after {
+    display: block;
+    margin-top: 0.16666667em;
+  }
+}
+@media (min-width: 720px) {
+  .avn-icon-block {
+    text-align: justify;
+  }
+  .avn-icon-block:before,
+  .avn-icon-block:after,
+  .avn-icon-block .avn-icon-item-before,
+  .avn-icon-block .avn-icon-item-after {
+    margin: 0;
+    margin-top: -0.33333333em;
+    position: absolute;
+    top: 50%;
+    line-height: inherit !important;
+  }
+  .avn-icon-block.avn-icon-before {
+    padding-left: 2.5em;
+  }
+  .avn-icon-block.avn-icon-after {
+    padding-right: 2.5em;
+  }
+  .avn-icon-block.avn-icon-before:before,
+  .avn-icon-block .avn-icon-item-before {
+    left: 0;
+  }
+  .avn-icon-block.avn-icon-after:after,
+  .avn-icon-block .avn-icon-item-after {
+    right: 0;
+  }
+}
+/* icon-small */
+.avn-icon-small:before,
+.avn-icon-small:after,
+.avn-icon-small .avn-icon-item-before,
+.avn-icon-small .avn-icon-item-after {
+  font-size: 1em !important;
+}
+@media (min-width: 720px) {
+  .avn-icon-small.avn-icon-block:before,
+  .avn-icon-small.avn-icon-block:after,
+  .avn-icon-small.avn-icon-block .avn-icon-item-before,
+  .avn-icon-small.avn-icon-block .avn-icon-item-after {
+    margin-top: -0.5em;
+  }
+  .avn-icon-small.avn-icon-block.avn-icon-before {
+    padding-left: 2em;
+  }
+  .avn-icon-small.avn-icon-block.avn-icon-after {
+    padding-right: 2em;
+  }
+}
+/* icon-medium */
+.avn-icon-medium:before,
+.avn-icon-medium:after,
+.avn-icon-medium .avn-icon-item-before,
+.avn-icon-medium .avn-icon-item-after {
+  font-size: 3em !important;
+}
+@media (min-width: 720px) {
+  .avn-icon-medium.avn-icon-block:before,
+  .avn-icon-medium.avn-icon-block:after,
+  .avn-icon-medium.avn-icon-block .avn-icon-item-before,
+  .avn-icon-medium.avn-icon-block .avn-icon-item-after {
+    margin-top: -0.16666667em;
+  }
+  .avn-icon-medium.avn-icon-block.avn-icon-before {
+    padding-left: 4em;
+  }
+  .avn-icon-medium.avn-icon-block.avn-icon-after {
+    padding-right: 4em;
+  }
+}
+/* icon-big */
+.avn-icon-big:before,
+.avn-icon-big:after,
+.avn-icon-big .avn-icon-item-before,
+.avn-icon-big .avn-icon-item-after {
+  font-size: 4.5em !important;
+}
+@media (min-width: 720px) {
+  .avn-icon-big.avn-icon-block:before,
+  .avn-icon-big.avn-icon-block:after,
+  .avn-icon-big.avn-icon-block .avn-icon-item-before,
+  .avn-icon-big.avn-icon-block .avn-icon-item-after {
+    margin-top: -0.11111111em;
+  }
+  .avn-icon-big.avn-icon-block.avn-icon-before {
+    padding-left: 5.5em;
+  }
+  .avn-icon-big.avn-icon-block.avn-icon-after {
+    padding-right: 5.5em;
+  }
+}
+/* icons content */
+.avn-icon-success:before,
+.avn-icon-success:after {
+  content: "\f00c";
+}
+.avn-icon-error:before,
+.avn-icon-error:after {
+  content: "\f00d";
+}
+.avn-icon-warning:before,
+.avn-icon-warning:after {
+  content: "\f071";
+}
+.avn-icon-info:before,
+.avn-icon-info:after {
+  content: "\f129";
+}
+.avn-icon-tip:before,
+.avn-icon-tip:after {
+  content: "\f024";
+}
+.avn-icon-quotes:before {
+  content: "\f10d";
+}
+.avn-icon-quotes:after {
+  content: "\f10e";
+}
+.avn-icon-list:before {
+  content: "\f105";
+}
+/* ----
+   area
+   ---- */
+.avn-area-bound {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  min-width: 240px;
+  max-width: 960px;
+  border-style: none;
+  border-color: #dddddd;
+}
+.avn-area-fill {
+  position: relative;
+  border: 0 solid #dddddd;
+  border-top-width: 1px;
+  background-repeat: repeat-x;
+  /*background-image: linear-gradient(bottom,
+		rgba(255,255,255,0) 0%,
+		rgba(255,255,255,.033) 33%,
+		rgba(255,255,255,0) 66%
+	), linear-gradient(top,
+		rgba(255,255,255,0.033) 0,
+		rgba(255,255,255,0) @font-size-medium
+	), linear-gradient(bottom,
+		rgba(0,0,0,0.033) 0,
+		rgba(0,0,0,0) @font-size-medium
+	);*/
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.1) 1px, rgba(0, 0, 0, 0.033) 2px, rgba(0, 0, 0, 0) 9%, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.033) 30%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0) 51%, rgba(0, 0, 0, 0.033) 75%, rgba(0, 0, 0, 0) 100%);
+  background-image: linear-gradient(top, rgba(255, 255, 255, 0.1) 1px, rgba(0, 0, 0, 0.033) 2px, rgba(0, 0, 0, 0) 9%, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.033) 30%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0) 51%, rgba(0, 0, 0, 0.033) 75%, rgba(0, 0, 0, 0) 100%);
+}
+.avn-area-border {
+  border-bottom-width: 1px;
+}
+.avn-area-nograd {
+  background-image: none !important;
+}
+.avn-area-bound > .avn-area-fill {
+  border-color: inherit;
+}
+@media (min-width: 960px) {
+  .avn-area-bound > .avn-area-fill {
+    border-left-width: 1px;
+    border-right-width: 1px;
+  }
+  .avn-area-bound > .avn-area-fill:last-child {
+    border-bottom-width: 1px;
+  }
+  .avn-area-bound + .avn-area-bound > .avn-area-fill:first-child {
+    margin-top: -1px;
+  }
+  .avn-area-bound.avn-area-spacing > .avn-area-fill:first-child,
+  .avn-area-bound.avn-area-spacing + .avn-area-bound > .avn-area-fill:first-child {
+    margin-top: 0;
+  }
+  .avn-area-spacing {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075);
+    border-radius: 8px;
+  }
+  .avn-area-spacing > :first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
+  .avn-area-spacing > :last-child {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+  .avn-area-noshad {
+    box-shadow: none !important;
+  }
+}
+.avn-area-pad,
+.avn-area-bound > .avn-area-fill,
+.avn-area-fill > .avn-area-bound {
+  padding: 0.75em 1em;
+}
+.avn-area-pad-large {
+  padding: 1.25em 1.5em !important;
+}
+.avn-area-nopad {
+  padding: 0 !important;
+}
+.avn-area-margin {
+  margin: 1.5em !important;
+}
+/* area-over */
+@media (min-width: 1000px) {
+  .avn-area-over {
+    margin-left: -10px;
+    margin-right: -10px;
+    border-width: 1px;
+    background-color: #ffffff;
+  }
+  .avn-area-over:before,
+  .avn-area-over:after {
+    border-color: #dddddd;
+  }
+  .avn-area-over > :first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
+  .avn-area-over > :last-child {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+  }
+  .avn-area-over-top {
+    border-radius: inherit;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+  .avn-area-over-top:before,
+  .avn-area-over-top:after {
+    bottom: -11px;
+  }
+  .avn-area-over-bottom {
+    border-radius: inherit;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+  .avn-area-over-bottom:before,
+  .avn-area-over-bottom:after {
+    top: -11px;
+  }
+  .avn-area-over-top:before,
+  .avn-area-over-top:after,
+  .avn-area-over-bottom:before,
+  .avn-area-over-bottom:after {
+    content: "\0000a0";
+    height: 0;
+    width: 0;
+    border-width: 10px;
+    border-style: solid;
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+    position: absolute;
+  }
+  .avn-area-over-top:before,
+  .avn-area-over-bottom:before {
+    left: -11px;
+  }
+  .avn-area-over-top:after,
+  .avn-area-over-bottom:after {
+    right: -11px;
+  }
+  .avn-area-over-top:before {
+    clip: rect(10px, auto, auto, 10px);
+  }
+  .avn-area-over-top:after {
+    clip: rect(10px, 10px, auto, auto);
+  }
+  .avn-area-over-bottom:before {
+    clip: rect(auto, auto, 10px, 10px);
+  }
+  .avn-area-over-bottom:after {
+    clip: rect(auto, 10px, 10px, auto);
+  }
+  .avn-area-over + .avn-area-fill {
+    border-top-width: 0;
+  }
+}
+/* area-over left and right */
+@media (min-width: 1000px) {
+  .avn-area-over-left,
+  .avn-area-over-right {
+    box-sizing: border-box;
+    position: absolute !important;
+    z-index: 1;
+    margin: 0 !important;
+  }
+  .avn-area-over-left {
+    left: 1em;
+  }
+  .avn-area-over-right {
+    right: 1em;
+  }
+  .avn-area-over-bottom.avn-area-over-left,
+  .avn-area-over-bottom.avn-area-over-right {
+    top: -11px;
+    border-radius: 0 0 8px 8px !important;
+  }
+  .avn-area-over-top.avn-area-over-left,
+  .avn-area-over-top.avn-area-over-right {
+    bottom: -11px;
+    border-radius: 8px 8px 0 0 !important;
+  }
+  .avn-area-over-bottom.avn-area-over-left:after {
+    right: -21px;
+    top: -1px;
+  }
+  .avn-area-over-bottom.avn-area-over-right:before {
+    left: -21px;
+    top: -1px;
+  }
+  .avn-area-over-top.avn-area-over-left:after {
+    right: -21px;
+    bottom: -1px;
+  }
+  .avn-area-over-top.avn-area-over-right:before {
+    left: -21px;
+    bottom: -1px;
+  }
+  .avn-area-over-left:before,
+  .avn-area-over-right:after {
+    display: none;
+  }
+  .avn-area-over-wrap-3 .avn-area-over-left,
+  .avn-area-over-wrap-3 .avn-area-over-right {
+    width: 21em;
+  }
+  .avn-area-over-main-left-3 {
+    margin-left: 22em;
+  }
+  .avn-area-over-main-right-3 {
+    margin-right: 22em;
+  }
+  .avn-area-over-wrap-2 .avn-area-over-left,
+  .avn-area-over-wrap-2 .avn-area-over-right {
+    width: 30.5em;
+  }
+  .avn-area-over-main-left-2 {
+    margin-left: 31.5em;
+  }
+  .avn-area-over-main-right-2 {
+    margin-right: 31.5em;
+  }
+}
+.avn-area-over-left,
+.avn-area-over-right {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-radius: 8px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075);
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+}
+.avn-area-over-bottom.avn-area-over-left:first-child,
+.avn-area-over-bottom.avn-area-over-right:first-child {
+  margin-top: 0;
+}
+.avn-area-over-top.avn-area-over-left:last-child,
+.avn-area-over-top.avn-area-over-right:last-child {
+  margin-bottom: 0;
+}
+/* over scroll (designed for over left and right) */
+.avn-area-over-scroll {
+  box-sizing: border-box;
+  overflow: auto;
+  height: inherit;
+  max-height: inherit;
+  padding: 0.75em 1em;
+}
+.avn-area-over-left > .avn-area-over-scroll,
+.avn-area-over-right > .avn-area-over-scroll {
+  margin-left: -1em;
+  margin-right: -1em;
+}
+/* ----
+   grid
+   ---- */
+.avn-grid {
+  position: relative;
+}
+.avn-grid > * {
+  position: relative;
+  vertical-align: top;
+}
+.avn-grid.avn-grid-align-top > * {
+  vertical-align: top;
+}
+.avn-grid.avn-grid-align-middle > * {
+  vertical-align: middle;
+}
+.avn-grid.avn-grid-align-bottom > * {
+  vertical-align: bottom;
+}
+.avn-grid > .avn-grid-align-top {
+  vertical-align: top;
+}
+.avn-grid > .avn-grid-align-middle {
+  vertical-align: middle;
+}
+.avn-grid > .avn-grid-align-bottom {
+  vertical-align: bottom;
+}
+.avn-grid-small {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.avn-grid-small > * {
+  display: table-cell;
+  box-sizing: border-box;
+}
+.avn-grid-small .avn-grid-w-20pc {
+  width: 20% !important;
+}
+.avn-grid-small .avn-grid-w-25pc {
+  width: 25% !important;
+}
+.avn-grid-small .avn-grid-w-33pc {
+  width: 33.33%!important;
+}
+.avn-grid-small .avn-grid-w-40pc {
+  width: 40% !important;
+}
+.avn-grid-small .avn-grid-w-50pc {
+  width: 50% !important;
+}
+.avn-grid-small .avn-grid-w-60pc {
+  width: 60% !important;
+}
+.avn-grid-small .avn-grid-w-66pc {
+  width: 66.66%!important;
+}
+.avn-grid-small .avn-grid-w-75pc {
+  width: 75% !important;
+}
+.avn-grid-small .avn-grid-w-80pc {
+  width: 80% !important;
+}
+.avn-grid-small .avn-grid-w-100pc {
+  width: 100% !important;
+}
+.avn-grid-small .avn-grid-w-30px {
+  width: 30px  !important;
+}
+.avn-grid-small .avn-grid-w-60px {
+  width: 60px  !important;
+}
+.avn-grid-small .avn-grid-w-120px {
+  width: 120px !important;
+}
+.avn-grid-small .avn-grid-w-180px {
+  width: 180px !important;
+}
+.avn-grid-small .avn-grid-w-240px {
+  width: 240px !important;
+}
+.avn-grid-small .avn-grid-w-300px {
+  width: 300px !important;
+}
+.avn-grid-small .avn-grid-w-360px {
+  width: 360px !important;
+}
+.avn-grid-small .avn-grid-w-420px {
+  width: 420px !important;
+}
+.avn-grid-small .avn-grid-w-480px {
+  width: 480px !important;
+}
+@media (min-width: 720px) {
+  .avn-grid-medium {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .avn-grid-medium > * {
+    display: table-cell;
+    box-sizing: border-box;
+  }
+  .avn-grid-medium .avn-grid-w-20pc {
+    width: 20% !important;
+  }
+  .avn-grid-medium .avn-grid-w-25pc {
+    width: 25% !important;
+  }
+  .avn-grid-medium .avn-grid-w-33pc {
+    width: 33.33%!important;
+  }
+  .avn-grid-medium .avn-grid-w-40pc {
+    width: 40% !important;
+  }
+  .avn-grid-medium .avn-grid-w-50pc {
+    width: 50% !important;
+  }
+  .avn-grid-medium .avn-grid-w-60pc {
+    width: 60% !important;
+  }
+  .avn-grid-medium .avn-grid-w-66pc {
+    width: 66.66%!important;
+  }
+  .avn-grid-medium .avn-grid-w-75pc {
+    width: 75% !important;
+  }
+  .avn-grid-medium .avn-grid-w-80pc {
+    width: 80% !important;
+  }
+  .avn-grid-medium .avn-grid-w-100pc {
+    width: 100% !important;
+  }
+  .avn-grid-medium .avn-grid-w-30px {
+    width: 30px  !important;
+  }
+  .avn-grid-medium .avn-grid-w-60px {
+    width: 60px  !important;
+  }
+  .avn-grid-medium .avn-grid-w-120px {
+    width: 120px !important;
+  }
+  .avn-grid-medium .avn-grid-w-180px {
+    width: 180px !important;
+  }
+  .avn-grid-medium .avn-grid-w-240px {
+    width: 240px !important;
+  }
+  .avn-grid-medium .avn-grid-w-300px {
+    width: 300px !important;
+  }
+  .avn-grid-medium .avn-grid-w-360px {
+    width: 360px !important;
+  }
+  .avn-grid-medium .avn-grid-w-420px {
+    width: 420px !important;
+  }
+  .avn-grid-medium .avn-grid-w-480px {
+    width: 480px !important;
+  }
+}
+@media (min-width: 960px) {
+  .avn-grid-large {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .avn-grid-large > * {
+    display: table-cell;
+    box-sizing: border-box;
+  }
+  .avn-grid-large .avn-grid-w-20pc {
+    width: 20% !important;
+  }
+  .avn-grid-large .avn-grid-w-25pc {
+    width: 25% !important;
+  }
+  .avn-grid-large .avn-grid-w-33pc {
+    width: 33.33%!important;
+  }
+  .avn-grid-large .avn-grid-w-40pc {
+    width: 40% !important;
+  }
+  .avn-grid-large .avn-grid-w-50pc {
+    width: 50% !important;
+  }
+  .avn-grid-large .avn-grid-w-60pc {
+    width: 60% !important;
+  }
+  .avn-grid-large .avn-grid-w-66pc {
+    width: 66.66%!important;
+  }
+  .avn-grid-large .avn-grid-w-75pc {
+    width: 75% !important;
+  }
+  .avn-grid-large .avn-grid-w-80pc {
+    width: 80% !important;
+  }
+  .avn-grid-large .avn-grid-w-100pc {
+    width: 100% !important;
+  }
+  .avn-grid-large .avn-grid-w-30px {
+    width: 30px  !important;
+  }
+  .avn-grid-large .avn-grid-w-60px {
+    width: 60px  !important;
+  }
+  .avn-grid-large .avn-grid-w-120px {
+    width: 120px !important;
+  }
+  .avn-grid-large .avn-grid-w-180px {
+    width: 180px !important;
+  }
+  .avn-grid-large .avn-grid-w-240px {
+    width: 240px !important;
+  }
+  .avn-grid-large .avn-grid-w-300px {
+    width: 300px !important;
+  }
+  .avn-grid-large .avn-grid-w-360px {
+    width: 360px !important;
+  }
+  .avn-grid-large .avn-grid-w-420px {
+    width: 420px !important;
+  }
+  .avn-grid-large .avn-grid-w-480px {
+    width: 480px !important;
+  }
+}
+/* grid miscellaneous */
+.avn-grid-width-auto {
+  width: auto;
+}
+.avn-grid-layout-auto {
+  table-layout: auto;
+}
+@media (max-width: 719px) {
+  .avn-grid-medium-h-only {
+    display: none !important;
+  }
+}
+@media (min-width: 720px) {
+  .avn-grid-medium-v-only {
+    display: none !important;
+  }
+}
+@media (max-width: 959px) {
+  .avn-grid-large-h-only {
+    display: none !important;
+  }
+}
+@media (min-width: 960px) {
+  .avn-grid-large-v-only {
+    display: none !important;
+  }
+}
+/* grid sidebar */
+@media (min-width: 960px) {
+  .avn-grid-large > .avn-grid-sidebar {
+    width: 300px;
+  }
+}
+@media (min-width: 720px) {
+  .avn-grid-medium > .avn-grid-sidebar {
+    width: 240px;
+  }
+}
+.avn-grid-small > .avn-grid-sidebar {
+  width: 180px;
+}
+/* grid border-radius */
+.avn-grid-wrap {
+  position: relative;
+}
+.avn-grid-wrap.avn-grid-inline {
+  margin: 0;
+  display: inline-block;
+  text-align: left;
+}
+.avn-grid-wrap.avn-grid-inline > .avn-grid {
+  width: auto;
+}
+.avn-grid-wrap > .avn-grid:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+.avn-grid-wrap > .avn-grid:last-child {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+.avn-grid-wrap > .avn-grid:first-child > :first-child {
+  border-top-left-radius: inherit;
+}
+.avn-grid-wrap > .avn-grid:last-child > :last-child {
+  border-bottom-right-radius: inherit;
+}
+.avn-grid-wrap > .avn-grid-small:first-child > :last-child {
+  border-top-right-radius: inherit;
+}
+.avn-grid-wrap > .avn-grid-small:last-child > :first-child {
+  border-bottom-left-radius: inherit;
+}
+@media (min-width: 720px) {
+  .avn-grid-wrap > .avn-grid-medium:first-child > :last-child {
+    border-top-right-radius: inherit;
+  }
+  .avn-grid-wrap > .avn-grid-medium:last-child > :first-child {
+    border-bottom-left-radius: inherit;
+  }
+}
+@media (max-width: 719px) {
+  .avn-grid-wrap > .avn-grid-medium:first-child > :first-child {
+    border-top-right-radius: inherit;
+  }
+  .avn-grid-wrap > .avn-grid-medium:last-child > :last-child {
+    border-bottom-left-radius: inherit;
+  }
+}
+@media (min-width: 960px) {
+  .avn-grid-wrap > .avn-grid-large:first-child > :last-child {
+    border-top-right-radius: inherit;
+  }
+  .avn-grid-wrap > .avn-grid-large:last-child > :first-child {
+    border-bottom-left-radius: inherit;
+  }
+}
+@media (max-width: 959px) {
+  .avn-grid-wrap > .avn-grid-large:first-child > :first-child {
+    border-top-right-radius: inherit;
+  }
+  .avn-grid-wrap > .avn-grid-large:last-child > :last-child {
+    border-bottom-left-radius: inherit;
+  }
+}
+.avn-grid-radius,
+.avn-grid-radius-full {
+  border-radius: 8px;
+}
+/* grid spacing */
+.avn-grid-spacing > .avn-grid-small {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-spacing: 1em 0;
+}
+@media (min-width: 720px) {
+  .avn-grid-spacing > .avn-grid-medium {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-spacing: 1em 0;
+  }
+}
+@media (min-width: 960px) {
+  .avn-grid-spacing > .avn-grid-large {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-spacing: 1em 0;
+  }
+}
+@media (max-width: 719px) {
+  .avn-grid-spacing > .avn-grid-medium > * {
+    margin: 1em;
+  }
+}
+@media (max-width: 959px) {
+  .avn-grid-spacing > .avn-grid-large > * {
+    margin: 1em;
+  }
+}
+.avn-grid-spacing-large > .avn-grid-small {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  border-spacing: 1.5em 0;
+}
+@media (min-width: 720px) {
+  .avn-grid-spacing-large > .avn-grid-medium {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    border-spacing: 1.5em 0;
+  }
+}
+@media (min-width: 960px) {
+  .avn-grid-spacing-large > .avn-grid-large {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    border-spacing: 1.5em 0;
+  }
+}
+@media (max-width: 719px) {
+  .avn-grid-spacing-large > .avn-grid-medium > * {
+    margin: 1.5em;
+  }
+}
+@media (max-width: 959px) {
+  .avn-grid-spacing-large > .avn-grid-large > * {
+    margin: 1.5em;
+  }
+}
+.avn-grid-fit.avn-grid-spacing {
+  margin-left: -1em;
+  margin-right: -1em;
+}
+.avn-grid-fit.avn-grid-spacing-large {
+  margin-left: -1.5em;
+  margin-right: -1.5em;
+}
+/* grid border */
+.avn-grid-border {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075);
+  border: 1px solid #dddddd;
+}
+.avn-grid-border,
+.avn-grid-border > .avn-grid > * {
+  background-color: #ffffff;
+}
+.avn-grid-border > .avn-grid,
+.avn-grid-border > .avn-grid > * {
+  border-color: inherit;
+}
+.avn-grid-border > .avn-grid > * {
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.15) inset;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  padding: 0.75em 1em;
+  background-image: -webkit-radial-gradient(top left, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 25%);
+  background-image: radial-gradient(top left, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 25%);
+  background-position: left top;
+  background-repeat: no-repeat;
+}
+.avn-grid-border > .avn-grid:last-child > :last-child {
+  border-bottom-width: 0;
+}
+.avn-grid-border > .avn-grid-small > * {
+  border-right-width: 1px;
+}
+.avn-grid-border > .avn-grid-small > :last-child {
+  border-right-width: 0;
+}
+.avn-grid-border > .avn-grid-small:last-child > * {
+  border-bottom-width: 0;
+}
+@media (min-width: 720px) {
+  .avn-grid-border > .avn-grid-medium > * {
+    border-right-width: 1px;
+  }
+  .avn-grid-border > .avn-grid-medium > :last-child {
+    border-right-width: 0;
+  }
+  .avn-grid-border > .avn-grid-medium:last-child > * {
+    border-bottom-width: 0;
+  }
+}
+@media (min-width: 960px) {
+  .avn-grid-border > .avn-grid-large > * {
+    border-right-width: 1px;
+  }
+  .avn-grid-border > .avn-grid-large > :last-child {
+    border-right-width: 0;
+  }
+  .avn-grid-border > .avn-grid-large:last-child > * {
+    border-bottom-width: 0;
+  }
+}
+/* grid spacing and border */
+.avn-grid-spacing.avn-grid-border,
+.avn-grid-spacing-large.avn-grid-border {
+  box-shadow: none;
+  border-width: 0;
+  background-color: transparent !important;
+}
+.avn-grid-spacing.avn-grid-border > .avn-grid > *,
+.avn-grid-spacing-large.avn-grid-border > .avn-grid > * {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075), 1px 1px 0 rgba(255, 255, 255, 0.15) inset;
+  border-width: 1px !important;
+}
+.avn-grid-spacing.avn-grid-radius-full > .avn-grid > *,
+.avn-grid-spacing-large.avn-grid-radius-full > .avn-grid > * {
+  border-radius: 8px;
+}
+/* grid embedded in area */
+.avn-grid-embedded.avn-grid-border {
+  box-shadow: none !important;
+  border-radius: inherit;
+  border-width: 0;
+  margin: 0;
+}
+.avn-grid-embedded.avn-grid-spacing,
+.avn-grid-embedded.avn-grid-spacing-large {
+  overflow: hidden;
+}
+/* grid-header */
+.avn-grid-header {
+  margin: -3px 0 0.4em 0 !important;
+  padding: 0 6px 3px 6px;
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+  background-image: -webkit-radial-gradient(bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 50%);
+  background-image: radial-gradient(bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 50%);
+}
+.avn-grid-border .avn-grid-header {
+  margin-left: -6px !important;
+  margin-right: -6px !important;
+}
+/* grid spacing with cell -fill or -nofill */
+.avn-grid-spacing > .avn-grid > * > .avn-grid-fill {
+  margin-bottom: 1em;
+}
+.avn-grid-spacing-large > .avn-grid > * > .avn-grid-fill {
+  margin-bottom: 1.5em;
+}
+.avn-grid-spacing > .avn-grid > .avn-grid-fill,
+.avn-grid-spacing-large > .avn-grid > .avn-grid-fill,
+.avn-grid-spacing > .avn-grid > * > .avn-grid-fill,
+.avn-grid-spacing-large > .avn-grid > * > .avn-grid-fill {
+  padding: 0.75em 1em;
+  background-image: -webkit-radial-gradient(top left, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 25%);
+  background-image: radial-gradient(top left, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 25%);
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075), 1px 1px 0 rgba(255, 255, 255, 0.15) inset;
+  border: 1px solid #dddddd;
+}
+.avn-grid-spacing > .avn-grid > .avn-grid-fill > *:first-child,
+.avn-grid-spacing-large > .avn-grid > .avn-grid-fill > *:first-child,
+.avn-grid-spacing > .avn-grid > * > .avn-grid-fill:first-child,
+.avn-grid-spacing-large > .avn-grid > * > .avn-grid-fill:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+.avn-grid-spacing > .avn-grid > .avn-grid-fill > *:last-child,
+.avn-grid-spacing-large > .avn-grid > .avn-grid-fill > *:last-child,
+.avn-grid-spacing > .avn-grid > * > .avn-grid-fill:last-child,
+.avn-grid-spacing-large > .avn-grid > * > .avn-grid-fill:last-child {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+.avn-grid-spacing > .avn-grid > * > .avn-grid-fill:last-child,
+.avn-grid-spacing-large > .avn-grid > * > .avn-grid-fill:last-child {
+  margin-bottom: 0;
+}
+.avn-grid-spacing.avn-grid-radius-full > .avn-grid > * > .avn-grid-fill,
+.avn-grid-spacing-large.avn-grid-radius-full > .avn-grid > * > .avn-grid-fill {
+  border-radius: inherit;
+}
+.avn-grid-spacing.avn-grid-border .avn-grid-nofill,
+.avn-grid-spacing-large.avn-grid-border .avn-grid-nofill {
+  box-shadow: none !important;
+  border: none !important;
+  background: none !important;
+  text-shadow: none;
+  color: #737373;
+}
+/* grid noshad */
+.avn-grid-noshad {
+  box-shadow: none !important;
+}
+.avn-grid-noshad > .avn-grid > *,
+.avn-grid-noshad > .avn-grid > * > .avn-grid-fill {
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.15) inset !important;
+}
+/* grid-aside */
+.avn-grid-border > .avn-grid > .avn-grid-aside {
+  padding: 0 !important;
+}
+.avn-grid-border > .avn-grid > .avn-grid-aside > * {
+  border-width: 1px 0 0 0;
+  border-style: solid;
+  border-color: inherit;
+  background-color: inherit;
+  box-shadow: inherit;
+  padding: 0.75em 1em;
+  background-image: -webkit-radial-gradient(top left, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 25%);
+  background-image: radial-gradient(top left, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0) 25%);
+  background-position: left top;
+  background-repeat: no-repeat;
+}
+.avn-grid-border > .avn-grid > .avn-grid-aside > *:first-child {
+  border-top-width: 0;
+  border-top-left-radius: inherit !important;
+  border-top-right-radius: inherit !important;
+}
+.avn-grid-border > .avn-grid > .avn-grid-aside > *:last-child {
+  border-bottom-left-radius: inherit !important;
+  border-bottom-right-radius: inherit !important;
+}
+.avn-grid-border > .avn-grid-small > .avn-grid-aside-left > * {
+  margin-right: -1px;
+  border-right-width: 1px;
+}
+.avn-grid-border > .avn-grid-small > .avn-grid-aside-right > * {
+  margin-left: -1px;
+  border-left-width: 1px;
+}
+.avn-grid-border > .avn-grid-small > .avn-grid-aside-right {
+  border-left-width: 1px;
+}
+.avn-grid-border > .avn-grid-small > .avn-grid-main {
+  border-right-width: 0;
+}
+.avn-grid-border > .avn-grid-small > .avn-grid-main + .avn-grid-main {
+  border-left-width: 1px;
+}
+@media (min-width: 720px) {
+  .avn-grid-border > .avn-grid-medium > .avn-grid-aside-left > * {
+    margin-right: -1px;
+    border-right-width: 1px;
+  }
+  .avn-grid-border > .avn-grid-medium > .avn-grid-aside-right > * {
+    margin-left: -1px;
+    border-left-width: 1px;
+  }
+  .avn-grid-border > .avn-grid-medium > .avn-grid-aside-right {
+    border-left-width: 1px;
+  }
+  .avn-grid-border > .avn-grid-medium > .avn-grid-main {
+    border-right-width: 0;
+  }
+  .avn-grid-border > .avn-grid-medium > .avn-grid-main + .avn-grid-main {
+    border-left-width: 1px;
+  }
+}
+@media (min-width: 960px) {
+  .avn-grid-border > .avn-grid-large > .avn-grid-aside-left > * {
+    margin-right: -1px;
+    border-right-width: 1px;
+  }
+  .avn-grid-border > .avn-grid-large > .avn-grid-aside-right > * {
+    margin-left: -1px;
+    border-left-width: 1px;
+  }
+  .avn-grid-border > .avn-grid-large > .avn-grid-aside-right {
+    border-left-width: 1px;
+  }
+  .avn-grid-border > .avn-grid-large > .avn-grid-main {
+    border-right-width: 0;
+  }
+  .avn-grid-border > .avn-grid-large > .avn-grid-main + .avn-grid-main {
+    border-left-width: 1px;
+  }
+}
+.avn-grid-border > .avn-grid > .avn-grid-aside-left,
+.avn-grid-border > .avn-grid > .avn-grid-aside-left > * {
+  box-shadow: -1px 1px 0 rgba(255, 255, 255, 0.15) inset;
+  background-image: -webkit-linear-gradient(right, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0) 15px) !important;
+  background-image: linear-gradient(right, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0) 15px) !important;
+}
+.avn-grid-border > .avn-grid > .avn-grid-aside-right,
+.avn-grid-border > .avn-grid > .avn-grid-aside-right > * {
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.15) inset;
+  background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0) 15px) !important;
+  background-image: linear-gradient(left, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0) 15px) !important;
+}
+@media (max-width: 719px) {
+  .avn-grid-border > .avn-grid.avn-grid-medium > .avn-grid-aside,
+  .avn-grid-border > .avn-grid.avn-grid-medium > .avn-grid-aside > * {
+    box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.15) inset;
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0) 15px) !important;
+    background-image: linear-gradient(top, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0) 15px) !important;
+  }
+  .avn-grid-border > .avn-grid.avn-grid-medium > .avn-grid-aside-right > :first-child {
+    border-top-width: 1px;
+    margin-top: -1px;
+  }
+}
+@media (max-width: 959px) {
+  .avn-grid-border > .avn-grid.avn-grid-large > .avn-grid-aside,
+  .avn-grid-border > .avn-grid.avn-grid-large > .avn-grid-aside > * {
+    box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.15) inset;
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0) 15px) !important;
+    background-image: linear-gradient(top, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0) 15px) !important;
+  }
+  .avn-grid-border > .avn-grid.avn-grid-large > .avn-grid-aside-right > :first-child {
+    border-top-width: 1px;
+    margin-top: -1px;
+  }
+}
+.avn-grid-border.avn-grid-spacing > .avn-grid > .avn-grid-aside > *,
+.avn-grid-border.avn-grid-spacing-large > .avn-grid > .avn-grid-aside > * {
+  margin-left: 0;
+  margin-right: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+}
+.avn-grid-border.avn-grid-spacing > .avn-grid > .avn-grid-aside-right > :first-child,
+.avn-grid-border.avn-grid-spacing-large > .avn-grid > .avn-grid-aside-right > :first-child {
+  border-top-width: 0;
+  margin-top: 0;
+}
+.avn-grid-border.avn-grid-spacing > .avn-grid > .avn-grid-aside-left,
+.avn-grid-border.avn-grid-spacing-large > .avn-grid > .avn-grid-aside-left {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075), -1px 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+.avn-grid-border.avn-grid-spacing > .avn-grid > .avn-grid-aside-right,
+.avn-grid-border.avn-grid-spacing-large > .avn-grid > .avn-grid-aside-right {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075), 1px 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+/* grid-line */
+.avn-grid-line > * {
+  padding: 1.5em 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.avn-grid-line > :first-child {
+  padding-top: 0;
+  border-top: none !important;
+}
+.avn-grid-line > :last-child {
+  padding-bottom: 0;
+  border-bottom: none !important;
+}
+.avn-grid-line.avn-grid-small > * {
+  border: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0 1.5em;
+}
+.avn-grid-line.avn-grid-small > :first-child {
+  border-left: none !important;
+  padding-left: 0 !important;
+}
+.avn-grid-line.avn-grid-small > :last-child {
+  border-right: none !important;
+  padding-right: 0 !important;
+}
+@media (min-width: 720px) {
+  .avn-grid-line.avn-grid-medium > * {
+    border: none;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0 1.5em;
+  }
+  .avn-grid-line.avn-grid-medium > :first-child {
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+  .avn-grid-line.avn-grid-medium > :last-child {
+    border-right: none !important;
+    padding-right: 0 !important;
+  }
+}
+@media (min-width: 960px) {
+  .avn-grid-line.avn-grid-large > * {
+    border: none;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0 1.5em;
+  }
+  .avn-grid-line.avn-grid-large > :first-child {
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+  .avn-grid-line.avn-grid-large > :last-child {
+    border-right: none !important;
+    padding-right: 0 !important;
+  }
+}
+/* ----
+   drop
+   ---- */
+.avn-drop-height {
+  padding: 0 1em;
+  height: 3em;
+  line-height: 3em;
+}
+.avn-drop-height-small {
+  padding: 0 1em;
+  height: 2.5em;
+  line-height: 2.5em;
+}
+.avn-drop,
+.avn-drop > * {
+  position: relative;
+  padding: 0 !important;
+}
+.avn-drop > * > :first-child {
+  position: relative;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 1em;
+  height: 3em;
+  line-height: 3em;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+.avn-drop > * > :last-child {
+  position: absolute;
+  left: -9999px;
+  padding: 0.75em 1em;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+.avn-drop.avn-hover-wrap > :hover > :last-child,
+.avn-drop > .avn-hover-jsOver > :last-child {
+  position: relative;
+  left: auto;
+}
+.avn-drop > .avn-drop-empty > :last-child {
+  position: absolute !important;
+  left: -9999px !important;
+}
+.avn-drop-small > * > :first-child {
+  padding: 0 1em;
+  height: 2.5em;
+  line-height: 2.5em;
+}
+.avn-drop-small > * > :last-child {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+.avn-drop-fill > * {
+  border: 1px solid transparent;
+}
+.avn-drop-fill.avn-hover-wrap > :hover,
+.avn-drop-fill > .avn-hover-jsOver {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075);
+  border-color: #dddddd;
+  background-color: #ffffff;
+}
+.avn-drop-fill.avn-hover-wrap > :hover > *,
+.avn-drop-fill > .avn-hover-jsOver > * {
+  -webkit-transition: opacity 0s ease !important;
+          transition: opacity 0s ease !important;
+}
+.avn-drop > .avn-hover-jsOver > :first-child,
+.avn-drop > .avn-hover-jsOut > :first-child {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+}
+.avn-grid-wrap > .avn-drop.avn-hover-wrap > :hover > :first-child,
+.avn-grid-wrap > .avn-drop > .avn-hover-jsOver > :first-child {
+  background-image: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+  background-image: linear-gradient(bottom, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+}
+.avn-grid-wrap > .avn-drop.avn-hover-wrap > :hover > :last-child,
+.avn-grid-wrap > .avn-drop > .avn-hover-jsOver > :last-child {
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: inherit;
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small > * > :first-child {
+  border-radius: inherit;
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small > * > :last-child {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075);
+  border-width: 1px;
+  border-style: solid;
+  border-color: inherit;
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-hover-wrap > :hover > *,
+.avn-grid-wrap > .avn-drop.avn-grid-small > .avn-hover-jsOver > * {
+  background-color: inherit;
+  background-repeat: repeat-x;
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-hover-wrap > :hover > :first-child,
+.avn-grid-wrap > .avn-drop.avn-grid-small > .avn-hover-jsOver > :first-child {
+  margin-top: -1px;
+}
+.avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-small > * {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-small.avn-hover-wrap > :hover > :first-child,
+.avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-small > .avn-hover-jsOver > :first-child {
+  top: 1px;
+  border-bottom: 1px solid transparent;
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+  background-image: linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+}
+.avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-small.avn-hover-wrap > :hover > :last-child,
+.avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-small > .avn-hover-jsOver > :last-child {
+  top: 0;
+  margin-top: 3em;
+  border-radius: 0 0 8px 8px;
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+}
+.avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-small > * {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-small.avn-hover-wrap > :hover > :first-child,
+.avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-small > .avn-hover-jsOver > :first-child {
+  bottom: 0;
+  border-top: 1px solid transparent;
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+}
+.avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-small.avn-hover-wrap > :hover > :last-child,
+.avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-small > .avn-hover-jsOver > :last-child {
+  bottom: 0;
+  margin-bottom: 3em;
+  border-radius: 8px 8px 0 0;
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+  background-image: linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small > .avn-drop-empty > :first-child {
+  margin-top: 0 !important;
+  top: 0 !important;
+  border: none !important;
+}
+.avn-grid-wrap.avn-drop-down > .avn-drop-small.avn-drop.avn-grid-small.avn-hover-wrap > :hover > :last-child,
+.avn-grid-wrap.avn-drop-down > .avn-drop-small.avn-drop.avn-grid-small > .avn-hover-jsOver > :last-child {
+  margin-top: 2.5em;
+}
+.avn-grid-wrap.avn-drop-up > .avn-drop-small.avn-drop.avn-grid-small.avn-hover-wrap > :hover > :last-child,
+.avn-grid-wrap.avn-drop-up > .avn-drop-small.avn-drop.avn-grid-small > .avn-hover-jsOver > :last-child {
+  margin-bottom: 2.5em;
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed,
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed-full {
+  position: static;
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed > *,
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed-full > * {
+  position: static;
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed.avn-hover-wrap > :hover > :last-child,
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed-full.avn-hover-wrap > :hover > :last-child,
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed > .avn-hover-jsOver > :last-child,
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed-full > .avn-hover-jsOver > :last-child {
+  -webkit-transition: opacity 0s;
+          transition: opacity 0s;
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed-full > * > :last-child {
+  width: auto;
+}
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed-full.avn-hover-wrap > :hover > :last-child,
+.avn-grid-wrap > .avn-drop.avn-grid-small.avn-drop-fixed-full > .avn-hover-jsOver > :last-child {
+  left: -1px;
+  right: -1px;
+}
+.avn-drop.avn-grid-small > * > :first-child {
+  z-index: 99;
+}
+.avn-drop.avn-grid-small > * > :last-child {
+  z-index: 98;
+  opacity: 0;
+  -webkit-transition: opacity 0s;
+          transition: opacity 0s;
+  width: 16em;
+}
+.avn-drop.avn-grid-small.avn-hover-wrap > :hover > :last-child,
+.avn-drop.avn-grid-small > .avn-hover-jsOver > :last-child {
+  position: absolute;
+  opacity: 1;
+  -webkit-transition: opacity .250s ease .125s;
+          transition: opacity .250s ease .125s;
+}
+.avn-drop.avn-grid-small.avn-drop-right.avn-hover-wrap > :hover > :last-child,
+.avn-drop.avn-grid-small.avn-drop-right > .avn-hover-jsOver > :last-child {
+  left: -1px;
+  right: auto;
+}
+.avn-drop.avn-grid-small.avn-drop-left.avn-hover-wrap > :hover > :last-child,
+.avn-drop.avn-grid-small.avn-drop-left > .avn-hover-jsOver > :last-child {
+  right: -1px;
+  left: auto;
+}
+.avn-drop.avn-grid-small.avn-hover-wrap > :hover.avn-drop-right > :last-child,
+.avn-drop.avn-grid-small > .avn-hover-jsOver.avn-drop-right > :last-child {
+  left: -1px;
+  right: auto;
+}
+.avn-drop.avn-grid-small.avn-hover-wrap > :hover.avn-drop-left > :last-child,
+.avn-drop.avn-grid-small > .avn-hover-jsOver.avn-drop-left > :last-child {
+  right: -1px;
+  left: auto;
+}
+@media (min-width: 720px) {
+  .avn-grid-wrap > .avn-drop.avn-grid-medium > * > :first-child {
+    border-radius: inherit;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-medium > * > :last-child {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075);
+    border-width: 1px;
+    border-style: solid;
+    border-color: inherit;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-hover-wrap > :hover > *,
+  .avn-grid-wrap > .avn-drop.avn-grid-medium > .avn-hover-jsOver > * {
+    background-color: inherit;
+    background-repeat: repeat-x;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-hover-wrap > :hover > :first-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-medium > .avn-hover-jsOver > :first-child {
+    margin-top: -1px;
+  }
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-medium > * {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-medium.avn-hover-wrap > :hover > :first-child,
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-medium > .avn-hover-jsOver > :first-child {
+    top: 1px;
+    border-bottom: 1px solid transparent;
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+    background-image: linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+  }
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-medium.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-medium > .avn-hover-jsOver > :last-child {
+    top: 0;
+    margin-top: 3em;
+    border-radius: 0 0 8px 8px;
+    background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+    background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+  }
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-medium > * {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-medium.avn-hover-wrap > :hover > :first-child,
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-medium > .avn-hover-jsOver > :first-child {
+    bottom: 0;
+    border-top: 1px solid transparent;
+    background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+    background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+  }
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-medium.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-medium > .avn-hover-jsOver > :last-child {
+    bottom: 0;
+    margin-bottom: 3em;
+    border-radius: 8px 8px 0 0;
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+    background-image: linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-medium > .avn-drop-empty > :first-child {
+    margin-top: 0 !important;
+    top: 0 !important;
+    border: none !important;
+  }
+  .avn-grid-wrap.avn-drop-down > .avn-drop-small.avn-drop.avn-grid-medium.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap.avn-drop-down > .avn-drop-small.avn-drop.avn-grid-medium > .avn-hover-jsOver > :last-child {
+    margin-top: 2.5em;
+  }
+  .avn-grid-wrap.avn-drop-up > .avn-drop-small.avn-drop.avn-grid-medium.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap.avn-drop-up > .avn-drop-small.avn-drop.avn-grid-medium > .avn-hover-jsOver > :last-child {
+    margin-bottom: 2.5em;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed,
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed-full {
+    position: static;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed > *,
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed-full > * {
+    position: static;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed-full.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed > .avn-hover-jsOver > :last-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed-full > .avn-hover-jsOver > :last-child {
+    -webkit-transition: opacity 0s;
+            transition: opacity 0s;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed-full > * > :last-child {
+    width: auto;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed-full.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-medium.avn-drop-fixed-full > .avn-hover-jsOver > :last-child {
+    left: -1px;
+    right: -1px;
+  }
+  .avn-drop.avn-grid-medium > * > :first-child {
+    z-index: 99;
+  }
+  .avn-drop.avn-grid-medium > * > :last-child {
+    z-index: 98;
+    opacity: 0;
+    -webkit-transition: opacity 0s;
+            transition: opacity 0s;
+    width: 16em;
+  }
+  .avn-drop.avn-grid-medium.avn-hover-wrap > :hover > :last-child,
+  .avn-drop.avn-grid-medium > .avn-hover-jsOver > :last-child {
+    position: absolute;
+    opacity: 1;
+    -webkit-transition: opacity .250s ease .125s;
+            transition: opacity .250s ease .125s;
+  }
+  .avn-drop.avn-grid-medium.avn-drop-right.avn-hover-wrap > :hover > :last-child,
+  .avn-drop.avn-grid-medium.avn-drop-right > .avn-hover-jsOver > :last-child {
+    left: -1px;
+    right: auto;
+  }
+  .avn-drop.avn-grid-medium.avn-drop-left.avn-hover-wrap > :hover > :last-child,
+  .avn-drop.avn-grid-medium.avn-drop-left > .avn-hover-jsOver > :last-child {
+    right: -1px;
+    left: auto;
+  }
+  .avn-drop.avn-grid-medium.avn-hover-wrap > :hover.avn-drop-right > :last-child,
+  .avn-drop.avn-grid-medium > .avn-hover-jsOver.avn-drop-right > :last-child {
+    left: -1px;
+    right: auto;
+  }
+  .avn-drop.avn-grid-medium.avn-hover-wrap > :hover.avn-drop-left > :last-child,
+  .avn-drop.avn-grid-medium > .avn-hover-jsOver.avn-drop-left > :last-child {
+    right: -1px;
+    left: auto;
+  }
+}
+@media (min-width: 960px) {
+  .avn-grid-wrap > .avn-drop.avn-grid-large > * > :first-child {
+    border-radius: inherit;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-large > * > :last-child {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075);
+    border-width: 1px;
+    border-style: solid;
+    border-color: inherit;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-hover-wrap > :hover > *,
+  .avn-grid-wrap > .avn-drop.avn-grid-large > .avn-hover-jsOver > * {
+    background-color: inherit;
+    background-repeat: repeat-x;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-hover-wrap > :hover > :first-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-large > .avn-hover-jsOver > :first-child {
+    margin-top: -1px;
+  }
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-large > * {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-large.avn-hover-wrap > :hover > :first-child,
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-large > .avn-hover-jsOver > :first-child {
+    top: 1px;
+    border-bottom: 1px solid transparent;
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+    background-image: linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+  }
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-large.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap.avn-drop-down > .avn-drop.avn-grid-large > .avn-hover-jsOver > :last-child {
+    top: 0;
+    margin-top: 3em;
+    border-radius: 0 0 8px 8px;
+    background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+    background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+  }
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-large > * {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-large.avn-hover-wrap > :hover > :first-child,
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-large > .avn-hover-jsOver > :first-child {
+    bottom: 0;
+    border-top: 1px solid transparent;
+    background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+    background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 0.75em);
+  }
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-large.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap.avn-drop-up > .avn-drop.avn-grid-large > .avn-hover-jsOver > :last-child {
+    bottom: 0;
+    margin-bottom: 3em;
+    border-radius: 8px 8px 0 0;
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+    background-image: linear-gradient(top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 0.75em);
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-large > .avn-drop-empty > :first-child {
+    margin-top: 0 !important;
+    top: 0 !important;
+    border: none !important;
+  }
+  .avn-grid-wrap.avn-drop-down > .avn-drop-small.avn-drop.avn-grid-large.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap.avn-drop-down > .avn-drop-small.avn-drop.avn-grid-large > .avn-hover-jsOver > :last-child {
+    margin-top: 2.5em;
+  }
+  .avn-grid-wrap.avn-drop-up > .avn-drop-small.avn-drop.avn-grid-large.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap.avn-drop-up > .avn-drop-small.avn-drop.avn-grid-large > .avn-hover-jsOver > :last-child {
+    margin-bottom: 2.5em;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed,
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed-full {
+    position: static;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed > *,
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed-full > * {
+    position: static;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed-full.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed > .avn-hover-jsOver > :last-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed-full > .avn-hover-jsOver > :last-child {
+    -webkit-transition: opacity 0s;
+            transition: opacity 0s;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed-full > * > :last-child {
+    width: auto;
+  }
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed-full.avn-hover-wrap > :hover > :last-child,
+  .avn-grid-wrap > .avn-drop.avn-grid-large.avn-drop-fixed-full > .avn-hover-jsOver > :last-child {
+    left: -1px;
+    right: -1px;
+  }
+  .avn-drop.avn-grid-large > * > :first-child {
+    z-index: 99;
+  }
+  .avn-drop.avn-grid-large > * > :last-child {
+    z-index: 98;
+    opacity: 0;
+    -webkit-transition: opacity 0s;
+            transition: opacity 0s;
+    width: 16em;
+  }
+  .avn-drop.avn-grid-large.avn-hover-wrap > :hover > :last-child,
+  .avn-drop.avn-grid-large > .avn-hover-jsOver > :last-child {
+    position: absolute;
+    opacity: 1;
+    -webkit-transition: opacity .250s ease .125s;
+            transition: opacity .250s ease .125s;
+  }
+  .avn-drop.avn-grid-large.avn-drop-right.avn-hover-wrap > :hover > :last-child,
+  .avn-drop.avn-grid-large.avn-drop-right > .avn-hover-jsOver > :last-child {
+    left: -1px;
+    right: auto;
+  }
+  .avn-drop.avn-grid-large.avn-drop-left.avn-hover-wrap > :hover > :last-child,
+  .avn-drop.avn-grid-large.avn-drop-left > .avn-hover-jsOver > :last-child {
+    right: -1px;
+    left: auto;
+  }
+  .avn-drop.avn-grid-large.avn-hover-wrap > :hover.avn-drop-right > :last-child,
+  .avn-drop.avn-grid-large > .avn-hover-jsOver.avn-drop-right > :last-child {
+    left: -1px;
+    right: auto;
+  }
+  .avn-drop.avn-grid-large.avn-hover-wrap > :hover.avn-drop-left > :last-child,
+  .avn-drop.avn-grid-large > .avn-hover-jsOver.avn-drop-left > :last-child {
+    right: -1px;
+    left: auto;
+  }
+}
+.avn-drop-down {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.avn-drop-up {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.avn-drop-down.avn-grid-spacing.avn-grid-radius,
+.avn-drop-up.avn-grid-spacing.avn-grid-radius,
+.avn-drop-down.avn-grid-spacing.avn-grid-radius-full,
+.avn-drop-up.avn-grid-spacing.avn-grid-radius-full {
+  border-radius: 8px;
+}
+.avn-drop.avn-drop-fixed-full.avn-grid-width-auto.avn-hover-wrap > :hover:last-child > :first-child,
+.avn-drop.avn-drop-fixed-full.avn-grid-width-auto > .avn-hover-jsOver:last-child > :first-child,
+.avn-drop.avn-drop-fixed-full.avn-grid-width-auto > .avn-hover-jsOut:hover:last-child > :first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-right-color: inherit;
+}
+.avn-grid-wrap > .avn-drop > :hover,
+.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #f7f7f7;
+}
+/* ----
+   menu
+   ---- */
+.avn-menu-wrap {
+  margin: 1.5em 0;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.075);
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  color: #737373;
+  text-shadow: none;
+  z-index: 1;
+}
+.avn-menu-wrap .avn-menu-wrap {
+  z-index: 2;
+}
+.avn-menu-wrap .avn-menu {
+  margin-top: 0;
+}
+.avn-menu {
+  position: relative;
+  margin-bottom: 0;
+  padding: 0;
+  border-color: inherit;
+  list-style: none;
+}
+.avn-menu > * {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border-top-width: 1px;
+  border-top-style: dotted;
+  border-top-color: inherit;
+  -webkit-transition: background-color 0.25s ease;
+          transition: background-color 0.25s ease;
+}
+.avn-menu > :first-child {
+  border-top: none;
+}
+.avn-menu > * > :first-child {
+  display: block;
+  padding: 0.75em 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.avn-menu + .avn-menu {
+  margin-top: 0;
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+.avn-menu .avn-menu,
+.avn-menu .avn-menu-wrap {
+  margin: 0;
+}
+@media (max-width: 959px) {
+  .avn-menu-large.avn-menu .avn-menu > * {
+    text-indent: 30px;
+    font-size: 0.85em;
+  }
+  .avn-menu-large.avn-menu .avn-menu .avn-menu > * {
+    text-indent: 60px;
+    font-size: 1em;
+  }
+  .avn-menu-large.avn-menu .avn-menu .avn-menu .avn-menu > * {
+    text-indent: 90px;
+  }
+  .avn-menu-large.avn-menu .avn-menu-wrap {
+    margin: 0;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border-width: 0 !important;
+    background-color: rgba(255, 255, 255, 0) !important;
+  }
+  .avn-menu-large.avn-menu > * > :first-child:hover,
+  .avn-menu-large.avn-menu .avn-menu > * > :first-child:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .avn-menu-large.avn-menu.avn-hover-wrap > * > a:first-child:focus,
+  .avn-menu-large.avn-menu > .avn-hover-jsOver > a:first-child,
+  .avn-menu-large.avn-menu.avn-hover-wrap .avn-menu > * > a:first-child:focus,
+  .avn-menu-large.avn-menu .avn-menu > .avn-hover-jsOver > a:first-child {
+    background-color: rgba(0, 0, 0, 0.033);
+  }
+}
+@media (min-width: 960px) {
+  .avn-menu-large.avn-menu .avn-menu-wrap {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    width: 16em;
+    opacity: 0;
+    -webkit-transition: opacity .25s ease .125s;
+            transition: opacity .25s ease .125s;
+  }
+  .avn-menu-large.avn-menu > :hover,
+  .avn-menu-large.avn-menu .avn-menu > :hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .avn-menu-large.avn-menu > .avn-hover-jsOver,
+  .avn-menu-large.avn-menu .avn-menu > .avn-hover-jsOver {
+    background-color: rgba(0, 0, 0, 0.033);
+  }
+  .avn-menu-large.avn-menu.avn-hover-wrap > :hover > .avn-menu-wrap,
+  .avn-menu-large.avn-menu > .avn-hover-jsOver > .avn-menu-wrap,
+  .avn-menu-large.avn-menu.avn-hover-wrap .avn-menu > :hover > .avn-menu-wrap,
+  .avn-menu-large.avn-menu .avn-menu > .avn-hover-jsOver > .avn-menu-wrap {
+    top: 0.75em;
+    left: auto;
+    right: -15.5em;
+    opacity: 1;
+  }
+  .avn-menu-large.avn-menu.avn-hover-wrap > :hover > .avn-menu-left,
+  .avn-menu-large.avn-menu > .avn-hover-jsOver > .avn-menu-left,
+  .avn-menu-large.avn-menu.avn-hover-wrap .avn-menu > :hover > .avn-menu-left,
+  .avn-menu-large.avn-menu .avn-menu > .avn-hover-jsOver > .avn-menu-left {
+    top: 0.75em;
+    left: -15.5em;
+    right: auto;
+  }
+  .avn-menu-large.avn-menu.avn-hover-wrap > :hover > .avn-menu-up,
+  .avn-menu-large.avn-menu > .avn-hover-jsOver > .avn-menu-up,
+  .avn-menu-large.avn-menu.avn-hover-wrap .avn-menu > :hover > .avn-menu-up,
+  .avn-menu-large.avn-menu .avn-menu > .avn-hover-jsOver > .avn-menu-up {
+    top: auto;
+    bottom: 0.75em;
+  }
+}
+@media (max-width: 719px) {
+  .avn-menu-medium.avn-menu .avn-menu > * {
+    text-indent: 30px;
+    font-size: 0.85em;
+  }
+  .avn-menu-medium.avn-menu .avn-menu .avn-menu > * {
+    text-indent: 60px;
+    font-size: 1em;
+  }
+  .avn-menu-medium.avn-menu .avn-menu .avn-menu .avn-menu > * {
+    text-indent: 90px;
+  }
+  .avn-menu-medium.avn-menu .avn-menu-wrap {
+    margin: 0;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border-width: 0 !important;
+    background-color: rgba(255, 255, 255, 0) !important;
+  }
+  .avn-menu-medium.avn-menu > * > :first-child:hover,
+  .avn-menu-medium.avn-menu .avn-menu > * > :first-child:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .avn-menu-medium.avn-menu.avn-hover-wrap > * > a:first-child:focus,
+  .avn-menu-medium.avn-menu > .avn-hover-jsOver > a:first-child,
+  .avn-menu-medium.avn-menu.avn-hover-wrap .avn-menu > * > a:first-child:focus,
+  .avn-menu-medium.avn-menu .avn-menu > .avn-hover-jsOver > a:first-child {
+    background-color: rgba(0, 0, 0, 0.033);
+  }
+}
+@media (min-width: 720px) {
+  .avn-menu-medium.avn-menu .avn-menu-wrap {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    width: 16em;
+    opacity: 0;
+    -webkit-transition: opacity .25s ease .125s;
+            transition: opacity .25s ease .125s;
+  }
+  .avn-menu-medium.avn-menu > :hover,
+  .avn-menu-medium.avn-menu .avn-menu > :hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .avn-menu-medium.avn-menu > .avn-hover-jsOver,
+  .avn-menu-medium.avn-menu .avn-menu > .avn-hover-jsOver {
+    background-color: rgba(0, 0, 0, 0.033);
+  }
+  .avn-menu-medium.avn-menu.avn-hover-wrap > :hover > .avn-menu-wrap,
+  .avn-menu-medium.avn-menu > .avn-hover-jsOver > .avn-menu-wrap,
+  .avn-menu-medium.avn-menu.avn-hover-wrap .avn-menu > :hover > .avn-menu-wrap,
+  .avn-menu-medium.avn-menu .avn-menu > .avn-hover-jsOver > .avn-menu-wrap {
+    top: 0.75em;
+    left: auto;
+    right: -15.5em;
+    opacity: 1;
+  }
+  .avn-menu-medium.avn-menu.avn-hover-wrap > :hover > .avn-menu-left,
+  .avn-menu-medium.avn-menu > .avn-hover-jsOver > .avn-menu-left,
+  .avn-menu-medium.avn-menu.avn-hover-wrap .avn-menu > :hover > .avn-menu-left,
+  .avn-menu-medium.avn-menu .avn-menu > .avn-hover-jsOver > .avn-menu-left {
+    top: 0.75em;
+    left: -15.5em;
+    right: auto;
+  }
+  .avn-menu-medium.avn-menu.avn-hover-wrap > :hover > .avn-menu-up,
+  .avn-menu-medium.avn-menu > .avn-hover-jsOver > .avn-menu-up,
+  .avn-menu-medium.avn-menu.avn-hover-wrap .avn-menu > :hover > .avn-menu-up,
+  .avn-menu-medium.avn-menu .avn-menu > .avn-hover-jsOver > .avn-menu-up {
+    top: auto;
+    bottom: 0.75em;
+  }
+}
+.avn-menu-wrap {
+  border-radius: 8px;
+}
+.avn-menu {
+  border-radius: inherit;
+}
+.avn-menu + .avn-menu {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.avn-menu:first-child > :first-child,
+.avn-menu:first-child > :first-child > :first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+.avn-menu:last-child > :last-child,
+.avn-menu:last-child > :last-child > :first-child {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+/* ------
+   Toggle
+   ------ */
+@media (max-width: 959px) {
+  .avn-toggle-large .avn-toggle-target {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    -webkit-transition: opacity .25s ease;
+            transition: opacity .25s ease;
+  }
+  .avn-toggle-large.avn-hover:hover .avn-toggle-target,
+  .avn-toggle-large.avn-hover-jsOver .avn-toggle-target {
+    position: relative;
+    left: 0;
+    opacity: 1;
+  }
+}
+@media (min-width: 960px) {
+  .avn-toggle-large .avn-toggle-source {
+    display: none;
+  }
+}
+@media (max-width: 719px) {
+  .avn-toggle-medium .avn-toggle-target {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    -webkit-transition: opacity .25s ease;
+            transition: opacity .25s ease;
+  }
+  .avn-toggle-medium.avn-hover:hover .avn-toggle-target,
+  .avn-toggle-medium.avn-hover-jsOver .avn-toggle-target {
+    position: relative;
+    left: 0;
+    opacity: 1;
+  }
+}
+@media (min-width: 720px) {
+  .avn-toggle-medium .avn-toggle-source {
+    display: none;
+  }
+}
+/* ---
+   app
+   --- */
+html.avn-app,
+html.avn-app body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.avn-app .avn-app-top,
+.avn-app .avn-app-bottom,
+.avn-app .avn-app-main {
+  position: absolute;
+  width: 100%;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box
+  /* Only IE8+ */
+}
+.avn-app-top {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+.avn-app-bottom {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+.avn-app-main {
+  overflow: auto;
+}
+.avn-app .avn-app-top {
+  z-index: 3;
+  left: 0;
+  top: 0;
+}
+.avn-app .avn-app-bottom {
+  z-index: 2;
+  left: 0;
+  bottom: 0;
+}
+.avn-app .avn-app-main {
+  z-index: 1;
+  top: 30px;
+  bottom: 30px;
+}
+html.avn-app.avn-app-hide-top .avn-app-top,
+html.avn-app.avn-app-hide-bottom .avn-app-bottom {
+  display: none;
+}
+html.avn-app.avn-app-hide-top .avn-app-main {
+  top: 0;
+}
+html.avn-app.avn-app-hide-bottom .avn-app-main {
+  bottom: 0;
+}
+/* app and area-fill */
+html.avn-app.avn-app-hide-top .avn-area-fill.avn-app-main {
+  border-top: none;
+}
+/* ----
+   flap
+   ---- */
+.avn-flap-wrap {
+  position: relative;
+}
+.avn-flap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: width .3s ease .1s, height .3s ease .1s;
+  transition: width .3s ease .1s, height .3s ease .1s;
+  border-radius: inherit;
+  background-color: rgba(136, 136, 136, 0.1);
+}
+.avn-flap-top {
+  top: 0;
+  bottom: auto !important;
+  left: 0;
+}
+.avn-flap-bottom {
+  bottom: 0;
+  top: auto !important;
+  left: 0;
+}
+.avn-flap-left {
+  left: 0;
+  right: auto !important;
+  top: 0;
+}
+.avn-flap-right {
+  right: 0;
+  left: auto !important;
+  top: 0;
+}
+.avn-flap-wrap:hover .avn-flap-top,
+.avn-flap-wrap:hover .avn-flap-bottom {
+  height: 0;
+}
+.avn-flap-wrap:hover .avn-flap-left,
+.avn-flap-wrap:hover .avn-flap-right {
+  width: 0;
+}
+/* ----
+   form
+   ---- */
+.avn-form input,
+.avn-form select,
+.avn-form textarea,
+.avn-form label,
+.avn-form-label {
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  /* Only IE8+ */
+  padding: .25em .5em;
+  vertical-align: top;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 1em;
+  line-height: 1.5em;
+}
+.avn-form input,
+.avn-form select,
+.avn-form textarea {
+  margin: 0 0 1em 0;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  background-color: #fafafa;
+  color: #444;
+  -webkit-transition: box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+.avn-form input,
+.avn-form select {
+  height: 2em;
+}
+.avn-form select[multiple] {
+  height: auto;
+}
+.avn-form input[type="radio"],
+.avn-form input[type="checkbox"],
+.avn-form input[type="file"] {
+  padding: 0;
+  box-shadow: none !important;
+  border: none !important;
+  background-color: transparent !important;
+}
+.avn-form select {
+  padding-right: .25em;
+}
+.avn-form label,
+.avn-form-label {
+  display: inline-block;
+  margin: 0;
+  background-color: transparent !important;
+  color: #777;
+}
+.avn-form-label {
+  font-style: italic;
+}
+/* hover and active */
+.avn-form input:focus,
+.avn-form select:focus,
+.avn-form textarea:focus {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-color: #52b42f;
+  background-color: #fff;
+  outline: none;
+}
+/* submit */
+.avn-form input[type="submit"] {
+  padding: 0 1em;
+  background-color: #009640;
+  color: #fff;
+}
+.avn-form input[type="submit"]:hover {
+  background-color: #52b42f;
+  color: #fff;
+}
+.avn-form input[type="submit"]:active {
+  background-color: #fff;
+  color: #52b42f;
+}
+/* readonly and disabled */
+[readonly] {
+  border-color: #ddd !important;
+  background-color: #f6f6f6 !important;
+}
+[disabled] {
+  background-color: #f6f6f6 !important;
+  color: #ccc !important;
+  font-style: italic;
+}
+/* required */
+.avn-form-required:after {
+  margin-left: 5px;
+  vertical-align: super;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  font-size: smaller;
+  color: red;
+  content: "\f069";
+}
+/* radio and checkbox labels */
+.avn-form input[type="radio"] + label,
+.avn-form input[type="checkbox"] + label,
+.avn-form input[type="radio"] + .avn-form-label,
+.avn-form input[type="checkbox"] + .avn-form-label {
+  width: auto;
+  margin-right: 1em;
+}
+/* tight */
+.avn-form-tight input,
+.avn-form-tight label,
+.avn-form-tight .avn-form-label {
+  line-height: 1em;
+}
+.avn-form-tight input {
+  height: 1.5em;
+}
+/* avn-form-grid */
+.avn-form-grid-space {
+  padding-right: 5px;
+}
+.avn-form-grid input,
+.avn-form-grid select,
+.avn-form-grid textarea,
+.avn-form-grid label,
+.avn-form-grid .avn-form-label {
+  width: 100%;
+}
+.avn-form-grid input[type="radio"],
+.avn-form-grid input[type="checkbox"],
+.avn-form-grid input[type="file"],
+.avn-form-grid input[type="radio"] + label,
+.avn-form-grid input[type="checkbox"] + label,
+.avn-form-grid input[type="file"] + label,
+.avn-form-grid input[type="radio"] + .avn-form-label,
+.avn-form-grid input[type="checkbox"] + .avn-form-label,
+.avn-form-grid input[type="file"] + .avn-form-label {
+  width: auto;
+}
+@media (min-width: 720px) {
+  .avn-form-grid.avn-form-label-right label,
+  .avn-form-grid label.avn-form-label-right,
+  .avn-form-grid.avn-form-label-right .avn-form-label,
+  .avn-form-grid .avn-form-label.avn-form-label-right {
+    text-align: right;
+  }
+  .avn-form-grid.avn-form-label-left label,
+  .avn-form-grid label.avn-form-label-left,
+  .avn-form-grid.avn-form-label-left .avn-form-label,
+  .avn-form-grid .avn-form-label.avn-form-label-left {
+    text-align: left;
+  }
+}
+/* fieldset */
+.avn-form fieldset {
+  background-color: #f2f2f2;
+  border: 1px solid #eaeaea;
+  margin: 1em 0 0.4em 0;
+  padding: 1em;
+  border-radius: 2px;
+  box-shadow: 1px 1px 0 #ddd;
+}
+.avn-form legend {
+  margin: 0;
+  padding: .25em 1em;
+  border-radius: 99px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 1.3em;
+  font-variant: small-caps;
+}
+@media (min-width: 720px) {
+  .avn-form .avn-grid-medium > * {
+    /*padding-top: @text-margin-top;
+		border-bottom: 1px dashed #ccc;*/
+  }
+}
+/*
+.avn-form-toggle-hidden {
+	display: none;
+}
+*/
+/*custo
+.avn-form .avn-form-fixed input, .avn-form-fixed .avn-form select, .avn-form-fixed .avn-form textarea {
+	width: 200px;
+}
+.avn-form .avn-form-fixed label {
+	width: 150px;
+}*/
+/*.avn-form select {
+
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	outline: none;
+
+	background: url('dropdown_arrow.png') right center no-repeat;
+
+	text-indent: 0.01px;
+	text-overflow: "";
+
+
+}
+.avn-form select::-ms-expand { display: none; }
+
+.avn-form label:before {
+
+	font-family: FontAwesome;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1em;
+	color: inherit;
+
+	content: "\f00d";
+
+	position:absolute;
+	top:0;
+	left:0;
+	width: 30px;
+	height:30px;
+	border: 1px solid red;
+
+}*/
+/* --------
+   carousel
+   -------- */
+.avn-carousel-wrap {
+  position: relative;
+  overflow: hidden;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
+}
+.avn-carousel {
+  position: relative;
+}
+.avn-carousel:after {
+  content: "\0020";
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  font-size: 0;
+  zoom: 1
+  /* Hack for IE7 **/
+}
+.avn-carousel > * {
+  display: none;
+  width: 100%;
+  float: left;
+  position: relative;
+  left: 0%;
+  z-index: 1;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box
+  /* Only IE8+ */
+}
+.avn-carousel > :first-child {
+  display: block;
+}
+/* carousel pagination */
+.avn-carousel-jsPageWrap > * {
+  position: relative;
+  z-index: 3;
+  margin: 0 2px;
+  padding: 0 4px;
+}
+/*.avn-carousel-jsPage {}
+.avn-carousel-jsPageCurrent {
+	text-decoration: none;
+}*/
+.avn-carousel-jsPage,
+.avn-carousel-jsNav {
+  /*text-shadow: -1px -1px 0 #aaa;*/
+  color: #444 !important;
+  text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.5);
+}
+.avn-carousel-jsPage:hover,
+.avn-carousel-jsNav:hover {
+  /*text-shadow: -1px -1px 0 #222;*/
+  color: #888 !important;
+}
+.avn-carousel-jsPageCurrent {
+  /*text-shadow: -1px -1px 0 #fff;*/
+  color: #ccc !important;
+}
+/* carousel nav */
+.avn-carousel-jsNav {
+  position: relative;
+  z-index: 2;
+  text-decoration: none;
+}
+/* carousel page default */
+.avn-carousel-jsPageDefault.avn-carousel-jsPageWrap {
+  width: 100%;
+  position: absolute;
+  bottom: 5px;
+  text-align: center;
+}
+.avn-carousel-jsPageDefault .avn-carousel-jsPage,
+.avn-carousel-jsPageDefault .avn-carousel-jsNav {
+  /*text-shadow: 0 -1px 0 rgba(255,255,255,.5);*/
+  text-decoration: none !important;
+  font-weight: bold;
+  border-radius: 99px;
+}
+.avn-carousel-jsPageDefault .avn-carousel-jsPageCurrent {
+  /*background-color: rgba(255,255,255,.5);*/
+}
+/* carousel nav default */
+.avn-carousel-jsNavDefault.avn-carousel-jsNav {
+  /*text-shadow: 0 0 5px #fff;*/
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 60px;
+  opacity: .45;
+  -webkit-transition: opacity .5s ease;
+  transition: opacity .5s ease;
+}
+.avn-carousel-jsNavDefault.avn-carousel-jsNavPrev {
+  left: 0;
+  text-align: left;
+}
+.avn-carousel-jsNavDefault.avn-carousel-jsNavNext {
+  right: 0;
+  text-align: right;
+}
+.avn-carousel-jsNavDefault.avn-carousel-jsNav:hover {
+  opacity: .9;
+}
+/*.avn-carousel-jsNavDefault.avn-carousel-jsNavPrev:hover {
+	background-image: -webkit-linear-gradient(left, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+	background-image: -moz-linear-gradient(left, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+	background-image: -ms-linear-gradient(left, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+	background-image: -o-linear-gradient(left, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+	background-image: linear-gradient(left, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+}
+.avn-carousel-jsNavDefault.avn-carousel-jsNavNext:hover {
+	background-image: -webkit-linear-gradient(right, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+	background-image: -moz-linear-gradient(right, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+	background-image: -ms-linear-gradient(right, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+	background-image: -o-linear-gradient(right, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+	background-image: linear-gradient(right, rgba(136,136,136,.33) 50%, rgba(136,136,136,0) 100%);
+}*/
+.avn-carousel-jsNavDefault.avn-carousel-jsNav > * {
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  margin: -15px 10px 0 10px;
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+}
+/* carousel slogan */
+.avn-carousel-slogan {
+  position: absolute;
+  left: 40px;
+  bottom: 20px;
+  opacity: 1;
+  -webkit-transition: bottom .25s ease, opacity .5s ease;
+  transition: bottom .25s ease, opacity .5s ease;
+  line-height: 1.3em;
+  font-size: 2.5em;
+  font-weight: 500;
+}
+.avn-carousel-jsSloganHide {
+  bottom: -40px !important;
+  opacity: 0;
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.avn-carousel-slogan > * {
+  clear: left;
+  float: left;
+  padding: 0 .33em;
+  background-color: rgba(0, 0, 0, 0.66);
+  color: #fff;
+  text-shadow: 1px 1px 1px #111;
+}
+.avn-carousel-slogan > :first-child {
+  border-radius: 4px 4px 0 0;
+}
+.avn-carousel-slogan > :last-child {
+  border-radius: 0 0 4px 4px;
+}
+@media (max-width: 719px) {
+  .avn-carousel-jsNav {
+    width: 40px;
+  }
+  .avn-carousel-jsNav > * {
+    margin: -10px 5px 0 5px;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+  }
+  .avn-carousel-slogan {
+    left: 25px;
+    bottom: 12.5px;
+    font-size: 1.75em;
+  }
+}
+/* -----
+   color
+   ----- */
+.avn-color-transition {
+  -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+          transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+.avn-color-default,
+.avn-color-default-hover:hover,
+.avn-color-default-hover.avn-hover-jsOver {
+  border-color: #dddddd !important;
+  background-color: #ffffff !important;
+  text-shadow: 0 1px 0 transparent;
+  color: #737373 !important;
+}
+.avn-color-default h1,
+.avn-color-default-hover:hover h1,
+.avn-color-default-hover.avn-hover-jsOver h1,
+.avn-color-default h3,
+.avn-color-default-hover:hover h3,
+.avn-color-default-hover.avn-hover-jsOver h3,
+.avn-color-default h5,
+.avn-color-default-hover:hover h5,
+.avn-color-default-hover.avn-hover-jsOver h5 {
+  color: #737373;
+}
+.avn-color-default h1 small,
+.avn-color-default-hover:hover h1 small,
+.avn-color-default-hover.avn-hover-jsOver h1 small,
+.avn-color-default h3 small,
+.avn-color-default-hover:hover h3 small,
+.avn-color-default-hover.avn-hover-jsOver h3 small,
+.avn-color-default h5 small,
+.avn-color-default-hover:hover h5 small,
+.avn-color-default-hover.avn-hover-jsOver h5 small {
+  color: #cdcdcd;
+}
+.avn-color-default hgroup h1 + *,
+.avn-color-default-hover:hover hgroup h1 + *,
+.avn-color-default-hover.avn-hover-jsOver hgroup h1 + *,
+.avn-color-default hgroup h3 + *,
+.avn-color-default-hover:hover hgroup h3 + *,
+.avn-color-default-hover.avn-hover-jsOver hgroup h3 + *,
+.avn-color-default hgroup h5 + *,
+.avn-color-default-hover:hover hgroup h5 + *,
+.avn-color-default-hover.avn-hover-jsOver hgroup h5 + * {
+  color: #cdcdcd;
+}
+.avn-color-default h2,
+.avn-color-default-hover:hover h2,
+.avn-color-default-hover.avn-hover-jsOver h2,
+.avn-color-default h4,
+.avn-color-default-hover:hover h4,
+.avn-color-default-hover.avn-hover-jsOver h4,
+.avn-color-default h6,
+.avn-color-default-hover:hover h6,
+.avn-color-default-hover.avn-hover-jsOver h6 {
+  color: #6b8a5c;
+}
+.avn-color-default h2 small,
+.avn-color-default-hover:hover h2 small,
+.avn-color-default-hover.avn-hover-jsOver h2 small,
+.avn-color-default h4 small,
+.avn-color-default-hover:hover h4 small,
+.avn-color-default-hover.avn-hover-jsOver h4 small,
+.avn-color-default h6 small,
+.avn-color-default-hover:hover h6 small,
+.avn-color-default-hover.avn-hover-jsOver h6 small {
+  color: #cdcdcd;
+}
+.avn-color-default hgroup h2 + *,
+.avn-color-default-hover:hover hgroup h2 + *,
+.avn-color-default-hover.avn-hover-jsOver hgroup h2 + *,
+.avn-color-default hgroup h4 + *,
+.avn-color-default-hover:hover hgroup h4 + *,
+.avn-color-default-hover.avn-hover-jsOver hgroup h4 + *,
+.avn-color-default hgroup h6 + *,
+.avn-color-default-hover:hover hgroup h6 + *,
+.avn-color-default-hover.avn-hover-jsOver hgroup h6 + * {
+  color: #cdcdcd;
+}
+.avn-color-default h2,
+.avn-color-default-hover:hover h2,
+.avn-color-default-hover.avn-hover-jsOver h2 {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-default a,
+.avn-color-default-hover:hover a,
+.avn-color-default-hover.avn-hover-jsOver a,
+.avn-color-default a:link,
+.avn-color-default-hover:hover a:link,
+.avn-color-default-hover.avn-hover-jsOver a:link,
+.avn-color-default a:visited,
+.avn-color-default-hover:hover a:visited,
+.avn-color-default-hover.avn-hover-jsOver a:visited {
+  color: #8a5c81;
+}
+.avn-color-default a:hover,
+.avn-color-default-hover:hover a:hover,
+.avn-color-default-hover.avn-hover-jsOver a:hover,
+.avn-color-default a:active,
+.avn-color-default-hover:hover a:active,
+.avn-color-default-hover.avn-hover-jsOver a:active,
+.avn-color-default a:focus,
+.avn-color-default-hover:hover a:focus,
+.avn-color-default-hover.avn-hover-jsOver a:focus {
+  color: #b792af;
+}
+.avn-color-default ul.avn-list-nav > li,
+.avn-color-default-hover:hover ul.avn-list-nav > li,
+.avn-color-default-hover.avn-hover-jsOver ul.avn-list-nav > li {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-default blockquote,
+.avn-color-default-hover:hover blockquote,
+.avn-color-default-hover.avn-hover-jsOver blockquote {
+  border-left-color: rgba(0, 0, 0, 0.1);
+}
+.avn-color-default details[open],
+.avn-color-default-hover:hover details[open],
+.avn-color-default-hover.avn-hover-jsOver details[open] {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.avn-color-default details[open] summary,
+.avn-color-default-hover:hover details[open] summary,
+.avn-color-default-hover.avn-hover-jsOver details[open] summary {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-default .avn-table th,
+.avn-color-default-hover:hover .avn-table th,
+.avn-color-default-hover.avn-hover-jsOver .avn-table th {
+  background-color: #ffffff;
+}
+.avn-color-default .avn-table th,
+.avn-color-default-hover:hover .avn-table th,
+.avn-color-default-hover.avn-hover-jsOver .avn-table th,
+.avn-color-default .avn-table td,
+.avn-color-default-hover:hover .avn-table td,
+.avn-color-default-hover.avn-hover-jsOver .avn-table td {
+  border-color: #dedede;
+}
+.avn-color-default .avn-table-striped tr:nth-child(even),
+.avn-color-default-hover:hover .avn-table-striped tr:nth-child(even),
+.avn-color-default-hover.avn-hover-jsOver .avn-table-striped tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.avn-color-default .avn-table-hover tr:hover,
+.avn-color-default-hover:hover .avn-table-hover tr:hover,
+.avn-color-default-hover.avn-hover-jsOver .avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+.avn-color-default code,
+.avn-color-default-hover:hover code,
+.avn-color-default-hover.avn-hover-jsOver code {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+@media (min-width: 1000px) {
+  .avn-color-default.avn-area-over:before,
+  .avn-color-default-hover:hover.avn-area-over:before,
+  .avn-color-default-hover.avn-hover-jsOver.avn-area-over:before,
+  .avn-color-default.avn-area-over:after,
+  .avn-color-default-hover:hover.avn-area-over:after,
+  .avn-color-default-hover.avn-hover-jsOver.avn-area-over:after {
+    border-color: #c4c4c4;
+  }
+  .avn-color-default.avn-area-over.avn-color-transition:before,
+  .avn-color-default-hover:hover.avn-area-over.avn-color-transition:before,
+  .avn-color-default-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:before,
+  .avn-color-default.avn-area-over.avn-color-transition:after,
+  .avn-color-default-hover:hover.avn-area-over.avn-color-transition:after,
+  .avn-color-default-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:after {
+    -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+}
+.avn-color-default.avn-grid-border > .avn-grid > *,
+.avn-color-default-hover:hover.avn-grid-border > .avn-grid > *,
+.avn-color-default-hover.avn-hover-jsOver.avn-grid-border > .avn-grid > * {
+  background-color: #ffffff;
+}
+.avn-color-default.avn-grid-spacing.avn-grid-border,
+.avn-color-default-hover:hover.avn-grid-spacing.avn-grid-border,
+.avn-color-default-hover.avn-hover-jsOver.avn-grid-spacing.avn-grid-border,
+.avn-color-default.avn-grid-spacing-large.avn-grid-border,
+.avn-color-default-hover:hover.avn-grid-spacing-large.avn-grid-border,
+.avn-color-default-hover.avn-hover-jsOver.avn-grid-spacing-large.avn-grid-border {
+  background-color: transparent !important;
+}
+.avn-color-default.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-default-hover:hover.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-default-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-default.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-default-hover:hover.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-default-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #fefefe;
+}
+.avn-color-grey-lightest,
+.avn-color-grey-lightest-hover:hover,
+.avn-color-grey-lightest-hover.avn-hover-jsOver {
+  border-color: #e6e6e6 !important;
+  background-color: #f7f7f7 !important;
+  text-shadow: 0 1px 0 #ffffff;
+  color: #919191 !important;
+}
+.avn-color-grey-lightest h1,
+.avn-color-grey-lightest-hover:hover h1,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h1,
+.avn-color-grey-lightest h3,
+.avn-color-grey-lightest-hover:hover h3,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h3,
+.avn-color-grey-lightest h5,
+.avn-color-grey-lightest-hover:hover h5,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h5 {
+  color: #808080;
+}
+.avn-color-grey-lightest h1 small,
+.avn-color-grey-lightest-hover:hover h1 small,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h1 small,
+.avn-color-grey-lightest h3 small,
+.avn-color-grey-lightest-hover:hover h3 small,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h3 small,
+.avn-color-grey-lightest h5 small,
+.avn-color-grey-lightest-hover:hover h5 small,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h5 small {
+  color: #c5c5c5;
+}
+.avn-color-grey-lightest hgroup h1 + *,
+.avn-color-grey-lightest-hover:hover hgroup h1 + *,
+.avn-color-grey-lightest-hover.avn-hover-jsOver hgroup h1 + *,
+.avn-color-grey-lightest hgroup h3 + *,
+.avn-color-grey-lightest-hover:hover hgroup h3 + *,
+.avn-color-grey-lightest-hover.avn-hover-jsOver hgroup h3 + *,
+.avn-color-grey-lightest hgroup h5 + *,
+.avn-color-grey-lightest-hover:hover hgroup h5 + *,
+.avn-color-grey-lightest-hover.avn-hover-jsOver hgroup h5 + * {
+  color: #c5c5c5;
+}
+.avn-color-grey-lightest h2,
+.avn-color-grey-lightest-hover:hover h2,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h2,
+.avn-color-grey-lightest h4,
+.avn-color-grey-lightest-hover:hover h4,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h4,
+.avn-color-grey-lightest h6,
+.avn-color-grey-lightest-hover:hover h6,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h6 {
+  color: #a3a3a3;
+}
+.avn-color-grey-lightest h2 small,
+.avn-color-grey-lightest-hover:hover h2 small,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h2 small,
+.avn-color-grey-lightest h4 small,
+.avn-color-grey-lightest-hover:hover h4 small,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h4 small,
+.avn-color-grey-lightest h6 small,
+.avn-color-grey-lightest-hover:hover h6 small,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h6 small {
+  color: #c5c5c5;
+}
+.avn-color-grey-lightest hgroup h2 + *,
+.avn-color-grey-lightest-hover:hover hgroup h2 + *,
+.avn-color-grey-lightest-hover.avn-hover-jsOver hgroup h2 + *,
+.avn-color-grey-lightest hgroup h4 + *,
+.avn-color-grey-lightest-hover:hover hgroup h4 + *,
+.avn-color-grey-lightest-hover.avn-hover-jsOver hgroup h4 + *,
+.avn-color-grey-lightest hgroup h6 + *,
+.avn-color-grey-lightest-hover:hover hgroup h6 + *,
+.avn-color-grey-lightest-hover.avn-hover-jsOver hgroup h6 + * {
+  color: #c5c5c5;
+}
+.avn-color-grey-lightest h2,
+.avn-color-grey-lightest-hover:hover h2,
+.avn-color-grey-lightest-hover.avn-hover-jsOver h2 {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-grey-lightest a,
+.avn-color-grey-lightest-hover:hover a,
+.avn-color-grey-lightest-hover.avn-hover-jsOver a,
+.avn-color-grey-lightest a:link,
+.avn-color-grey-lightest-hover:hover a:link,
+.avn-color-grey-lightest-hover.avn-hover-jsOver a:link,
+.avn-color-grey-lightest a:visited,
+.avn-color-grey-lightest-hover:hover a:visited,
+.avn-color-grey-lightest-hover.avn-hover-jsOver a:visited {
+  color: #787878;
+}
+.avn-color-grey-lightest a:hover,
+.avn-color-grey-lightest-hover:hover a:hover,
+.avn-color-grey-lightest-hover.avn-hover-jsOver a:hover,
+.avn-color-grey-lightest a:active,
+.avn-color-grey-lightest-hover:hover a:active,
+.avn-color-grey-lightest-hover.avn-hover-jsOver a:active,
+.avn-color-grey-lightest a:focus,
+.avn-color-grey-lightest-hover:hover a:focus,
+.avn-color-grey-lightest-hover.avn-hover-jsOver a:focus {
+  color: #aaaaaa;
+}
+.avn-color-grey-lightest ul.avn-list-nav > li,
+.avn-color-grey-lightest-hover:hover ul.avn-list-nav > li,
+.avn-color-grey-lightest-hover.avn-hover-jsOver ul.avn-list-nav > li {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-grey-lightest blockquote,
+.avn-color-grey-lightest-hover:hover blockquote,
+.avn-color-grey-lightest-hover.avn-hover-jsOver blockquote {
+  border-left-color: rgba(0, 0, 0, 0.1);
+}
+.avn-color-grey-lightest details[open],
+.avn-color-grey-lightest-hover:hover details[open],
+.avn-color-grey-lightest-hover.avn-hover-jsOver details[open] {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.avn-color-grey-lightest details[open] summary,
+.avn-color-grey-lightest-hover:hover details[open] summary,
+.avn-color-grey-lightest-hover.avn-hover-jsOver details[open] summary {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-grey-lightest .avn-table th,
+.avn-color-grey-lightest-hover:hover .avn-table th,
+.avn-color-grey-lightest-hover.avn-hover-jsOver .avn-table th {
+  background-color: #f7f7f7;
+}
+.avn-color-grey-lightest .avn-table th,
+.avn-color-grey-lightest-hover:hover .avn-table th,
+.avn-color-grey-lightest-hover.avn-hover-jsOver .avn-table th,
+.avn-color-grey-lightest .avn-table td,
+.avn-color-grey-lightest-hover:hover .avn-table td,
+.avn-color-grey-lightest-hover.avn-hover-jsOver .avn-table td {
+  border-color: #d6d6d6;
+}
+.avn-color-grey-lightest .avn-table-striped tr:nth-child(even),
+.avn-color-grey-lightest-hover:hover .avn-table-striped tr:nth-child(even),
+.avn-color-grey-lightest-hover.avn-hover-jsOver .avn-table-striped tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.avn-color-grey-lightest .avn-table-hover tr:hover,
+.avn-color-grey-lightest-hover:hover .avn-table-hover tr:hover,
+.avn-color-grey-lightest-hover.avn-hover-jsOver .avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+.avn-color-grey-lightest code,
+.avn-color-grey-lightest-hover:hover code,
+.avn-color-grey-lightest-hover.avn-hover-jsOver code {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+@media (min-width: 1000px) {
+  .avn-color-grey-lightest.avn-area-over:before,
+  .avn-color-grey-lightest-hover:hover.avn-area-over:before,
+  .avn-color-grey-lightest-hover.avn-hover-jsOver.avn-area-over:before,
+  .avn-color-grey-lightest.avn-area-over:after,
+  .avn-color-grey-lightest-hover:hover.avn-area-over:after,
+  .avn-color-grey-lightest-hover.avn-hover-jsOver.avn-area-over:after {
+    border-color: #cecece;
+  }
+  .avn-color-grey-lightest.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-lightest-hover:hover.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-lightest-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-lightest.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-lightest-hover:hover.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-lightest-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:after {
+    -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+}
+.avn-color-grey-lightest.avn-grid-border > .avn-grid > *,
+.avn-color-grey-lightest-hover:hover.avn-grid-border > .avn-grid > *,
+.avn-color-grey-lightest-hover.avn-hover-jsOver.avn-grid-border > .avn-grid > * {
+  background-color: #f7f7f7;
+}
+.avn-color-grey-lightest.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-lightest-hover:hover.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-lightest-hover.avn-hover-jsOver.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-lightest.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-lightest-hover:hover.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-lightest-hover.avn-hover-jsOver.avn-grid-spacing-large.avn-grid-border {
+  background-color: transparent !important;
+}
+.avn-color-grey-lightest.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-lightest-hover:hover.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-lightest-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-lightest.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-lightest-hover:hover.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-lightest-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #ffffff;
+}
+.avn-color-grey-lighter,
+.avn-color-grey-lighter-hover:hover,
+.avn-color-grey-lighter-hover.avn-hover-jsOver {
+  border-color: #d6d6d6 !important;
+  background-color: #e7e7e7 !important;
+  text-shadow: 0 1px 0 #f8f8f8;
+  color: #818181 !important;
+}
+.avn-color-grey-lighter h1,
+.avn-color-grey-lighter-hover:hover h1,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h1,
+.avn-color-grey-lighter h3,
+.avn-color-grey-lighter-hover:hover h3,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h3,
+.avn-color-grey-lighter h5,
+.avn-color-grey-lighter-hover:hover h5,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h5 {
+  color: #707070;
+}
+.avn-color-grey-lighter h1 small,
+.avn-color-grey-lighter-hover:hover h1 small,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h1 small,
+.avn-color-grey-lighter h3 small,
+.avn-color-grey-lighter-hover:hover h3 small,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h3 small,
+.avn-color-grey-lighter h5 small,
+.avn-color-grey-lighter-hover:hover h5 small,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h5 small {
+  color: #b5b5b5;
+}
+.avn-color-grey-lighter hgroup h1 + *,
+.avn-color-grey-lighter-hover:hover hgroup h1 + *,
+.avn-color-grey-lighter-hover.avn-hover-jsOver hgroup h1 + *,
+.avn-color-grey-lighter hgroup h3 + *,
+.avn-color-grey-lighter-hover:hover hgroup h3 + *,
+.avn-color-grey-lighter-hover.avn-hover-jsOver hgroup h3 + *,
+.avn-color-grey-lighter hgroup h5 + *,
+.avn-color-grey-lighter-hover:hover hgroup h5 + *,
+.avn-color-grey-lighter-hover.avn-hover-jsOver hgroup h5 + * {
+  color: #b5b5b5;
+}
+.avn-color-grey-lighter h2,
+.avn-color-grey-lighter-hover:hover h2,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h2,
+.avn-color-grey-lighter h4,
+.avn-color-grey-lighter-hover:hover h4,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h4,
+.avn-color-grey-lighter h6,
+.avn-color-grey-lighter-hover:hover h6,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h6 {
+  color: #939393;
+}
+.avn-color-grey-lighter h2 small,
+.avn-color-grey-lighter-hover:hover h2 small,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h2 small,
+.avn-color-grey-lighter h4 small,
+.avn-color-grey-lighter-hover:hover h4 small,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h4 small,
+.avn-color-grey-lighter h6 small,
+.avn-color-grey-lighter-hover:hover h6 small,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h6 small {
+  color: #b5b5b5;
+}
+.avn-color-grey-lighter hgroup h2 + *,
+.avn-color-grey-lighter-hover:hover hgroup h2 + *,
+.avn-color-grey-lighter-hover.avn-hover-jsOver hgroup h2 + *,
+.avn-color-grey-lighter hgroup h4 + *,
+.avn-color-grey-lighter-hover:hover hgroup h4 + *,
+.avn-color-grey-lighter-hover.avn-hover-jsOver hgroup h4 + *,
+.avn-color-grey-lighter hgroup h6 + *,
+.avn-color-grey-lighter-hover:hover hgroup h6 + *,
+.avn-color-grey-lighter-hover.avn-hover-jsOver hgroup h6 + * {
+  color: #b5b5b5;
+}
+.avn-color-grey-lighter h2,
+.avn-color-grey-lighter-hover:hover h2,
+.avn-color-grey-lighter-hover.avn-hover-jsOver h2 {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-grey-lighter a,
+.avn-color-grey-lighter-hover:hover a,
+.avn-color-grey-lighter-hover.avn-hover-jsOver a,
+.avn-color-grey-lighter a:link,
+.avn-color-grey-lighter-hover:hover a:link,
+.avn-color-grey-lighter-hover.avn-hover-jsOver a:link,
+.avn-color-grey-lighter a:visited,
+.avn-color-grey-lighter-hover:hover a:visited,
+.avn-color-grey-lighter-hover.avn-hover-jsOver a:visited {
+  color: #686868;
+}
+.avn-color-grey-lighter a:hover,
+.avn-color-grey-lighter-hover:hover a:hover,
+.avn-color-grey-lighter-hover.avn-hover-jsOver a:hover,
+.avn-color-grey-lighter a:active,
+.avn-color-grey-lighter-hover:hover a:active,
+.avn-color-grey-lighter-hover.avn-hover-jsOver a:active,
+.avn-color-grey-lighter a:focus,
+.avn-color-grey-lighter-hover:hover a:focus,
+.avn-color-grey-lighter-hover.avn-hover-jsOver a:focus {
+  color: #9a9a9a;
+}
+.avn-color-grey-lighter ul.avn-list-nav > li,
+.avn-color-grey-lighter-hover:hover ul.avn-list-nav > li,
+.avn-color-grey-lighter-hover.avn-hover-jsOver ul.avn-list-nav > li {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-grey-lighter blockquote,
+.avn-color-grey-lighter-hover:hover blockquote,
+.avn-color-grey-lighter-hover.avn-hover-jsOver blockquote {
+  border-left-color: rgba(0, 0, 0, 0.1);
+}
+.avn-color-grey-lighter details[open],
+.avn-color-grey-lighter-hover:hover details[open],
+.avn-color-grey-lighter-hover.avn-hover-jsOver details[open] {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.avn-color-grey-lighter details[open] summary,
+.avn-color-grey-lighter-hover:hover details[open] summary,
+.avn-color-grey-lighter-hover.avn-hover-jsOver details[open] summary {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-grey-lighter .avn-table th,
+.avn-color-grey-lighter-hover:hover .avn-table th,
+.avn-color-grey-lighter-hover.avn-hover-jsOver .avn-table th {
+  background-color: #e7e7e7;
+}
+.avn-color-grey-lighter .avn-table th,
+.avn-color-grey-lighter-hover:hover .avn-table th,
+.avn-color-grey-lighter-hover.avn-hover-jsOver .avn-table th,
+.avn-color-grey-lighter .avn-table td,
+.avn-color-grey-lighter-hover:hover .avn-table td,
+.avn-color-grey-lighter-hover.avn-hover-jsOver .avn-table td {
+  border-color: #c6c6c6;
+}
+.avn-color-grey-lighter .avn-table-striped tr:nth-child(even),
+.avn-color-grey-lighter-hover:hover .avn-table-striped tr:nth-child(even),
+.avn-color-grey-lighter-hover.avn-hover-jsOver .avn-table-striped tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.avn-color-grey-lighter .avn-table-hover tr:hover,
+.avn-color-grey-lighter-hover:hover .avn-table-hover tr:hover,
+.avn-color-grey-lighter-hover.avn-hover-jsOver .avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+.avn-color-grey-lighter code,
+.avn-color-grey-lighter-hover:hover code,
+.avn-color-grey-lighter-hover.avn-hover-jsOver code {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+@media (min-width: 1000px) {
+  .avn-color-grey-lighter.avn-area-over:before,
+  .avn-color-grey-lighter-hover:hover.avn-area-over:before,
+  .avn-color-grey-lighter-hover.avn-hover-jsOver.avn-area-over:before,
+  .avn-color-grey-lighter.avn-area-over:after,
+  .avn-color-grey-lighter-hover:hover.avn-area-over:after,
+  .avn-color-grey-lighter-hover.avn-hover-jsOver.avn-area-over:after {
+    border-color: #bebebe;
+  }
+  .avn-color-grey-lighter.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-lighter-hover:hover.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-lighter-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-lighter.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-lighter-hover:hover.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-lighter-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:after {
+    -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+}
+.avn-color-grey-lighter.avn-grid-border > .avn-grid > *,
+.avn-color-grey-lighter-hover:hover.avn-grid-border > .avn-grid > *,
+.avn-color-grey-lighter-hover.avn-hover-jsOver.avn-grid-border > .avn-grid > * {
+  background-color: #e7e7e7;
+}
+.avn-color-grey-lighter.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-lighter-hover:hover.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-lighter-hover.avn-hover-jsOver.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-lighter.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-lighter-hover:hover.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-lighter-hover.avn-hover-jsOver.avn-grid-spacing-large.avn-grid-border {
+  background-color: transparent !important;
+}
+.avn-color-grey-lighter.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-lighter-hover:hover.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-lighter-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-lighter.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-lighter-hover:hover.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-lighter-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #f8f8f8;
+}
+.avn-color-grey-light,
+.avn-color-grey-light-hover:hover,
+.avn-color-grey-light-hover.avn-hover-jsOver {
+  border-color: #c6c6c6 !important;
+  background-color: #d7d7d7 !important;
+  text-shadow: 0 1px 0 #e8e8e8;
+  color: #717171 !important;
+}
+.avn-color-grey-light h1,
+.avn-color-grey-light-hover:hover h1,
+.avn-color-grey-light-hover.avn-hover-jsOver h1,
+.avn-color-grey-light h3,
+.avn-color-grey-light-hover:hover h3,
+.avn-color-grey-light-hover.avn-hover-jsOver h3,
+.avn-color-grey-light h5,
+.avn-color-grey-light-hover:hover h5,
+.avn-color-grey-light-hover.avn-hover-jsOver h5 {
+  color: #606060;
+}
+.avn-color-grey-light h1 small,
+.avn-color-grey-light-hover:hover h1 small,
+.avn-color-grey-light-hover.avn-hover-jsOver h1 small,
+.avn-color-grey-light h3 small,
+.avn-color-grey-light-hover:hover h3 small,
+.avn-color-grey-light-hover.avn-hover-jsOver h3 small,
+.avn-color-grey-light h5 small,
+.avn-color-grey-light-hover:hover h5 small,
+.avn-color-grey-light-hover.avn-hover-jsOver h5 small {
+  color: #a5a5a5;
+}
+.avn-color-grey-light hgroup h1 + *,
+.avn-color-grey-light-hover:hover hgroup h1 + *,
+.avn-color-grey-light-hover.avn-hover-jsOver hgroup h1 + *,
+.avn-color-grey-light hgroup h3 + *,
+.avn-color-grey-light-hover:hover hgroup h3 + *,
+.avn-color-grey-light-hover.avn-hover-jsOver hgroup h3 + *,
+.avn-color-grey-light hgroup h5 + *,
+.avn-color-grey-light-hover:hover hgroup h5 + *,
+.avn-color-grey-light-hover.avn-hover-jsOver hgroup h5 + * {
+  color: #a5a5a5;
+}
+.avn-color-grey-light h2,
+.avn-color-grey-light-hover:hover h2,
+.avn-color-grey-light-hover.avn-hover-jsOver h2,
+.avn-color-grey-light h4,
+.avn-color-grey-light-hover:hover h4,
+.avn-color-grey-light-hover.avn-hover-jsOver h4,
+.avn-color-grey-light h6,
+.avn-color-grey-light-hover:hover h6,
+.avn-color-grey-light-hover.avn-hover-jsOver h6 {
+  color: #838383;
+}
+.avn-color-grey-light h2 small,
+.avn-color-grey-light-hover:hover h2 small,
+.avn-color-grey-light-hover.avn-hover-jsOver h2 small,
+.avn-color-grey-light h4 small,
+.avn-color-grey-light-hover:hover h4 small,
+.avn-color-grey-light-hover.avn-hover-jsOver h4 small,
+.avn-color-grey-light h6 small,
+.avn-color-grey-light-hover:hover h6 small,
+.avn-color-grey-light-hover.avn-hover-jsOver h6 small {
+  color: #a5a5a5;
+}
+.avn-color-grey-light hgroup h2 + *,
+.avn-color-grey-light-hover:hover hgroup h2 + *,
+.avn-color-grey-light-hover.avn-hover-jsOver hgroup h2 + *,
+.avn-color-grey-light hgroup h4 + *,
+.avn-color-grey-light-hover:hover hgroup h4 + *,
+.avn-color-grey-light-hover.avn-hover-jsOver hgroup h4 + *,
+.avn-color-grey-light hgroup h6 + *,
+.avn-color-grey-light-hover:hover hgroup h6 + *,
+.avn-color-grey-light-hover.avn-hover-jsOver hgroup h6 + * {
+  color: #a5a5a5;
+}
+.avn-color-grey-light h2,
+.avn-color-grey-light-hover:hover h2,
+.avn-color-grey-light-hover.avn-hover-jsOver h2 {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-grey-light a,
+.avn-color-grey-light-hover:hover a,
+.avn-color-grey-light-hover.avn-hover-jsOver a,
+.avn-color-grey-light a:link,
+.avn-color-grey-light-hover:hover a:link,
+.avn-color-grey-light-hover.avn-hover-jsOver a:link,
+.avn-color-grey-light a:visited,
+.avn-color-grey-light-hover:hover a:visited,
+.avn-color-grey-light-hover.avn-hover-jsOver a:visited {
+  color: #585858;
+}
+.avn-color-grey-light a:hover,
+.avn-color-grey-light-hover:hover a:hover,
+.avn-color-grey-light-hover.avn-hover-jsOver a:hover,
+.avn-color-grey-light a:active,
+.avn-color-grey-light-hover:hover a:active,
+.avn-color-grey-light-hover.avn-hover-jsOver a:active,
+.avn-color-grey-light a:focus,
+.avn-color-grey-light-hover:hover a:focus,
+.avn-color-grey-light-hover.avn-hover-jsOver a:focus {
+  color: #8a8a8a;
+}
+.avn-color-grey-light ul.avn-list-nav > li,
+.avn-color-grey-light-hover:hover ul.avn-list-nav > li,
+.avn-color-grey-light-hover.avn-hover-jsOver ul.avn-list-nav > li {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-grey-light blockquote,
+.avn-color-grey-light-hover:hover blockquote,
+.avn-color-grey-light-hover.avn-hover-jsOver blockquote {
+  border-left-color: rgba(0, 0, 0, 0.1);
+}
+.avn-color-grey-light details[open],
+.avn-color-grey-light-hover:hover details[open],
+.avn-color-grey-light-hover.avn-hover-jsOver details[open] {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.avn-color-grey-light details[open] summary,
+.avn-color-grey-light-hover:hover details[open] summary,
+.avn-color-grey-light-hover.avn-hover-jsOver details[open] summary {
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+.avn-color-grey-light .avn-table th,
+.avn-color-grey-light-hover:hover .avn-table th,
+.avn-color-grey-light-hover.avn-hover-jsOver .avn-table th {
+  background-color: #d7d7d7;
+}
+.avn-color-grey-light .avn-table th,
+.avn-color-grey-light-hover:hover .avn-table th,
+.avn-color-grey-light-hover.avn-hover-jsOver .avn-table th,
+.avn-color-grey-light .avn-table td,
+.avn-color-grey-light-hover:hover .avn-table td,
+.avn-color-grey-light-hover.avn-hover-jsOver .avn-table td {
+  border-color: #b6b6b6;
+}
+.avn-color-grey-light .avn-table-striped tr:nth-child(even),
+.avn-color-grey-light-hover:hover .avn-table-striped tr:nth-child(even),
+.avn-color-grey-light-hover.avn-hover-jsOver .avn-table-striped tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.avn-color-grey-light .avn-table-hover tr:hover,
+.avn-color-grey-light-hover:hover .avn-table-hover tr:hover,
+.avn-color-grey-light-hover.avn-hover-jsOver .avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+.avn-color-grey-light code,
+.avn-color-grey-light-hover:hover code,
+.avn-color-grey-light-hover.avn-hover-jsOver code {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+@media (min-width: 1000px) {
+  .avn-color-grey-light.avn-area-over:before,
+  .avn-color-grey-light-hover:hover.avn-area-over:before,
+  .avn-color-grey-light-hover.avn-hover-jsOver.avn-area-over:before,
+  .avn-color-grey-light.avn-area-over:after,
+  .avn-color-grey-light-hover:hover.avn-area-over:after,
+  .avn-color-grey-light-hover.avn-hover-jsOver.avn-area-over:after {
+    border-color: #aeaeae;
+  }
+  .avn-color-grey-light.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-light-hover:hover.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-light-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-light.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-light-hover:hover.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-light-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:after {
+    -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+}
+.avn-color-grey-light.avn-grid-border > .avn-grid > *,
+.avn-color-grey-light-hover:hover.avn-grid-border > .avn-grid > *,
+.avn-color-grey-light-hover.avn-hover-jsOver.avn-grid-border > .avn-grid > * {
+  background-color: #d7d7d7;
+}
+.avn-color-grey-light.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-light-hover:hover.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-light-hover.avn-hover-jsOver.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-light.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-light-hover:hover.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-light-hover.avn-hover-jsOver.avn-grid-spacing-large.avn-grid-border {
+  background-color: transparent !important;
+}
+.avn-color-grey-light.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-light-hover:hover.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-light-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-light.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-light-hover:hover.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-light-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #e8e8e8;
+}
+.avn-color-grey-dark,
+.avn-color-grey-dark-hover:hover,
+.avn-color-grey-dark-hover.avn-hover-jsOver {
+  border-color: #777777 !important;
+  background-color: #888888 !important;
+  text-shadow: 0 -1px 0 #777777;
+  color: #eeeeee !important;
+}
+.avn-color-grey-dark h1,
+.avn-color-grey-dark-hover:hover h1,
+.avn-color-grey-dark-hover.avn-hover-jsOver h1,
+.avn-color-grey-dark h3,
+.avn-color-grey-dark-hover:hover h3,
+.avn-color-grey-dark-hover.avn-hover-jsOver h3,
+.avn-color-grey-dark h5,
+.avn-color-grey-dark-hover:hover h5,
+.avn-color-grey-dark-hover.avn-hover-jsOver h5 {
+  color: #ffffff;
+}
+.avn-color-grey-dark h1 small,
+.avn-color-grey-dark-hover:hover h1 small,
+.avn-color-grey-dark-hover.avn-hover-jsOver h1 small,
+.avn-color-grey-dark h3 small,
+.avn-color-grey-dark-hover:hover h3 small,
+.avn-color-grey-dark-hover.avn-hover-jsOver h3 small,
+.avn-color-grey-dark h5 small,
+.avn-color-grey-dark-hover:hover h5 small,
+.avn-color-grey-dark-hover.avn-hover-jsOver h5 small {
+  color: #bababa;
+}
+.avn-color-grey-dark hgroup h1 + *,
+.avn-color-grey-dark-hover:hover hgroup h1 + *,
+.avn-color-grey-dark-hover.avn-hover-jsOver hgroup h1 + *,
+.avn-color-grey-dark hgroup h3 + *,
+.avn-color-grey-dark-hover:hover hgroup h3 + *,
+.avn-color-grey-dark-hover.avn-hover-jsOver hgroup h3 + *,
+.avn-color-grey-dark hgroup h5 + *,
+.avn-color-grey-dark-hover:hover hgroup h5 + *,
+.avn-color-grey-dark-hover.avn-hover-jsOver hgroup h5 + * {
+  color: #bababa;
+}
+.avn-color-grey-dark h2,
+.avn-color-grey-dark-hover:hover h2,
+.avn-color-grey-dark-hover.avn-hover-jsOver h2,
+.avn-color-grey-dark h4,
+.avn-color-grey-dark-hover:hover h4,
+.avn-color-grey-dark-hover.avn-hover-jsOver h4,
+.avn-color-grey-dark h6,
+.avn-color-grey-dark-hover:hover h6,
+.avn-color-grey-dark-hover.avn-hover-jsOver h6 {
+  color: #dcdcdc;
+}
+.avn-color-grey-dark h2 small,
+.avn-color-grey-dark-hover:hover h2 small,
+.avn-color-grey-dark-hover.avn-hover-jsOver h2 small,
+.avn-color-grey-dark h4 small,
+.avn-color-grey-dark-hover:hover h4 small,
+.avn-color-grey-dark-hover.avn-hover-jsOver h4 small,
+.avn-color-grey-dark h6 small,
+.avn-color-grey-dark-hover:hover h6 small,
+.avn-color-grey-dark-hover.avn-hover-jsOver h6 small {
+  color: #bababa;
+}
+.avn-color-grey-dark hgroup h2 + *,
+.avn-color-grey-dark-hover:hover hgroup h2 + *,
+.avn-color-grey-dark-hover.avn-hover-jsOver hgroup h2 + *,
+.avn-color-grey-dark hgroup h4 + *,
+.avn-color-grey-dark-hover:hover hgroup h4 + *,
+.avn-color-grey-dark-hover.avn-hover-jsOver hgroup h4 + *,
+.avn-color-grey-dark hgroup h6 + *,
+.avn-color-grey-dark-hover:hover hgroup h6 + *,
+.avn-color-grey-dark-hover.avn-hover-jsOver hgroup h6 + * {
+  color: #bababa;
+}
+.avn-color-grey-dark h2,
+.avn-color-grey-dark-hover:hover h2,
+.avn-color-grey-dark-hover.avn-hover-jsOver h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-grey-dark a,
+.avn-color-grey-dark-hover:hover a,
+.avn-color-grey-dark-hover.avn-hover-jsOver a,
+.avn-color-grey-dark a:link,
+.avn-color-grey-dark-hover:hover a:link,
+.avn-color-grey-dark-hover.avn-hover-jsOver a:link,
+.avn-color-grey-dark a:visited,
+.avn-color-grey-dark-hover:hover a:visited,
+.avn-color-grey-dark-hover.avn-hover-jsOver a:visited {
+  color: #ffffff;
+}
+.avn-color-grey-dark a:hover,
+.avn-color-grey-dark-hover:hover a:hover,
+.avn-color-grey-dark-hover.avn-hover-jsOver a:hover,
+.avn-color-grey-dark a:active,
+.avn-color-grey-dark-hover:hover a:active,
+.avn-color-grey-dark-hover.avn-hover-jsOver a:active,
+.avn-color-grey-dark a:focus,
+.avn-color-grey-dark-hover:hover a:focus,
+.avn-color-grey-dark-hover.avn-hover-jsOver a:focus {
+  color: #cdcdcd;
+}
+.avn-color-grey-dark ul.avn-list-nav > li,
+.avn-color-grey-dark-hover:hover ul.avn-list-nav > li,
+.avn-color-grey-dark-hover.avn-hover-jsOver ul.avn-list-nav > li {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-grey-dark blockquote,
+.avn-color-grey-dark-hover:hover blockquote,
+.avn-color-grey-dark-hover.avn-hover-jsOver blockquote {
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+.avn-color-grey-dark details[open],
+.avn-color-grey-dark-hover:hover details[open],
+.avn-color-grey-dark-hover.avn-hover-jsOver details[open] {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-grey-dark details[open] summary,
+.avn-color-grey-dark-hover:hover details[open] summary,
+.avn-color-grey-dark-hover.avn-hover-jsOver details[open] summary {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-grey-dark .avn-table th,
+.avn-color-grey-dark-hover:hover .avn-table th,
+.avn-color-grey-dark-hover.avn-hover-jsOver .avn-table th {
+  background-color: #888888;
+}
+.avn-color-grey-dark .avn-table th,
+.avn-color-grey-dark-hover:hover .avn-table th,
+.avn-color-grey-dark-hover.avn-hover-jsOver .avn-table th,
+.avn-color-grey-dark .avn-table td,
+.avn-color-grey-dark-hover:hover .avn-table td,
+.avn-color-grey-dark-hover.avn-hover-jsOver .avn-table td {
+  border-color: #a9a9a9;
+}
+.avn-color-grey-dark .avn-table-striped tr:nth-child(even),
+.avn-color-grey-dark-hover:hover .avn-table-striped tr:nth-child(even),
+.avn-color-grey-dark-hover.avn-hover-jsOver .avn-table-striped tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-grey-dark .avn-table-hover tr:hover,
+.avn-color-grey-dark-hover:hover .avn-table-hover tr:hover,
+.avn-color-grey-dark-hover.avn-hover-jsOver .avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+.avn-color-grey-dark code,
+.avn-color-grey-dark-hover:hover code,
+.avn-color-grey-dark-hover.avn-hover-jsOver code {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+@media (min-width: 1000px) {
+  .avn-color-grey-dark.avn-area-over:before,
+  .avn-color-grey-dark-hover:hover.avn-area-over:before,
+  .avn-color-grey-dark-hover.avn-hover-jsOver.avn-area-over:before,
+  .avn-color-grey-dark.avn-area-over:after,
+  .avn-color-grey-dark-hover:hover.avn-area-over:after,
+  .avn-color-grey-dark-hover.avn-hover-jsOver.avn-area-over:after {
+    border-color: #5f5f5f;
+  }
+  .avn-color-grey-dark.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-dark-hover:hover.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-dark-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-dark.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-dark-hover:hover.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-dark-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:after {
+    -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+}
+.avn-color-grey-dark.avn-grid-border > .avn-grid > *,
+.avn-color-grey-dark-hover:hover.avn-grid-border > .avn-grid > *,
+.avn-color-grey-dark-hover.avn-hover-jsOver.avn-grid-border > .avn-grid > * {
+  background-color: #888888;
+}
+.avn-color-grey-dark.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-dark-hover:hover.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-dark-hover.avn-hover-jsOver.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-dark.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-dark-hover:hover.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-dark-hover.avn-hover-jsOver.avn-grid-spacing-large.avn-grid-border {
+  background-color: transparent !important;
+}
+.avn-color-grey-dark.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-dark-hover:hover.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-dark-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-dark.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-dark-hover:hover.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-dark-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #565656;
+}
+.avn-color-grey-darker,
+.avn-color-grey-darker-hover:hover,
+.avn-color-grey-darker-hover.avn-hover-jsOver {
+  border-color: #444444 !important;
+  background-color: #555555 !important;
+  text-shadow: 0 -1px 0 #444444;
+  color: #bbbbbb !important;
+}
+.avn-color-grey-darker h1,
+.avn-color-grey-darker-hover:hover h1,
+.avn-color-grey-darker-hover.avn-hover-jsOver h1,
+.avn-color-grey-darker h3,
+.avn-color-grey-darker-hover:hover h3,
+.avn-color-grey-darker-hover.avn-hover-jsOver h3,
+.avn-color-grey-darker h5,
+.avn-color-grey-darker-hover:hover h5,
+.avn-color-grey-darker-hover.avn-hover-jsOver h5 {
+  color: #cccccc;
+}
+.avn-color-grey-darker h1 small,
+.avn-color-grey-darker-hover:hover h1 small,
+.avn-color-grey-darker-hover.avn-hover-jsOver h1 small,
+.avn-color-grey-darker h3 small,
+.avn-color-grey-darker-hover:hover h3 small,
+.avn-color-grey-darker-hover.avn-hover-jsOver h3 small,
+.avn-color-grey-darker h5 small,
+.avn-color-grey-darker-hover:hover h5 small,
+.avn-color-grey-darker-hover.avn-hover-jsOver h5 small {
+  color: #878787;
+}
+.avn-color-grey-darker hgroup h1 + *,
+.avn-color-grey-darker-hover:hover hgroup h1 + *,
+.avn-color-grey-darker-hover.avn-hover-jsOver hgroup h1 + *,
+.avn-color-grey-darker hgroup h3 + *,
+.avn-color-grey-darker-hover:hover hgroup h3 + *,
+.avn-color-grey-darker-hover.avn-hover-jsOver hgroup h3 + *,
+.avn-color-grey-darker hgroup h5 + *,
+.avn-color-grey-darker-hover:hover hgroup h5 + *,
+.avn-color-grey-darker-hover.avn-hover-jsOver hgroup h5 + * {
+  color: #878787;
+}
+.avn-color-grey-darker h2,
+.avn-color-grey-darker-hover:hover h2,
+.avn-color-grey-darker-hover.avn-hover-jsOver h2,
+.avn-color-grey-darker h4,
+.avn-color-grey-darker-hover:hover h4,
+.avn-color-grey-darker-hover.avn-hover-jsOver h4,
+.avn-color-grey-darker h6,
+.avn-color-grey-darker-hover:hover h6,
+.avn-color-grey-darker-hover.avn-hover-jsOver h6 {
+  color: #a9a9a9;
+}
+.avn-color-grey-darker h2 small,
+.avn-color-grey-darker-hover:hover h2 small,
+.avn-color-grey-darker-hover.avn-hover-jsOver h2 small,
+.avn-color-grey-darker h4 small,
+.avn-color-grey-darker-hover:hover h4 small,
+.avn-color-grey-darker-hover.avn-hover-jsOver h4 small,
+.avn-color-grey-darker h6 small,
+.avn-color-grey-darker-hover:hover h6 small,
+.avn-color-grey-darker-hover.avn-hover-jsOver h6 small {
+  color: #878787;
+}
+.avn-color-grey-darker hgroup h2 + *,
+.avn-color-grey-darker-hover:hover hgroup h2 + *,
+.avn-color-grey-darker-hover.avn-hover-jsOver hgroup h2 + *,
+.avn-color-grey-darker hgroup h4 + *,
+.avn-color-grey-darker-hover:hover hgroup h4 + *,
+.avn-color-grey-darker-hover.avn-hover-jsOver hgroup h4 + *,
+.avn-color-grey-darker hgroup h6 + *,
+.avn-color-grey-darker-hover:hover hgroup h6 + *,
+.avn-color-grey-darker-hover.avn-hover-jsOver hgroup h6 + * {
+  color: #878787;
+}
+.avn-color-grey-darker h2,
+.avn-color-grey-darker-hover:hover h2,
+.avn-color-grey-darker-hover.avn-hover-jsOver h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-grey-darker a,
+.avn-color-grey-darker-hover:hover a,
+.avn-color-grey-darker-hover.avn-hover-jsOver a,
+.avn-color-grey-darker a:link,
+.avn-color-grey-darker-hover:hover a:link,
+.avn-color-grey-darker-hover.avn-hover-jsOver a:link,
+.avn-color-grey-darker a:visited,
+.avn-color-grey-darker-hover:hover a:visited,
+.avn-color-grey-darker-hover.avn-hover-jsOver a:visited {
+  color: #d4d4d4;
+}
+.avn-color-grey-darker a:hover,
+.avn-color-grey-darker-hover:hover a:hover,
+.avn-color-grey-darker-hover.avn-hover-jsOver a:hover,
+.avn-color-grey-darker a:active,
+.avn-color-grey-darker-hover:hover a:active,
+.avn-color-grey-darker-hover.avn-hover-jsOver a:active,
+.avn-color-grey-darker a:focus,
+.avn-color-grey-darker-hover:hover a:focus,
+.avn-color-grey-darker-hover.avn-hover-jsOver a:focus {
+  color: #a2a2a2;
+}
+.avn-color-grey-darker ul.avn-list-nav > li,
+.avn-color-grey-darker-hover:hover ul.avn-list-nav > li,
+.avn-color-grey-darker-hover.avn-hover-jsOver ul.avn-list-nav > li {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-grey-darker blockquote,
+.avn-color-grey-darker-hover:hover blockquote,
+.avn-color-grey-darker-hover.avn-hover-jsOver blockquote {
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+.avn-color-grey-darker details[open],
+.avn-color-grey-darker-hover:hover details[open],
+.avn-color-grey-darker-hover.avn-hover-jsOver details[open] {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-grey-darker details[open] summary,
+.avn-color-grey-darker-hover:hover details[open] summary,
+.avn-color-grey-darker-hover.avn-hover-jsOver details[open] summary {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-grey-darker .avn-table th,
+.avn-color-grey-darker-hover:hover .avn-table th,
+.avn-color-grey-darker-hover.avn-hover-jsOver .avn-table th {
+  background-color: #555555;
+}
+.avn-color-grey-darker .avn-table th,
+.avn-color-grey-darker-hover:hover .avn-table th,
+.avn-color-grey-darker-hover.avn-hover-jsOver .avn-table th,
+.avn-color-grey-darker .avn-table td,
+.avn-color-grey-darker-hover:hover .avn-table td,
+.avn-color-grey-darker-hover.avn-hover-jsOver .avn-table td {
+  border-color: #767676;
+}
+.avn-color-grey-darker .avn-table-striped tr:nth-child(even),
+.avn-color-grey-darker-hover:hover .avn-table-striped tr:nth-child(even),
+.avn-color-grey-darker-hover.avn-hover-jsOver .avn-table-striped tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-grey-darker .avn-table-hover tr:hover,
+.avn-color-grey-darker-hover:hover .avn-table-hover tr:hover,
+.avn-color-grey-darker-hover.avn-hover-jsOver .avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+.avn-color-grey-darker code,
+.avn-color-grey-darker-hover:hover code,
+.avn-color-grey-darker-hover.avn-hover-jsOver code {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+@media (min-width: 1000px) {
+  .avn-color-grey-darker.avn-area-over:before,
+  .avn-color-grey-darker-hover:hover.avn-area-over:before,
+  .avn-color-grey-darker-hover.avn-hover-jsOver.avn-area-over:before,
+  .avn-color-grey-darker.avn-area-over:after,
+  .avn-color-grey-darker-hover:hover.avn-area-over:after,
+  .avn-color-grey-darker-hover.avn-hover-jsOver.avn-area-over:after {
+    border-color: #2c2c2c;
+  }
+  .avn-color-grey-darker.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-darker-hover:hover.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-darker-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-darker.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-darker-hover:hover.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-darker-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:after {
+    -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+}
+.avn-color-grey-darker.avn-grid-border > .avn-grid > *,
+.avn-color-grey-darker-hover:hover.avn-grid-border > .avn-grid > *,
+.avn-color-grey-darker-hover.avn-hover-jsOver.avn-grid-border > .avn-grid > * {
+  background-color: #555555;
+}
+.avn-color-grey-darker.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-darker-hover:hover.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-darker-hover.avn-hover-jsOver.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-darker.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-darker-hover:hover.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-darker-hover.avn-hover-jsOver.avn-grid-spacing-large.avn-grid-border {
+  background-color: transparent !important;
+}
+.avn-color-grey-darker.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-darker-hover:hover.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-darker-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-darker.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-darker-hover:hover.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-darker-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #232323;
+}
+.avn-color-grey-darkest,
+.avn-color-grey-darkest-hover:hover,
+.avn-color-grey-darkest-hover.avn-hover-jsOver {
+  border-color: #111111 !important;
+  background-color: #222222 !important;
+  text-shadow: 0 -1px 0 #111111;
+  color: #888888 !important;
+}
+.avn-color-grey-darkest h1,
+.avn-color-grey-darkest-hover:hover h1,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h1,
+.avn-color-grey-darkest h3,
+.avn-color-grey-darkest-hover:hover h3,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h3,
+.avn-color-grey-darkest h5,
+.avn-color-grey-darkest-hover:hover h5,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h5 {
+  color: #999999;
+}
+.avn-color-grey-darkest h1 small,
+.avn-color-grey-darkest-hover:hover h1 small,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h1 small,
+.avn-color-grey-darkest h3 small,
+.avn-color-grey-darkest-hover:hover h3 small,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h3 small,
+.avn-color-grey-darkest h5 small,
+.avn-color-grey-darkest-hover:hover h5 small,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h5 small {
+  color: #545454;
+}
+.avn-color-grey-darkest hgroup h1 + *,
+.avn-color-grey-darkest-hover:hover hgroup h1 + *,
+.avn-color-grey-darkest-hover.avn-hover-jsOver hgroup h1 + *,
+.avn-color-grey-darkest hgroup h3 + *,
+.avn-color-grey-darkest-hover:hover hgroup h3 + *,
+.avn-color-grey-darkest-hover.avn-hover-jsOver hgroup h3 + *,
+.avn-color-grey-darkest hgroup h5 + *,
+.avn-color-grey-darkest-hover:hover hgroup h5 + *,
+.avn-color-grey-darkest-hover.avn-hover-jsOver hgroup h5 + * {
+  color: #545454;
+}
+.avn-color-grey-darkest h2,
+.avn-color-grey-darkest-hover:hover h2,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h2,
+.avn-color-grey-darkest h4,
+.avn-color-grey-darkest-hover:hover h4,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h4,
+.avn-color-grey-darkest h6,
+.avn-color-grey-darkest-hover:hover h6,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h6 {
+  color: #767676;
+}
+.avn-color-grey-darkest h2 small,
+.avn-color-grey-darkest-hover:hover h2 small,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h2 small,
+.avn-color-grey-darkest h4 small,
+.avn-color-grey-darkest-hover:hover h4 small,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h4 small,
+.avn-color-grey-darkest h6 small,
+.avn-color-grey-darkest-hover:hover h6 small,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h6 small {
+  color: #545454;
+}
+.avn-color-grey-darkest hgroup h2 + *,
+.avn-color-grey-darkest-hover:hover hgroup h2 + *,
+.avn-color-grey-darkest-hover.avn-hover-jsOver hgroup h2 + *,
+.avn-color-grey-darkest hgroup h4 + *,
+.avn-color-grey-darkest-hover:hover hgroup h4 + *,
+.avn-color-grey-darkest-hover.avn-hover-jsOver hgroup h4 + *,
+.avn-color-grey-darkest hgroup h6 + *,
+.avn-color-grey-darkest-hover:hover hgroup h6 + *,
+.avn-color-grey-darkest-hover.avn-hover-jsOver hgroup h6 + * {
+  color: #545454;
+}
+.avn-color-grey-darkest h2,
+.avn-color-grey-darkest-hover:hover h2,
+.avn-color-grey-darkest-hover.avn-hover-jsOver h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-grey-darkest a,
+.avn-color-grey-darkest-hover:hover a,
+.avn-color-grey-darkest-hover.avn-hover-jsOver a,
+.avn-color-grey-darkest a:link,
+.avn-color-grey-darkest-hover:hover a:link,
+.avn-color-grey-darkest-hover.avn-hover-jsOver a:link,
+.avn-color-grey-darkest a:visited,
+.avn-color-grey-darkest-hover:hover a:visited,
+.avn-color-grey-darkest-hover.avn-hover-jsOver a:visited {
+  color: #a1a1a1;
+}
+.avn-color-grey-darkest a:hover,
+.avn-color-grey-darkest-hover:hover a:hover,
+.avn-color-grey-darkest-hover.avn-hover-jsOver a:hover,
+.avn-color-grey-darkest a:active,
+.avn-color-grey-darkest-hover:hover a:active,
+.avn-color-grey-darkest-hover.avn-hover-jsOver a:active,
+.avn-color-grey-darkest a:focus,
+.avn-color-grey-darkest-hover:hover a:focus,
+.avn-color-grey-darkest-hover.avn-hover-jsOver a:focus {
+  color: #6f6f6f;
+}
+.avn-color-grey-darkest ul.avn-list-nav > li,
+.avn-color-grey-darkest-hover:hover ul.avn-list-nav > li,
+.avn-color-grey-darkest-hover.avn-hover-jsOver ul.avn-list-nav > li {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-grey-darkest blockquote,
+.avn-color-grey-darkest-hover:hover blockquote,
+.avn-color-grey-darkest-hover.avn-hover-jsOver blockquote {
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+.avn-color-grey-darkest details[open],
+.avn-color-grey-darkest-hover:hover details[open],
+.avn-color-grey-darkest-hover.avn-hover-jsOver details[open] {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-grey-darkest details[open] summary,
+.avn-color-grey-darkest-hover:hover details[open] summary,
+.avn-color-grey-darkest-hover.avn-hover-jsOver details[open] summary {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-grey-darkest .avn-table th,
+.avn-color-grey-darkest-hover:hover .avn-table th,
+.avn-color-grey-darkest-hover.avn-hover-jsOver .avn-table th {
+  background-color: #222222;
+}
+.avn-color-grey-darkest .avn-table th,
+.avn-color-grey-darkest-hover:hover .avn-table th,
+.avn-color-grey-darkest-hover.avn-hover-jsOver .avn-table th,
+.avn-color-grey-darkest .avn-table td,
+.avn-color-grey-darkest-hover:hover .avn-table td,
+.avn-color-grey-darkest-hover.avn-hover-jsOver .avn-table td {
+  border-color: #434343;
+}
+.avn-color-grey-darkest .avn-table-striped tr:nth-child(even),
+.avn-color-grey-darkest-hover:hover .avn-table-striped tr:nth-child(even),
+.avn-color-grey-darkest-hover.avn-hover-jsOver .avn-table-striped tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-grey-darkest .avn-table-hover tr:hover,
+.avn-color-grey-darkest-hover:hover .avn-table-hover tr:hover,
+.avn-color-grey-darkest-hover.avn-hover-jsOver .avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+.avn-color-grey-darkest code,
+.avn-color-grey-darkest-hover:hover code,
+.avn-color-grey-darkest-hover.avn-hover-jsOver code {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+@media (min-width: 1000px) {
+  .avn-color-grey-darkest.avn-area-over:before,
+  .avn-color-grey-darkest-hover:hover.avn-area-over:before,
+  .avn-color-grey-darkest-hover.avn-hover-jsOver.avn-area-over:before,
+  .avn-color-grey-darkest.avn-area-over:after,
+  .avn-color-grey-darkest-hover:hover.avn-area-over:after,
+  .avn-color-grey-darkest-hover.avn-hover-jsOver.avn-area-over:after {
+    border-color: #000000;
+  }
+  .avn-color-grey-darkest.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-darkest-hover:hover.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-darkest-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:before,
+  .avn-color-grey-darkest.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-darkest-hover:hover.avn-area-over.avn-color-transition:after,
+  .avn-color-grey-darkest-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:after {
+    -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+}
+.avn-color-grey-darkest.avn-grid-border > .avn-grid > *,
+.avn-color-grey-darkest-hover:hover.avn-grid-border > .avn-grid > *,
+.avn-color-grey-darkest-hover.avn-hover-jsOver.avn-grid-border > .avn-grid > * {
+  background-color: #222222;
+}
+.avn-color-grey-darkest.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-darkest-hover:hover.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-darkest-hover.avn-hover-jsOver.avn-grid-spacing.avn-grid-border,
+.avn-color-grey-darkest.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-darkest-hover:hover.avn-grid-spacing-large.avn-grid-border,
+.avn-color-grey-darkest-hover.avn-hover-jsOver.avn-grid-spacing-large.avn-grid-border {
+  background-color: transparent !important;
+}
+.avn-color-grey-darkest.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-darkest-hover:hover.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-darkest-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-grey-darkest.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-darkest-hover:hover.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-grey-darkest-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #000000;
+}
+.avn-area-fill.avn-color-grey-darkest + .avn-area-fill.avn-color-grey-darker {
+  border-top-color: #111111 !important;
+}
+.avn-area-fill.avn-color-grey-darker + .avn-area-fill.avn-color-grey-dark {
+  border-top-color: #444444 !important;
+}
+.avn-area-fill.avn-color-grey-dark + .avn-area-fill.avn-color-grey-light {
+  border-top-color: #777777 !important;
+}
+.avn-area-fill.avn-color-grey-light + .avn-area-fill.avn-color-grey-lighter {
+  border-top-color: #c6c6c6 !important;
+}
+.avn-area-fill.avn-color-grey-lighter + .avn-area-fill.avn-color-grey-lightest {
+  border-top-color: #d6d6d6 !important;
+}
+.avn-area-fill.avn-color-grey-lightest + .avn-area-fill.avn-color-default {
+  border-top-color: #e6e6e6 !important;
+}
+/* ------
+   helper
+   ------ */
+.avn-clearfix:after {
+  content: "\0020";
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  font-size: 0;
+  zoom: 1
+  /* Hack for IE7 **/
+}
+.avn-overhidden {
+  overflow: hidden;
+}
+/* ------
+   custom
+   ------ */
+@font-face {
+  font-family: AvineFontText;
+  font-weight: normal;
+  src: url(font/Ubuntu/Ubuntu-Light.ttf);
+}
+@font-face {
+  font-family: AvineFontText;
+  font-weight: bold;
+  src: url(font/Ubuntu/Ubuntu-Regular.ttf);
+}
+@font-face {
+  font-family: AvineFontTitle;
+  src: url(font/Nova_Square/NovaSquare.ttf);
+}
+@font-face {
+  font-family: AvineFontCode;
+  src: url(font/Roboto_Mono/RobotoMono-Light.ttf);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: AvineFontTitle, Tahoma, Geneva, sans-serif;
+}
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.avn-color-primary,
+.avn-color-primary-hover:hover,
+.avn-color-primary-hover.avn-hover-jsOver {
+  border-color: #6f556a !important;
+  background-color: #8a5c81 !important;
+  text-shadow: 0 -1px 0 #6f556a;
+  color: #e0d1dd !important;
+}
+.avn-color-primary h1,
+.avn-color-primary-hover:hover h1,
+.avn-color-primary-hover.avn-hover-jsOver h1,
+.avn-color-primary h3,
+.avn-color-primary-hover:hover h3,
+.avn-color-primary-hover.avn-hover-jsOver h3,
+.avn-color-primary h5,
+.avn-color-primary-hover:hover h5,
+.avn-color-primary-hover.avn-hover-jsOver h5 {
+  color: #eee5ec;
+}
+.avn-color-primary h1 small,
+.avn-color-primary-hover:hover h1 small,
+.avn-color-primary-hover.avn-hover-jsOver h1 small,
+.avn-color-primary h3 small,
+.avn-color-primary-hover:hover h3 small,
+.avn-color-primary-hover.avn-hover-jsOver h3 small,
+.avn-color-primary h5 small,
+.avn-color-primary-hover:hover h5 small,
+.avn-color-primary-hover.avn-hover-jsOver h5 small {
+  color: #b792af;
+}
+.avn-color-primary hgroup h1 + *,
+.avn-color-primary-hover:hover hgroup h1 + *,
+.avn-color-primary-hover.avn-hover-jsOver hgroup h1 + *,
+.avn-color-primary hgroup h3 + *,
+.avn-color-primary-hover:hover hgroup h3 + *,
+.avn-color-primary-hover.avn-hover-jsOver hgroup h3 + *,
+.avn-color-primary hgroup h5 + *,
+.avn-color-primary-hover:hover hgroup h5 + *,
+.avn-color-primary-hover.avn-hover-jsOver hgroup h5 + * {
+  color: #b792af;
+}
+.avn-color-primary h2,
+.avn-color-primary-hover:hover h2,
+.avn-color-primary-hover.avn-hover-jsOver h2,
+.avn-color-primary h4,
+.avn-color-primary-hover:hover h4,
+.avn-color-primary-hover.avn-hover-jsOver h4,
+.avn-color-primary h6,
+.avn-color-primary-hover:hover h6,
+.avn-color-primary-hover.avn-hover-jsOver h6 {
+  color: #d2bcce;
+}
+.avn-color-primary h2 small,
+.avn-color-primary-hover:hover h2 small,
+.avn-color-primary-hover.avn-hover-jsOver h2 small,
+.avn-color-primary h4 small,
+.avn-color-primary-hover:hover h4 small,
+.avn-color-primary-hover.avn-hover-jsOver h4 small,
+.avn-color-primary h6 small,
+.avn-color-primary-hover:hover h6 small,
+.avn-color-primary-hover.avn-hover-jsOver h6 small {
+  color: #b792af;
+}
+.avn-color-primary hgroup h2 + *,
+.avn-color-primary-hover:hover hgroup h2 + *,
+.avn-color-primary-hover.avn-hover-jsOver hgroup h2 + *,
+.avn-color-primary hgroup h4 + *,
+.avn-color-primary-hover:hover hgroup h4 + *,
+.avn-color-primary-hover.avn-hover-jsOver hgroup h4 + *,
+.avn-color-primary hgroup h6 + *,
+.avn-color-primary-hover:hover hgroup h6 + *,
+.avn-color-primary-hover.avn-hover-jsOver hgroup h6 + * {
+  color: #b792af;
+}
+.avn-color-primary h2,
+.avn-color-primary-hover:hover h2,
+.avn-color-primary-hover.avn-hover-jsOver h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-primary a,
+.avn-color-primary-hover:hover a,
+.avn-color-primary-hover.avn-hover-jsOver a,
+.avn-color-primary a:link,
+.avn-color-primary-hover:hover a:link,
+.avn-color-primary-hover.avn-hover-jsOver a:link,
+.avn-color-primary a:visited,
+.avn-color-primary-hover:hover a:visited,
+.avn-color-primary-hover.avn-hover-jsOver a:visited {
+  color: #f4eff3;
+}
+.avn-color-primary a:hover,
+.avn-color-primary-hover:hover a:hover,
+.avn-color-primary-hover.avn-hover-jsOver a:hover,
+.avn-color-primary a:active,
+.avn-color-primary-hover:hover a:active,
+.avn-color-primary-hover.avn-hover-jsOver a:active,
+.avn-color-primary a:focus,
+.avn-color-primary-hover:hover a:focus,
+.avn-color-primary-hover.avn-hover-jsOver a:focus {
+  color: #cdb3c7;
+}
+.avn-color-primary ul.avn-list-nav > li,
+.avn-color-primary-hover:hover ul.avn-list-nav > li,
+.avn-color-primary-hover.avn-hover-jsOver ul.avn-list-nav > li {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-primary blockquote,
+.avn-color-primary-hover:hover blockquote,
+.avn-color-primary-hover.avn-hover-jsOver blockquote {
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+.avn-color-primary details[open],
+.avn-color-primary-hover:hover details[open],
+.avn-color-primary-hover.avn-hover-jsOver details[open] {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-primary details[open] summary,
+.avn-color-primary-hover:hover details[open] summary,
+.avn-color-primary-hover.avn-hover-jsOver details[open] summary {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-primary .avn-table th,
+.avn-color-primary-hover:hover .avn-table th,
+.avn-color-primary-hover.avn-hover-jsOver .avn-table th {
+  background-color: #8a5c81;
+}
+.avn-color-primary .avn-table th,
+.avn-color-primary-hover:hover .avn-table th,
+.avn-color-primary-hover.avn-hover-jsOver .avn-table th,
+.avn-color-primary .avn-table td,
+.avn-color-primary-hover:hover .avn-table td,
+.avn-color-primary-hover.avn-hover-jsOver .avn-table td {
+  border-color: #a2859d;
+}
+.avn-color-primary .avn-table-striped tr:nth-child(even),
+.avn-color-primary-hover:hover .avn-table-striped tr:nth-child(even),
+.avn-color-primary-hover.avn-hover-jsOver .avn-table-striped tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-primary .avn-table-hover tr:hover,
+.avn-color-primary-hover:hover .avn-table-hover tr:hover,
+.avn-color-primary-hover.avn-hover-jsOver .avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+.avn-color-primary code,
+.avn-color-primary-hover:hover code,
+.avn-color-primary-hover.avn-hover-jsOver code {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+@media (min-width: 1000px) {
+  .avn-color-primary.avn-area-over:before,
+  .avn-color-primary-hover:hover.avn-area-over:before,
+  .avn-color-primary-hover.avn-hover-jsOver.avn-area-over:before,
+  .avn-color-primary.avn-area-over:after,
+  .avn-color-primary-hover:hover.avn-area-over:after,
+  .avn-color-primary-hover.avn-hover-jsOver.avn-area-over:after {
+    border-color: #533f4f;
+  }
+  .avn-color-primary.avn-area-over.avn-color-transition:before,
+  .avn-color-primary-hover:hover.avn-area-over.avn-color-transition:before,
+  .avn-color-primary-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:before,
+  .avn-color-primary.avn-area-over.avn-color-transition:after,
+  .avn-color-primary-hover:hover.avn-area-over.avn-color-transition:after,
+  .avn-color-primary-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:after {
+    -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+}
+.avn-color-primary.avn-grid-border > .avn-grid > *,
+.avn-color-primary-hover:hover.avn-grid-border > .avn-grid > *,
+.avn-color-primary-hover.avn-hover-jsOver.avn-grid-border > .avn-grid > * {
+  background-color: #8a5c81;
+}
+.avn-color-primary.avn-grid-spacing.avn-grid-border,
+.avn-color-primary-hover:hover.avn-grid-spacing.avn-grid-border,
+.avn-color-primary-hover.avn-hover-jsOver.avn-grid-spacing.avn-grid-border,
+.avn-color-primary.avn-grid-spacing-large.avn-grid-border,
+.avn-color-primary-hover:hover.avn-grid-spacing-large.avn-grid-border,
+.avn-color-primary-hover.avn-hover-jsOver.avn-grid-spacing-large.avn-grid-border {
+  background-color: transparent !important;
+}
+.avn-color-primary.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-primary-hover:hover.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-primary-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-primary.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-primary-hover:hover.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-primary-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #4a3846;
+}
+.avn-color-secondary,
+.avn-color-secondary-hover:hover,
+.avn-color-secondary-hover.avn-hover-jsOver {
+  border-color: #5e6f55 !important;
+  background-color: #6b8a5c !important;
+  text-shadow: 0 -1px 0 #5e6f55;
+  color: #d6e0d1 !important;
+}
+.avn-color-secondary h1,
+.avn-color-secondary-hover:hover h1,
+.avn-color-secondary-hover.avn-hover-jsOver h1,
+.avn-color-secondary h3,
+.avn-color-secondary-hover:hover h3,
+.avn-color-secondary-hover.avn-hover-jsOver h3,
+.avn-color-secondary h5,
+.avn-color-secondary-hover:hover h5,
+.avn-color-secondary-hover.avn-hover-jsOver h5 {
+  color: #e8eee5;
+}
+.avn-color-secondary h1 small,
+.avn-color-secondary-hover:hover h1 small,
+.avn-color-secondary-hover.avn-hover-jsOver h1 small,
+.avn-color-secondary h3 small,
+.avn-color-secondary-hover:hover h3 small,
+.avn-color-secondary-hover.avn-hover-jsOver h3 small,
+.avn-color-secondary h5 small,
+.avn-color-secondary-hover:hover h5 small,
+.avn-color-secondary-hover.avn-hover-jsOver h5 small {
+  color: #9eb792;
+}
+.avn-color-secondary hgroup h1 + *,
+.avn-color-secondary-hover:hover hgroup h1 + *,
+.avn-color-secondary-hover.avn-hover-jsOver hgroup h1 + *,
+.avn-color-secondary hgroup h3 + *,
+.avn-color-secondary-hover:hover hgroup h3 + *,
+.avn-color-secondary-hover.avn-hover-jsOver hgroup h3 + *,
+.avn-color-secondary hgroup h5 + *,
+.avn-color-secondary-hover:hover hgroup h5 + *,
+.avn-color-secondary-hover.avn-hover-jsOver hgroup h5 + * {
+  color: #9eb792;
+}
+.avn-color-secondary h2,
+.avn-color-secondary-hover:hover h2,
+.avn-color-secondary-hover.avn-hover-jsOver h2,
+.avn-color-secondary h4,
+.avn-color-secondary-hover:hover h4,
+.avn-color-secondary-hover.avn-hover-jsOver h4,
+.avn-color-secondary h6,
+.avn-color-secondary-hover:hover h6,
+.avn-color-secondary-hover.avn-hover-jsOver h6 {
+  color: #c3d2bc;
+}
+.avn-color-secondary h2 small,
+.avn-color-secondary-hover:hover h2 small,
+.avn-color-secondary-hover.avn-hover-jsOver h2 small,
+.avn-color-secondary h4 small,
+.avn-color-secondary-hover:hover h4 small,
+.avn-color-secondary-hover.avn-hover-jsOver h4 small,
+.avn-color-secondary h6 small,
+.avn-color-secondary-hover:hover h6 small,
+.avn-color-secondary-hover.avn-hover-jsOver h6 small {
+  color: #9eb792;
+}
+.avn-color-secondary hgroup h2 + *,
+.avn-color-secondary-hover:hover hgroup h2 + *,
+.avn-color-secondary-hover.avn-hover-jsOver hgroup h2 + *,
+.avn-color-secondary hgroup h4 + *,
+.avn-color-secondary-hover:hover hgroup h4 + *,
+.avn-color-secondary-hover.avn-hover-jsOver hgroup h4 + *,
+.avn-color-secondary hgroup h6 + *,
+.avn-color-secondary-hover:hover hgroup h6 + *,
+.avn-color-secondary-hover.avn-hover-jsOver hgroup h6 + * {
+  color: #9eb792;
+}
+.avn-color-secondary h2,
+.avn-color-secondary-hover:hover h2,
+.avn-color-secondary-hover.avn-hover-jsOver h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-secondary a,
+.avn-color-secondary-hover:hover a,
+.avn-color-secondary-hover.avn-hover-jsOver a,
+.avn-color-secondary a:link,
+.avn-color-secondary-hover:hover a:link,
+.avn-color-secondary-hover.avn-hover-jsOver a:link,
+.avn-color-secondary a:visited,
+.avn-color-secondary-hover:hover a:visited,
+.avn-color-secondary-hover.avn-hover-jsOver a:visited {
+  color: #f1f4ef;
+}
+.avn-color-secondary a:hover,
+.avn-color-secondary-hover:hover a:hover,
+.avn-color-secondary-hover.avn-hover-jsOver a:hover,
+.avn-color-secondary a:active,
+.avn-color-secondary-hover:hover a:active,
+.avn-color-secondary-hover.avn-hover-jsOver a:active,
+.avn-color-secondary a:focus,
+.avn-color-secondary-hover:hover a:focus,
+.avn-color-secondary-hover.avn-hover-jsOver a:focus {
+  color: #bccdb3;
+}
+.avn-color-secondary ul.avn-list-nav > li,
+.avn-color-secondary-hover:hover ul.avn-list-nav > li,
+.avn-color-secondary-hover.avn-hover-jsOver ul.avn-list-nav > li {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-secondary blockquote,
+.avn-color-secondary-hover:hover blockquote,
+.avn-color-secondary-hover.avn-hover-jsOver blockquote {
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+.avn-color-secondary details[open],
+.avn-color-secondary-hover:hover details[open],
+.avn-color-secondary-hover.avn-hover-jsOver details[open] {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-secondary details[open] summary,
+.avn-color-secondary-hover:hover details[open] summary,
+.avn-color-secondary-hover.avn-hover-jsOver details[open] summary {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.avn-color-secondary .avn-table th,
+.avn-color-secondary-hover:hover .avn-table th,
+.avn-color-secondary-hover.avn-hover-jsOver .avn-table th {
+  background-color: #6b8a5c;
+}
+.avn-color-secondary .avn-table th,
+.avn-color-secondary-hover:hover .avn-table th,
+.avn-color-secondary-hover.avn-hover-jsOver .avn-table th,
+.avn-color-secondary .avn-table td,
+.avn-color-secondary-hover:hover .avn-table td,
+.avn-color-secondary-hover.avn-hover-jsOver .avn-table td {
+  border-color: #8fa285;
+}
+.avn-color-secondary .avn-table-striped tr:nth-child(even),
+.avn-color-secondary-hover:hover .avn-table-striped tr:nth-child(even),
+.avn-color-secondary-hover.avn-hover-jsOver .avn-table-striped tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.avn-color-secondary .avn-table-hover tr:hover,
+.avn-color-secondary-hover:hover .avn-table-hover tr:hover,
+.avn-color-secondary-hover.avn-hover-jsOver .avn-table-hover tr:hover {
+  background-color: rgba(255, 255, 0, 0.15);
+}
+.avn-color-secondary code,
+.avn-color-secondary-hover:hover code,
+.avn-color-secondary-hover.avn-hover-jsOver code {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+@media (min-width: 1000px) {
+  .avn-color-secondary.avn-area-over:before,
+  .avn-color-secondary-hover:hover.avn-area-over:before,
+  .avn-color-secondary-hover.avn-hover-jsOver.avn-area-over:before,
+  .avn-color-secondary.avn-area-over:after,
+  .avn-color-secondary-hover:hover.avn-area-over:after,
+  .avn-color-secondary-hover.avn-hover-jsOver.avn-area-over:after {
+    border-color: #46533f;
+  }
+  .avn-color-secondary.avn-area-over.avn-color-transition:before,
+  .avn-color-secondary-hover:hover.avn-area-over.avn-color-transition:before,
+  .avn-color-secondary-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:before,
+  .avn-color-secondary.avn-area-over.avn-color-transition:after,
+  .avn-color-secondary-hover:hover.avn-area-over.avn-color-transition:after,
+  .avn-color-secondary-hover.avn-hover-jsOver.avn-area-over.avn-color-transition:after {
+    -webkit-transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+            transition: border 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  }
+}
+.avn-color-secondary.avn-grid-border > .avn-grid > *,
+.avn-color-secondary-hover:hover.avn-grid-border > .avn-grid > *,
+.avn-color-secondary-hover.avn-hover-jsOver.avn-grid-border > .avn-grid > * {
+  background-color: #6b8a5c;
+}
+.avn-color-secondary.avn-grid-spacing.avn-grid-border,
+.avn-color-secondary-hover:hover.avn-grid-spacing.avn-grid-border,
+.avn-color-secondary-hover.avn-hover-jsOver.avn-grid-spacing.avn-grid-border,
+.avn-color-secondary.avn-grid-spacing-large.avn-grid-border,
+.avn-color-secondary-hover:hover.avn-grid-spacing-large.avn-grid-border,
+.avn-color-secondary-hover.avn-hover-jsOver.avn-grid-spacing-large.avn-grid-border {
+  background-color: transparent !important;
+}
+.avn-color-secondary.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-secondary-hover:hover.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-secondary-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > :hover,
+.avn-color-secondary.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-secondary-hover:hover.avn-grid-wrap > .avn-drop > .avn-hover-jsOver,
+.avn-color-secondary-hover.avn-hover-jsOver.avn-grid-wrap > .avn-drop > .avn-hover-jsOver {
+  background-color: #3e4a38;
+}
+/*# sourceMappingURL=avine-css.css.map */

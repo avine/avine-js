@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>loading - jQuery plugin</title>
+
+	<link rel="shortcut icon" href="../../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../../index.css" />
+
+	<script src="jquery-1.9.1.js"></script>
+	<script src="jquery-createPlugin.js"></script>
+	<script src="jquery-loading.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../prism/prism.css" />
+	<script src="../../prism/prism.js"></script>
+
+	<style>
+		.links a { margin-right: 10px; }
+		.test { margin: 20px 0; padding: 10px; border: 1px dotted #aaa; }
+		input, select { width: 20%; }
+	</style>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../../index.html" class="logo" style="width:32px;"><img src="../../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>loading <span>- jQuery plugin</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines"><em>loading</em> permet d'afficher un retour visuel au chargement de données asynchrone.
+			Ce plugin est basé sur un générateur de code simplifiant la création de plugins jQuery.</h4>
+
+
+
+<hr />
+<h2>Introduction</h2>
+<p>Le code suivant montre la syntaxe de base pour invoquer le plugin sur un object jQuery.</p>
+
+<pre><code class="language-markup">&lt;div class="test"&gt; &lt;!-- content --&gt; &lt;/div&gt;
+&lt;div class="test"&gt; &lt;!-- content --&gt; &lt;/div&gt;
+
+&lt;script&gt; $(".test").loading(); &lt;/script&gt;
+</code></pre>
+
+
+
+<hr />
+<h2>Demo</h2>
+<p>Cliquez sur les boutons pour voir le plugin en action.</p>
+
+<div class="online-demo">
+
+	<div class="test">
+		<label for="name">Your name :</label> <input type="text" id="name" /> &nbsp; &nbsp;
+		<label for="gender">Your gender :</label> <select id="gender"><option value="0">Woman</option><option value="1">Man</option></select>
+	</div>
+
+	<div class="test" style="background-color:#bbb; color:white; text-shadow:none;">
+		<label for="address">Your adress :</label> <input type="text" id="address" /> &nbsp; &nbsp;
+		<label for="zip">Your zip code :</label> <input type="text" id="zip" />
+	</div>
+
+	<h4>Actions :</h4>
+	<div class="links">
+		<a href="#" id="progress">Progress </a>
+		<a href="#" id="success">Success </a>
+		<a href="#" id="error">Errror </a>
+		<a href="#" id="complete">Complete </a>
+		<a href="#" id="remove">Remove </a>
+		<br /><br />
+		<a href="#" id="change-options">Change options </a>
+		<a href="#" id="restore-options">Restore options </a>
+	</div>
+
+</div>
+
+<script>
+$("#progress").click(function (e) {
+	$(".test").loading('progress'); // Same result as: $(".test").loading();
+	e.preventDefault();
+});
+$("#success").click(function (e) {
+	$(".test").loading('success');
+	e.preventDefault();
+});
+$("#error").click(function (e) {
+	$(".test").loading('error');
+	e.preventDefault();
+});
+$("#complete").click(function (e) {
+	$(".test").loading('complete');
+	e.preventDefault();
+});
+$("#remove").click(function (e) {
+	$(".test").loading('remove');
+	e.preventDefault();
+});
+
+$("#change-options").click(function (e) {
+	$(".test").loading({ bgColor: '#ffd800', opacity: .8 });
+	e.preventDefault();
+});
+$("#restore-options").click(function (e) {
+	var settings = $.fn.loading.settings;
+	$(".test").loading({ bgColor: settings.bgColor, opacity: settings.opacity });
+	e.preventDefault();
+});
+</script>
+
+
+
+<hr />
+<h2>Télécharger</h2>
+
+<ul>
+	<li><a href="jquery-createPlugin.js">jquery-createPlugin.js</a><br />
+		<em>Générateur de code permettant de créer rapidemment des plugins</em></li>
+	<li><a href="jquery-loading.js">jquery-loading.js</a><br />
+		<em>Affiche un retour visuel pendant le chargement de données asynchrone</em></li>
+</ul>
+
+<p class="msg-info">Pour en savoir plus sur le fonctionnement du plugin, repportez-vous à la <a href="demo.html">version AvineJS de <em>loading</em></a>.</p>
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

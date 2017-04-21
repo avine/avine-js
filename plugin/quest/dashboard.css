@@ -1,0 +1,44 @@
+/* Avine. Copyright (c) 2013-2015 Stéphane Francel (http://avine.fr). Dual licensed under the MIT and GPL Version 2 licenses. */
+
+.avn-dashboard-main {
+	display: table;
+	box-shadow: 1px 1px 3px #ccc;
+	border: 1px solid #bbb;
+	border-right: none;
+	background-color: white;
+	font-size: x-small;
+	line-height: 1.5em;
+}
+.avn-dashboard-panel {
+	display: table-cell;
+	border-right: 1px solid #bbb;
+}
+.avn-dashboard-title {
+	margin: 1px;
+	padding: 1px 5px;
+	background-color: #2C79B3;
+	color: white;
+	text-shadow: none;
+	text-align: center;
+}
+.avn-dashboard-content {
+	padding: 5px;
+}
+.avn-dashboard-content em {
+	font-style: normal;
+	color: #ccc;
+}
+
+#dashboard {
+	position: fixed;
+	z-index: 99;
+	left: auto;
+	right: 0;
+	top: 0;
+	margin: 5px;
+}
+#dashboard.dashboard-flip {
+	left: 0;
+	right: auto;
+	box-shadow: -1px 1px 3px #ccc;
+}

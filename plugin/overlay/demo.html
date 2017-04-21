@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Overlay plugin - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../../favicon.ico" />
+
+	<link rel="stylesheet" type="text/css" href="../../index.css" />
+
+	<!-- AvineJS Core -->
+	<script src="../../avine-js.js"></script>
+
+	<!-- Avine Overlay plugin -->
+	<link rel="stylesheet" type="text/css" href="overlay.css" /><!-- optional -->
+	<script src="overlay.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../prism/prism.css" />
+	<script src="../../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../../index.html" class="logo" style="width:32px;"><img src="../../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>Overlay plugin <span>- AvineJS</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines"><em>Overlay</em> permet de générer des fenêtres interactives comme des infos-bulles (tooltip),
+			des fenêtres déplaçables (draggable popup) ou encore des boîtes de dialogue confirmer/annuler (prompt).
+			Le paramétrage s'effectue en définissant un élément déclencheur <em>(source)</em> et un élément cible <em>(target)</em>.
+			Le premier déclenche l'ouverture du second au clic ou au passage de la souris selon le besoin !</h4>
+
+
+
+<hr />
+<h2>Info-bulle évoluée</h2>
+<p>Par défaut, Overlay se comporte comme une info-bulle dont l'ouverture est déclenchée au passage de la souris.
+	Seul l'élément <em>source</em> est nécessaire au paramétrage. L'élément adjacent qui le suit immédiatement est alors considéré comme la <em>target</em>.
+	Notez que AvineJS s'adapte au mobile et traduit par exemple un événement comme <em>mouseover</em> par <em>touchestart</em> de manière transparente.</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+$.dom.ready(function(){
+	$('.tooltip').overlay();
+});
+&lt;/script&gt;
+
+&lt;a href=&quot;#&quot; class=&quot;tooltip&quot;&gt;Qu'est ce que AvineJS ?&lt;/a&gt;
+&lt;div&gt;C'est un puissant framework Javascript, tout nouveau, tout beau !&lt;br /&gt;
+	&lt;a href=&quot;http://avine.fr/&quot;&gt;En savoir plus sur l'auteur.&lt;/a&gt;&lt;/div&gt;
+</code></pre>
+
+<div class="online-demo">
+
+<script>
+$.dom.ready(function(){
+	$('.tooltip').overlay();
+});
+</script>
+
+<a href="#" class="tooltip">Qu'est ce que AvineJS ?</a>
+<div>C'est un puissant framework Javascript, tout nouveau, tout beau !<br />
+	<a href="http://avine.fr/">En savoir plus sur l'auteur.</a></div>
+
+</div>
+
+
+
+<hr />
+<h2>Info-bulle "classique"...</h2>
+<p>Pour utiliser l'attribut <em>title</em> de la source comme <em>target</em>, et remplacer l'info-bulle du système, rien de plus simple comme le montre l'exemple suivant !
+	Bien sûr, dans ce cas le contenu de l'info-bulle se limite à du texte.
+	Notez que l'info-bulle apparaît à l'endroit le plus adéquat, en fonction de la position de la source par rapport à la page.</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+$.dom.ready(function(){
+	$('.tooltip-title').overlay({
+		target: 'title' // get the title attribute of the source as a target
+	});
+});
+&lt;/script&gt;
+
+&lt;p style=&quot;text-align:right;&quot;&gt;
+	&lt;a href=&quot;#&quot; class=&quot;tooltip-title&quot; title=&quot;C'est un puissant framework Javascript, tout nouveau, tout beau !&quot;&gt;
+		Qu'est ce que AvineJS ?&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+
+<div class="online-demo">
+
+<script>
+$.dom.ready(function(){
+	$('.tooltip-title').overlay({
+		target: 'title' // get the title attribute of the source as a target
+	});
+});
+</script>
+
+<p style="text-align:right;">
+	<a href="#" class="tooltip-title" title="C'est un puissant framework Javascript, tout nouveau, tout beau !">
+		Qu'est ce que AvineJS ?</a></p>
+
+</div>
+
+
+
+<hr />
+<h2>Fenêtre déplaçable</h2>
+<p>L'exemple suivant montre comment ouvrir une fenêtre déplaçable.
+	Il faut renseigner le paramètre <em>position</em> à la valeur <em>'absolute'</em> (au lieu de <em>'auto'</em>  qui est la valeur par défaut).
+	Notez que le paramètre <em>title</em> permet d'ajouter un bloc d'entête à la fenêtre.
+	Notez également un comportement intéressant : si plusieurs fenêtres sont ouvertes, la dernière est toujours en premier plan.
+	Enfin, sachez que vous pouvez fermer une fenêtre à l'aide du bouton dédié à cet effet, mais également en cliquant sur la touche <em>ESC</em>.</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+$.dom.ready(function(){
+	$('.drag1').overlay({
+		mouseover:	false,
+		position:	'absolute',
+		title:		'AvineJS'
+	});
+	$('.drag2').overlay({
+		target: 'title',
+		mouseover:	false,
+		position:	'absolute'
+	});
+});
+&lt;/script&gt;
+
+&lt;a href=&quot;#&quot; class=&quot;drag1&quot;&gt;Qu'est ce que AvineJS ?&lt;/a&gt;
+&lt;div&gt;
+	&lt;p&gt;C'est un puissant framework Javascript, tout nouveau, tout beau !&lt;br /&gt;
+		AvineJS est modulaire et extensible, et en plus  bien codé...&lt;/p&gt;
+	&lt;a href=&quot;http://avine.fr/&quot;&gt;En savoir plus sur l'auteur.&lt;/a&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;drag2&quot; title=&quot;Un framework PHP puissant modulaire et extensible !&quot;&gt;Mais Avine c'est un aussi...&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+
+<div class="online-demo">
+
+<script>
+$.dom.ready(function(){
+	$('.drag1').overlay({
+		mouseover:	false,
+		position:	'absolute',
+		title:		'AvineJS'
+	});
+	$('.drag2').overlay({
+		target: 'title',
+		mouseover:	false,
+		position:	'absolute'
+	});
+});
+</script>
+
+<a href="#" class="drag1">Qu'est ce que AvineJS ?</a>
+<div>
+	<p>C'est un puissant framework Javascript, tout nouveau, tout beau !<br />
+		AvineJS est modulaire et extensible, et en plus il est bien codé...</p>
+	<a href="http://avine.fr/">En savoir plus sur l'auteur.</a></div>
+
+<p><a href="#" class="drag2" title="Un framework PHP puissant modulaire et extensible !">Mais Avine c'est un aussi...</a></p>
+
+</div>
+
+
+
+<hr />
+<h2>Fenêtre de confirmation</h2>
+<p>Dans le cas où la <em>source</em> est un lien (requête GET), il est possible d'approcher le comportement de la fonction Javascript <em>prompt</em>.
+	A l'ouverture de la fenêtre, l'utilisateur peut confirmer ou annuler le suivi du lien.
+	Notez cette fois l'utilisation du paramètre <em>blur</em> permettant de griser le fond d'écran.</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+$.dom.ready(function(){
+	$('.confirm').overlay({
+		mouseover:	false,
+		position:	'fixed',
+		fade:		0,
+		blur:		150
+	});
+});
+&lt;/script&gt;
+
+&lt;a href=&quot;#delete&quot; class=&quot;confirm&quot;&gt;Effacer l'article&lt;/a&gt;
+&lt;div&gt;Vous êtes sur le point d'effacer l'article.
+	Attention, l'opération est irréversible !&lt;br /&gt;
+	Etes-vous vraiment sûr que cet article est bon pour la corbeille...?&lt;/div&gt;
+</code></pre>
+
+<div class="online-demo">
+
+<script>
+$.dom.ready(function(){
+	$('.confirm').overlay({
+		mouseover:	false,
+		position:	'fixed',
+		fade:		0,
+		blur:		150
+	});
+});
+</script>
+
+<a href="#delete" class="confirm">Effacer l'article</a>
+<div>Vous êtes sur le point d'effacer l'article.
+	Attention, l'opération est irréversible !<br />
+	<strong>Etes-vous vraiment sûr que cet article est bon pour la corbeille...?</strong></div>
+
+</div>
+
+
+
+<hr />
+<h2>Une nouvelle dimension s'ouvre à l'horizon...</h2>
+<p>Oui, c'est un jeu de mots... Vous pouvez si besoin fixer les dimensions de la fenêtre (en px ou en %).
+	C'est particulièrement utile dans le cas où la <em>target</em> contient un texte vraiment long (comme une license à accepter, après l'avoir lu... j'insiste...).
+	Attention ! La <em>target</em> est enveloppée dans un conteneur. Ce dernier est donc un peu plus grand que la taille initialement paramétrée.
+	Notez que par défaut la taille de la fenêtre s'adapte en fonction de son contenu.
+	Notez également qu'il est possible de paramétrer l'appel à l'aide de constantes pré-définies comme le montre l'exemple suivant.</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+$.dom.ready(function(){
+	/**
+	 * The PROMPT constant corresponds to the following settings :
+	 *   mouseover: false
+	 *   position: 'fixed'
+	 *   fade: 0
+	 *   blur: 150
+	 */
+	var param = $.fn.overlay.PROMPT; // constant
+
+	// Customize the setting
+	$.tool.merge2Object(param, {
+		title: 'Lorem ipsum',
+		width: '240px',
+		height: '180px'
+	});
+	$('.big-content').overlay(param);
+});
+&lt;/script&gt;
+
+&lt;a href=&quot;#lorem&quot; class=&quot;big-content&quot;&gt;Consulter un texte long...&lt;/a&gt;
+&lt;div&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies convallis nunc non auctor.
+	Vestibulum nec pretium eros. Donec et ullamcorper lectus. Morbi placerat interdum semper. Vivamus at neque id ipsum laoreet euismod.
+	Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+	Aenean nulla nunc, rhoncus eu vehicula eu, vestibulum nec leo. Suspendisse potenti.
+	Morbi feugiat eros sit amet mi vestibulum semper.&lt;/div&gt;
+</code></pre>
+
+<div class="online-demo">
+
+<script>
+$.dom.ready(function(){
+	/**
+	 * The PROMPT constant corresponds to the following settings :
+	 * mouseover: false
+	 * position: 'fixed'
+	 * fade: 0
+	 * blur: 150
+	 */
+	var param = $.fn.overlay.PROMPT; // constant
+
+	// Customize the setting
+	$.tool.merge2Object(param, {
+		title: 'Lorem ipsum',
+		width: '240px',
+		height: '180px'
+	});
+	$('.big-content').overlay(param);
+});
+</script>
+
+<a href="#lorem" class="big-content">Consulter un texte long...</a>
+<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies convallis nunc non auctor.
+	Vestibulum nec pretium eros. Donec et ullamcorper lectus. Morbi placerat interdum semper. Vivamus at neque id ipsum laoreet euismod.
+	Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+	Aenean nulla nunc, rhoncus eu vehicula eu, vestibulum nec leo. Suspendisse potenti.
+	Morbi feugiat eros sit amet mi vestibulum semper.
+
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies convallis nunc non auctor.
+	Vestibulum nec pretium eros. Donec et ullamcorper lectus. Morbi placerat interdum semper. Vivamus at neque id ipsum laoreet euismod.
+	Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+	Aenean nulla nunc, rhoncus eu vehicula eu, vestibulum nec leo. Suspendisse potenti.
+	Morbi feugiat eros sit amet mi vestibulum semper.</div>
+
+</div>
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

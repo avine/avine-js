@@ -1,0 +1,611 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>$() - API / Documentation - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../index.css" />
+
+	<script src="../avine-js.js"></script>
+	<script src="../unit-test.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../prism/prism.css" />
+	<script src="../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../index.html" class="logo" style="width:32px;"><img src="../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>$() <span>- API / Documentation</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines">
+			Le module <code>avine.Core.$</code> est une sous-classe, qui hérite des puissantes fonctionnalités de <code>avine.Core</code>.
+			Il permet de manipuler le DOM du navigateur par collections d'éléments, grâce aux nombreuses fonctionnalités de <code>avine.dom</code> qu'il enveloppe et étend.</h4>
+
+		<div id="index"><h4>Index</h4></div>
+
+		<p><a href="#" class="ut-trigger">masquer/afficher les extraits de code.</a></p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>$(<span>data</span>)</h2>
+
+<p>Retourne une instance du module <code>Core.$</code>.
+	En d'autres termes, la fonction exécute <code>new Core.$(data)</code> et retourne cette valeur.
+	Le paramètre <code>data</code> accepte plusieurs signatures&nbsp;:</p>
+<ul>
+	<li><code>string</code> : chaîne de caractères représentant un <strong>sélecteur CSS</strong>.
+		La recherche dans le DOM, utilise la fonction <code>dom.selector</code>.</li>
+	<li><code>string</code> : chaîne de caractères représentant une portion de <strong>code HTML</strong>.
+		Le code ne doit contenir qu'un seul élément racine (pouvant lui-même contenir d'autres éléments imbriqués).</li>
+	<li><code>array</code> : tableau de <strong>noeuds du DOM</strong>.</li>
+	<li><code>Node</code> : objet représentant un <strong>noeud du DOM</strong>.</li>
+	<li><code>$</code> : une autre <strong>instance de $</strong>.</li>
+</ul>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<p><span class="foo">Foo1</span><br /> <span class="foo">Foo2</span><br />
+	<span id="bar1">Bar1</span><br /> <span id="bar2">Bar2</span></p>
+
+	</div>
+	<script>ut2(function(log) {
+
+// Wait for the document ready event
+$.dom.ready(function () {
+	// Instantiate from CSS selector
+	var $foo = $('.foo').append('<i> (css) </i>');
+	// Instantiate from HTML
+	$('<i> (html) </i>').appendTo($foo);
+
+	var bar1 = document.getElementById('bar1'),
+		bar2 = document.getElementById('bar2');
+
+	// Instantiate from DOM node
+	$(bar1).append('<i> (node) </i>');
+	// Instantiate from array
+	$bar12 = $([bar1, bar2]).append('<i> (array) </i>');
+	// Instantiate from instance
+	$($bar12).append('<i> ($) </i>');
+});
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>.checkElements(<span></span>)</h2>
+<p>Permet d'identifier dans la page les éléments de la collection, en leur ajoutant un bord rouge en pointillés.
+	Il s'agit d'une aide au déboggage.
+	Pour rendre à l'élément son apparence initiale, il suffit de cliquer dessus.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<style>.check-elems { margin:0 4px; padding:0 4px; border:2px dashed grey; }</style>
+<p><span class="check-elems">A</span> <span class="check-elems">B</span></p>
+
+	</div>
+	<script>ut2(function(log) {
+
+$.dom.ready(function () {
+	$('.check-elems').checkElements();
+});
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>.get(<span>i, getArray</span>)</h2>
+<p>Par défaut, la méthode retourne un tableau des éléments présents de la collection.
+	Dans ce cas, le paramètre <code>getArray</code> n'a aucun effet.</p>
+<p>Si le paramètre <code>i</code> est renseigné alors la méthode retourne l'élément de la collection à la position correspondante (en commençant par zéro).
+	Dans ce cas, si le paramètre <code>getArray</code> est renseigné à <code>true</code> alors la méthode retourne un tableau contenant l'élement.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<p><span class="get">A</span> <span class="get">B</span></p>
+
+	</div>
+	<script>ut2(function(log) {
+
+$.dom.ready(function () {
+	var $list = $('.get');
+	// Get the first element and check it !
+	$( $list.get(0) ).checkElements();
+});
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>.size(<span></span>)</h2>
+<p>Retourne le nombre d'éléments présents dans la collection.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<p><span class="size">A</span> <span class="size">B</span></p>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+log($('.size').size() + ' elements in the collection.');
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>.end(<span></span>)</h2>
+<p>Récupère l'instance de la précédente collection d'éléments.
+	Cela signifie que les collections d'éléments successives sont mémorisées dans l'instance.</p>
+<p>Prenons un exemple.
+	Vous sélectionnez un noeud du DOM, puis vous sélectionnez ses noeuds enfants.
+	Le noeud parent reste disponible dans l'historique des sélections.
+	Si vous avez à nouveau besoin du noeud parent alors il vous suffit de récupérer l'instance correspondante à sa sélection.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<p id="end"><span>A</span> <span>B</span></p>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var $parent = $('#end'), $children = $parent.children();
+
+log($parent === $children.end());
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>.each(<span>fn, i</span>)</h2>
+<p>Exécute la fonction <code>fn</code> sur chaque élément de la collection.
+	La fonction de rappel accepte 2 paramètres, correspondants respectivement à l'index de l'élément dans la collection et l'élément lui-même.
+	A l'intérieur de la fonction, <code>this</code> représente également l'élément.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<p><span class="each">A</span> <span class="each">B</span></p>
+
+	</div>
+	<script>ut2(function(log) {
+
+$.dom.ready(function () {
+	var colors = ['red', 'blue'];
+	$('.each').each(function (index, elem) {
+		// this === elem
+		$(this).css('color', colors[index]);
+	});
+});
+
+	});</script>
+</div>
+
+
+
+<hr />
+<p class="msg-info">La plupart des méthodes de <code>$()</code> reprennent les fonctions de <code>$.dom</code> de mêmes noms.
+	La différence étant que les méthodes travaillent sur des collections d'éléments alors que les fonctions travaillent sur des éléments isolés.
+	Le paramètre optionnel <code>i</code> disponible dans la signature de la plupart des méthodes permet de travailler sur l'élément de la collection correspondant.</p>
+
+<p class="msg-info">Seules les nouvelles méthodes ou celles qui présentent des paricularités sont documentées.
+	Pour les autres, reportez-vous à leurs homologues pour plus d'informations.</p>
+
+<p class="msg-info">De nombreuses méthodes sont chaînables, c'est-à-dire quelles retournent généralement le contexte <code>this</code>.
+	Certaines méthodes fonctionnent comme <em>"setter"</em> et/ou <em>"getter"</em>.
+	Lorsqu'une telle méthode est utilisée pour <strong>affecter</strong> une valeur, elle est chaînable.
+	Lorsqu'elle est utilisée pour <strong>récupérer</strong> une valeur, le type retourné dépend du nombre d'éléments de la collection&nbsp;:
+	S'il y a au moins deux éléments dans la collection alors la méthode retourne un tableau des valeurs récupérées.
+	S'il n'y a qu'un seul élément dans la collection alors la méthode retourne directement la valeur récupérée.</p>
+
+
+
+<hr />
+<h2>.coords(<span>i</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.isVisible">.isVisible(<span>all, i</span>)</a></h2>
+<p>La méthode retourne une valeur booléenne.
+	Si le paramètre <code>all</code> est renseigné à <code>true</code> alors la méthode retourne vrai uniquement si tous les éléments de la collection sont visibles.
+	Par défaut, le paramètre <code>all</code> vaut <code>false</code> et la méthode retourne vrai si au moins l'un de ses éléments est visible.</p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.text">.text(<span>text, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2>.html(<span>html, i</span>)</h2>
+<p>Retourne le contenu HTML des éléments de la collection.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<p><span class="html-source">Hello <em style="color:red">world!</em></span>
+	<span class="html-source">HTML is <em style="color:blue">nice!</em></span></p>
+
+<p id="html-target" style="border:1px dashed grey"></p>
+
+	</div>
+	<script>ut2(function(log) {
+
+$.dom.ready(function () {
+	var content = $('.html-source').html(); // array
+	content = $.tool.toArray(content).join('\n'); // string
+	$('#html-target').html(content);
+});
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.css">.css(<span>attr, value, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.previousStyle">.previousStyle(<span>property, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.zIndex">.zIndex(<span>i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.data">.data(<span>name, value, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2>.attr(<span>attr, value, i</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.prop">.prop(<span>prop, value, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.className">.className(<span>value, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.hasClass">.hasClass(<span>value, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.addClass">.addClass(<span>value, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.removeClass">.removeClass(<span>value, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.toggleClass">.toggleClass(<span>value, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2>.parent(<span>i</span>)</h2>
+<p>Crée une nouvelle collection d'éléments à partir du noeud parent de chaque élément de la collection.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<p class="ancestor">
+	<span class="parent" style="color:red">Hello</span>
+	<span class="parent" style="color:blue">World!</span></p>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var $parent = $('.parent').parent();
+log($parent.className());
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.parents">.parents(<span>i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.children">.children(<span>pos, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.prev">.prev(<span>i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.next">.next(<span>i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.prevAll">.prevAll(<span>i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.nextAll">.nextAll(<span>i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2>.find(<span>query, i</span>)</h2>
+<p>Parcours le DOM à partir de chaque élément de la collection et retourne un tableau des éléments qui correspondent au sélecteur CSS <code>query</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<style>.find span { padding:2px; }</style>
+
+<p class="find">
+	<b>-</b>
+	<span>Span1</span>
+	<span>Span2</span></p>
+
+<p class="find">
+	<b>-</b>
+	<span>Span3</span>
+	<span>Span4</span>
+	<span>Span5</span></p>
+
+	</div>
+	<script>ut2(function(log) {
+
+$.dom.ready(function () {
+	$('.find').find('span + span').checkElements(); // Span2, Span4 and Span5
+});
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>.reduce(<span>start, count</span>)</h2>
+<p>Réduit la taille de la collection à <code>count</code> éléments à partir de la position <code>start</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<style>.reduce { padding:2px; }</style>
+
+<p><span class="reduce">Span1</span>
+	<span class="reduce">Span2</span>
+	<span class="reduce">Span3</span>
+	<span class="reduce">Span4</span></p>
+
+	</div>
+	<script>ut2(function(log) {
+
+$.dom.ready(function () {
+	$('.reduce').reduce(1, 2).checkElements(); // Span2, Span3
+});
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>.prepend(<span>newElement, i</span>)</h2>
+<p>Ajoute l'élément <code>newElement</code> en tant que premier enfant de chaque élément de la collection.
+	Si la collection contient plus qu'un élément alors le nouvel élément est cloné autant de fois que nécessaire.
+	Le clonage inclut l'arborescence en profondeur du nouvel l'élément ainsi que ses événements assignés.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div><span class="prepend"><em>hello</em></span>
+	<span class="prepend"><em>world</em></span> </div>
+
+	</div>
+	<script>ut2(function(log) {
+
+$.dom.ready(function () {
+	$('.prepend').prepend('<b style="color:red"> the </b>');
+});
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>.append(<span>newElement, i</span>)</h2>
+<p>Ajoute l'élément <code>newElement</code> en tant que dernier enfant de chaque élément de la collection.
+	Si la collection contient plus qu'un élément alors le nouvel élément est cloné autant de fois que nécessaire.
+	Le clonage inclut l'arborescence en profondeur du nouvel l'élément ainsi que ses événements assignés.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div><span class="append"><em>hello</em></span>
+	<span class="append"><em>world!</em></span> </div>
+
+	</div>
+	<script>ut2(function(log) {
+
+$.dom.ready(function () {
+	$('.append').append('<b style="color:blue"> ! </b>');
+});
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>.appendTo(<span>data, i</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2>.before(<span>newElement, i</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2>.after(<span>newElement, i</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2>.wrap(<span>newElement, i</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.remove">.remove(<span>i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.replace">.replace(<span>newElement, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.on">.on(<span>event, fn, once, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2>.click(<span>fn, once, i</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.off">.off(<span>event, fn, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.trigger">.trigger(<span>event, detail, canBubble, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.cloneNode">.cloneNode(<span>childs, events, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.drag">.drag(<span>settings, callback, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2><a href="dom.html#dom.animate">.animate(<span>properties, duration, easing, callback, stoppable, i</span>)</a></h2>
+<p></p>
+
+
+
+<hr />
+<h2>.hide(<span>duration, value, easing, callback, stoppable, i</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2>.show(<span>duration, value, easing, callback, stoppable, i</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2>$.fn.plugin(<span>name, settings, methods</span>)</h2>
+<p></p>
+
+
+
+<hr />
+<h2>$.fn.plugin.helper</h2>
+<p></p>
+
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

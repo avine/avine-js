@@ -1,0 +1,819 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>$.Core - API / Documentation - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../index.css" />
+
+	<script src="../avine-js.js"></script>
+	<script src="../unit-test.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../prism/prism.css" />
+	<script src="../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../index.html" class="logo" style="width:32px;"><img src="../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>$.Core <span>- API / Documentation</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines">La classe <code>$.Core</code> permet de réaliser facilement des chaînes de traitements asynchrones complexes, sans passer par des fonctions de rappel imbriquées.
+			Grâce à sa syntaxe procédurale simple et robuste, le code gagne en clarté et maintenabilité.
+			Comprendre <a href="Core-basics.html">les bases de la classe $.Core</a>.</h4>
+
+		<div id="index"><h4>Index</h4></div>
+
+		<p><a href="#" class="ut-trigger">masquer/afficher les extraits de code.</a></p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>new $.Core()</h2>
+<p>Instancie une nouvelle pile d'appels.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<script>ut2(function(log) {
+
+var core = new $.Core();
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.clone(<span>callback, listeners</span>)</h2>
+<p>Clone l'instance de la pile d'appels.
+	Lors du clonage, une nouvelle pile d'appel est dédiée au clone.
+	De sorte que les appels asynchrones du clone (avec la méthode <code>.then</code> par exemple) se font en parallèle de l'instance d'origine</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var core = new $.Core(), clone = core.clone();
+
+core.then(function () {
+	setTimeout(function () {
+		this.done('from core');
+	}.bind(this), 100);
+}).queue(function (result) {
+	log('core get ' + result);
+});
+
+setTimeout(function () {
+	clone.then(function () {
+		this.done('from clone');
+	}).queue(function (result) {
+		log('clone get ' + result);
+	});
+}, 50);
+
+	});</script>
+</div>
+
+<p class="msg-info">Dans l'exemple précédent, si vous remplacez <code>clone</code> par <code>core</code> dans la deuxième série d'appels, vous verrez qu'alors, il y a des appels concurrents entre les deux piles et le résultat obtenu n'est pas celui escompté.</p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.then(<span>fn, argsStack, invoke</span>)</h2>
+<p>Enregistre la fonction asynchrone <code>fn</code> dans la pile d'appels.
+	A l'intérieur de <code>fn</code>, <code>this</code> représente l'instance de la classe <code>$.Core</code>.
+	Pour être valide, <code>fn</code> doit respecter la contrainte de ne pas briser la chaine des appels, en invoquant toujours la méthode <code>.done</code> (ou équivalente) au moment qu'elle juge opportun.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="then">Is this === core ? </div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var core = new $.Core().then(function () {
+	log(this === core ? 'YES' : 'NO');
+	this.done(); // Call the next function in the stack
+});
+
+	});</script>
+</div>
+
+<p>Le paramètre <code>argsStack=[stack1, stack2, ..., stackN]</code> permet d'exécuter la fonction N fois, sur autant de jeux de paramètres.
+	Le paramètre <code>invoke</code> détermine la manière dont chaque jeu <code>stackN</code> est passé à la fonction <code>fn</code>, et vaut <code>"call"</code> (par défaut) ou <code>"apply"</code>.</p>
+<p>Par défaut, la fonction est exécutée N fois comme ceci: <code>fn.<b>call</b>(this, stackN)</code>, et <code>stackN</code> est donc passé en premier argument à la fonction.</p>
+<p>Si <code>invoke</code> vaut <code>"apply"</code> alors la fonction est exécutée N fois comme ceci: <code>fn.<b>apply</b>(this, stackN)</code>, et <code>stackN</code> se doit d'être un tableau d'arguments.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var core = new $.Core();
+
+// Invoke fn.call(this, argsStack[i])
+core.then(function (param) {
+	log('Call= "' + param + '"');
+	this.done();
+}, ["1", "2"]/*, 'call'*/);
+
+// Invoke fn.apply(this, argsStack[i])
+core.then(function (param1, param2) {
+	log('Apply= "' + param1 + '", "' + param2 + '"');
+	this.done();
+}, [ ["1.1", "1.2"], ["2.1", "2.2"] ], 'apply');
+
+	});</script>
+</div>
+
+<p>La fonction <code>fn(result, done, fail)</code> enregistrée dans la pile, accepte 3 paramètres.
+	<code>result</code> est le résultat éventuellement transmis par la précédente fonction de rappel.
+	<code>done</code> et <code>fail</code> sont des fonctions qui invoquent respectivement <code>this.done()</code> et <code>this.fail()</code>.</p>
+<p class="msg-info">Les paramètres <code>done</code> et <code>fail</code> ne sont pas disponibles, si le paramètre <code>invoke</code> vaut <code>"apply"</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var core = new $.Core();
+
+core.then(function (result, done, fail) {
+	log('Step 1');
+	setTimeout(function() {
+		done('Great!'); // Simply use the done() parameter instead of this.done()
+	}, 1000);
+}).then(function (result) {
+	log('Step 2: ' + result);
+	this.done();
+});
+
+	});</script>
+</div>
+
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.queue(<span>fn</span>)</h2>
+<p>Enregistre la fonction synchrone <code>fn</code> dans la pile d'appels.
+	A l'intérieur de <code>fn</code>, <code>this</code> représente l'instance de la classe <code>$.Core</code>.
+	Contrairement à la méthode <code>.then</code>, <code>.queue</code> n'a pas besoin et ne doit pas invoquer la méthode <code>.done</code> (ou équivalente), pour rendre la main à la pile d'appels.
+	En effet, <code>.queue</code> invoque automatiquement la méthode <code>.done</code> immédiatement après l'exécution de la fonction <code>fn</code>.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+new $.Core().then(function () {
+	log('Step1');
+	this.done('Step 1 done !');
+}).queue(function (lastResult) {
+	log('Step2 (' + lastResult + ')');
+	// do not invoke .done() here !
+}).then(function (lastResult) {
+	// The last result is propagated from the previous .then() !
+	log('Step3 (' + lastResult + ')');
+	this.done();
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.now(<span>fn</span>)</h2>
+<p>Force la fonction asynchrone enregistrée <code>fn</code> à être la prochaine à être exécutée dans la pile d'appels.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<button class="ut-run" data-once="yes">Go</button>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var core = new $.Core().then(function () {
+	log('Step1'); setTimeout(function () { core.done(); }, 1000);
+}).then(function () {
+	log('Step2'); setTimeout(function () { core.done(); }, 1000);
+}).then(function () {
+	log('Step3'); setTimeout(function () { core.done(); }, 1000);
+});
+setTimeout(function () {
+	// .now() is called during the execution of the Step1
+	core.now(function () {
+		log('<b>Now!</b>'); setTimeout(function () { core.done(); }, 1000);
+	});
+}, 500);
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.done(<span>result</span>)</h2>
+<p>Permet à la fonction en cours d'exécution d'indiquer que son traitement est terminé.
+	La pile reprend alors la main et peut exécuter si elle existe, la fonction suivante toujours en attente.
+	En d'autres termes, chaque fonction enregistrée dans la pile avec la méthode <code>.then</code> doit respecter la contrainte de ne pas briser la chaine des appels, en invoquant toujours la méthode <code>.done</code> au moment qu'elle juge opportun.</p>
+<p>La fonction courante peut si besoin propager un résultat <code>result</code> à la fonction suivante, qui sera accessible via son premier argument ou via la propriété temporaire <code>this.lastResult</code>.
+	Si la fonction enregistrée est exécutée plusieurs fois via son paramètre <code>argsStack</code>, le dernier résultat n'est alors accessible qu'à partir de la propriété temporaire.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<style>
+.square {
+	background-color: #999; color: #fff;
+	width: 160px; height: 40px; line-height: 40px; margin: 0 auto;
+	cursor: pointer; text-align: center; text-shadow: none;
+}
+</style>
+
+<div id="done" class="square">Get the lastResult!</div>
+
+	</div>
+	<script>ut2(function(log) {
+
+var elem = document.getElementById('done');
+$.dom.on(elem, 'click', function () {
+
+	new $.Core().then(function () {
+		var result = prompt('Enter your result:');
+		this.done(result); // Propagate the result
+	}).then(function (lastResult) {
+		alert(
+			'lastResult = "' + lastResult + '"\n\n' +
+			'Is this.lastResult === lastResult ? ' +
+				(this.lastResult === lastResult ? 'YES\n' : 'NO\n')
+		);
+		this.done();
+	});
+
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.stackLength(<span></span>)</h2>
+<p>Retourne le nombre de fonctions encore en attente dans la pile.</p>
+<p class="msg-info">Si la pile est bouclée alors seul le nombre de fonctions en attente dans la boucle courante est pris en compte.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+new $.Core().then(function () {
+	log('a) Stack length = ' + this.stackLength()); // length = 2
+	this.done();
+
+}).then(function () {
+	log('b) Stack length = ' + this.stackLength()); // length = 1
+	this.done();
+
+}).then(function () {
+	log('c) Stack length = ' + this.stackLength()); // length = 0
+	this.done();
+
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.fail(<span>data</span>)</h2>
+<p>Efface de la pile toutes les fonctions enregistrées encore en attente et propage le paramètre <code>data</code> aux fonctions de rappels enregistrées avec la méthode <code>.onFailure</code>.
+	Cette méthode permet d'intérrompre l'exécution de la pile quand quelque chose d'imprévu s'est passé.</p>
+<p>Elle doit être appelée depuis l'intérieur d'une fonction de la pile, c'est-à-dire enregistrée par exemple avec la méthode <code>.then</code>, et en remplacement de la méthode <code>.done</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+new $.Core().then(function () {
+	log('Step 1/3');
+	this.done();
+
+}).then(function () {
+	log('Step 2/3');
+	this.fail('Stop!');
+
+}).then(function () {
+	log('Step 3/3'); // Never executed !
+	this.done();
+
+}).onFailure(function (data) {
+	log('onFailure1: ' + data);
+}).onFailure(function (data) {
+	log('onFailure2: ' + data);
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2 data-index="thenDone"><span>subCore</span>.thenDone(<span>mainCore</span>)</h2>
+<p>Enregistre une fonction dans la pile de l'instance <code>subCore</code>, qui a pour effet d'invoquer la méthode <code>.done</code> de l'instance <code>mainCore</code>.
+	Typiquement, cette méthode permet d'exécuter une pile d'appels imbriquée avant de poursuivre l'exécution de la pile d'appels principale.
+	En d'autres termes, <code>.thenDone</code> invoque la méthode <code>.done</code> appartenant à autre contexte.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var mainCore = new $.Core().then(function () {
+
+	log('main-1');
+	var subCore = new $.Core().then(function () {
+		log('sub-1');
+		this.done();
+	}).then(function () {
+		log('sub-2');
+		this.done();
+	}).thenDone(this); // this === mainCore
+
+	// The thenDone implementation is something like:
+	// subCore.then(function () { mainCore.done(); this.done(); });
+
+}).then(function () {
+
+	log('main-2');
+	this.done();
+
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.nowFail(<span>data</span>)</h2>
+<p>Efface de la pile toutes les fonctions enregistrées encore en attente et propage le paramètre <code>data</code> aux fonctions de rappels enregistrées avec la méthode <code>.onFailure</code>.
+	Cette méthode permet d'intérrompre l'exécution de la pile quand quelque chose d'imprévu s'est passé.</p>
+<p>Contrairement à la méthode <code>.fail</code>, la méthode <code>.nowFail</code> doit être invoquée depuis la chaîne d'appels principale, c'est-à-dire au même niveau par exemple que la méthode <code>.then</code>.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<button class="ut-run" data-once="yes">Click to launch</button>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+	var core = new $.Core().onFailure(function () {
+		log('Failure');
+	}).then(function () {
+		log('then1');
+		this.done();
+	}).then(function () {
+		log('then2');
+		this.done();
+	});
+	core.nowFail(); // Will remove 'then1' and 'then2' from the core stack
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.doneWhen(<span>core1, core2, ..., coreN</span>)</h2>
+<p>Invoque la méthode <code>.done</code> une fois que toutes les piles d'appels des instances <code>coreN</code> sont vides.
+	Typiquement, cette méthode permet d'exécuter des piles d'appels distinctes en parallèle.</p>
+<p class="msg-info"><code>.doneWhen</code> doit être appelée depuis une fonction de rappel et à la place de la méthode <code>.done</code> ou équivalente.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<button class="ut-run" data-once="yes">Click to launch</button>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+new $.Core().then(function () {
+
+	var c1 = new $.Core(), c2 = new $.Core(), c3 = new $.Core();
+
+	log('Begin');
+	this.doneWhen(
+		c1.then(function () {
+			setTimeout(function () { log('Second'); c1.done(); }, 2000);
+		}),
+		c2.then(function () {
+			setTimeout(function () { log('First'); c2.done(); }, 1000);
+		}),
+		c3.then(function () {
+			setTimeout(function () { log('Third'); c3.done(); }, 3000);
+		})
+	);
+
+}).then(function () {
+	log('End');
+	this.done();
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.when(<span>core1, core2, ..., coreN</span>)</h2>
+<p>Exécute en parallèle les piles d'appels distinctes des instances <code>coreN</code>, avant de passer à la prochaine fonction de rappel enregistrée.</p>
+<p class="msg-info"><code>.when</code> doit être appelée au même niveau que la méthode <code>.then</code> ou équivalente.</p>
+<p>Techniquement, la méthode <code>.when</code> invoque immédiatement la méthode <code>.stop</code> sur chaque paramètre <code>CoreN</code>, afin de différer le début de son exécution.
+	Elle ajoute également une fonction de rappel dans la pile dont l'effet sera de lancer l'exécution des piles <code>CoreN</code> avec la méthode <code>.restart</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<button class="ut-run" data-once="yes">Click to launch</button>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var c1 = new $.Core(), c2 = new $.Core(), c3 = new $.Core();
+
+new $.Core().then(function (result, done) {
+	setTimeout(function () { log('Begin'); done(); }, 1000);
+}).when(
+	c1.then(function () {
+		setTimeout(function () { log('Second'); c1.done(); }, 2000);
+	}),
+	c2.then(function () {
+		setTimeout(function () { log('First'); c2.done(); }, 1000);
+	}),
+	c3.then(function () {
+		setTimeout(function () { log('Third'); c3.done(); }, 3000);
+	})
+).then(function () {
+	log('End');
+	this.done();
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.stop(<span>callback, useThen</span>)</h2>
+<p>Interrompt l'exécution de la pile et exécute la fonction de rappel <code>callback</code> dans laquelle <code>this</code> se réfère à la pile.
+	Techniquement, la méthode <code>.stop</code> se contente d'enregistrer une fonction particulière dans la pile.
+	La particularité de cette fonction est qu'elle omet volontairement l'appel (obligatoire) à la méthode <code>.done</code>, brisant ainsi la chaine des appels.
+	Le paramètre boolean <code>useThen</code> détermine la manière d'enregistrer cette fonction particulière dans la pile, via la méthode <code>.now</code> (par défaut) ou <code>.then</code>.</p>
+
+<h2>.restart(<span>callback</span>)</h2>
+<p>Relance l'exécution d'une pile interrompue via la méthode <code>.stop</code>.
+	La méthode exécute au préalable la fonction de rappel <code>callback</code>, dans laquelle <code>this</code> se réfère à la pile.
+	Techniquement, la méthode <code>restart</code> se contente d'invoquer la méthode <code>.done</code>, qui avait été volontairement omise par la méthode <code>.stop</code>.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<a href="#" id="stop" style="display:none">Stop</a>
+<a href="#" id="restart" style="display:none">Restart</a>
+
+	</div>
+	<button class="ut-run" data-once="yes">Click to launch</button>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var core = new $.Core();
+var stop = document.getElementById('stop'),
+	restart = document.getElementById('restart');
+
+for (var step = 1; step <= 10; step++) (function (step) {
+	core.then(function () {
+		log(step);
+		setTimeout(function () { core.done(); }, 1000);
+	});
+})(step);
+
+$.dom.css(stop, 'display', 'inline');
+$.dom.css(restart, 'display', 'inline');
+
+$.dom.on(stop, 'click', function (e) {
+	core.stop(function () { log('<b>Stop</b>'); });
+	e.preventDefault();
+});
+
+$.dom.on(restart, 'click', function (e) {
+	core.restart(function () { log('<b>Restart</b>'); });
+	e.preventDefault();
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.loop(<span>count</span>)</h2>
+<p>Exécute en boucle les fonctions suivantes enregistrées dans la pile.
+	Seules les fonctions qui appellent la méthode <code>.then</code> sont bouclées.
+	Par défaut le bouclage est infini.
+	Le paramètre <code>count</code> permet de limiter le nombre de boucles à effectuer.
+	Par exemple, s'il est renseigné 2 alors la pile sera bouclée 2 fois après exécution, donc 3 fois en tout.</p>
+
+<h2>.loopCount()</h2>
+<p>Retourne le nombre de boucle restantes.</p>
+
+<h2>.erase(<span>callback</span>)</h2>
+<p>Efface les fonctions de la pile en cours de bouclage et exécute la fonction de rappel <code>callback</code>.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<a href="#" id="erase" style="display:none">Erase</a>
+
+	</div>
+	<button class="ut-run" data-once="yes">Click to launch</button>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var core = new $.Core();
+
+core.then(function () {
+	log('Go !'); // Not looped !
+	setTimeout(function () { core.done(); }, 1000);
+});
+
+core.loop(5); // Loops the next calls of the method "then" 5 times
+
+for (var i = 1; i <= 3; i++) (function (i) {
+	core.then(function () {
+		log('Push-' + i + ' Loop-' + this.loopCount()); // Looped !
+		setTimeout(function () { core.done(); }, 1000);
+	})
+})(i);
+
+var erase = document.getElementById('erase');
+
+$.dom.css(erase, 'display', 'inline');
+$.dom.on(erase, 'click', function (e) {
+	core.erase(function () { erase.innerHTML += ' (done)'; });
+	e.preventDefault();
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.onFailure(<span>fn, once</span>)</h2>
+<p>Enregistre la fonction de rappel <code>fn</code> et l'exécute chaque fois que la pile d'appels est vide.
+	Les fonctions enregistrées avec cette méthode sont exécutées uniquement si la méthode <code>.fail</code> a été invoquée.</p>
+<p>Si le paramètre boolean <code>once</code> vaut <code>true</code> alors la fonction n'est exécutée qu'une seule fois.</p>
+
+<h2>.onComplete(<span>fn, once</span>)</h2>
+<p>Enregistre la fonction de rappel <code>fn</code> et l'exécute chaque fois que que la pile d'appels est vide.
+	Les fonctions enregistrées avec cette méthode sont toujours exécutée.</p>
+<p>Si le paramètre boolean <code>once</code> vaut <code>true</code> alors la fonction n'est exécutée qu'une seule fois.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="callback-1">Without failure:</div>
+<div id="callback-2">With failure:</div>
+
+	</div>
+	<script>ut2(function(log) {
+
+var addHtml = function (id, html) {
+	document.getElementById(id).innerHTML += ' / ' + html;
+},
+core1 = new $.Core()
+	.then(function () { addHtml(this.id, 'Push'); this.done(); }) // this.id = "callback-1"
+	.onFailure(function () { addHtml(this.id, 'OUPS!'); }) // Not executed
+	.onComplete(function () { addHtml(this.id, 'Complete 1'); })
+	.onComplete(function () { addHtml(this.id, 'Complete 2'); }),
+
+core2 = new $.Core()
+	.then(function () { addHtml(this.id, 'Push'); this.fail(); }) // this.id = "callback-2"
+	.then(function () { addHtml(this.id, 'OUPS!'); this.done(); }) // Not executed
+	.onFailure(function () { addHtml(this.id, 'Failure'); })
+	.onComplete(function () { addHtml(this.id, 'Complete'); });
+
+// Set id property to write html in the appropriate div
+core1.id = "callback-1";
+core2.id = "callback-2";
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.addListener(<span>core, events, fn, once</span>)</h2>
+<p>Assigne à l'instance le gestionnaire d'événements <code>fn</code>.
+	Le paramètre <code>core</code> permet de renseigner l'instance écouté par le gestionnaire.
+	Le paramètre <code>events</code> permet de lister le ou les événements concernés, sous forme de chaîne (en utilisant la virgule comme séparateur) ou de tableau.</p>
+<p>Pour que le gestionnaire ne soit invoqué qu'une seule fois, il faut renseigner le paramètre boolean <code>once</code> à <code>true</code>.</p>
+<p>En fait, à l'exeption de <code>fn</code>, tous les paramètres sont optionnels.
+	Par exemple, si <code>core</code> et <code>events</code> sont omis, alors le gestionnaire est à l'écoute de toutes les instances, tous événements confondus.</p>
+<p>La fonction de rappel est définie de la manière suivante <code>function fn(event, data) { this; }</code>.
+	<code>event.core</code> et <code>event.type</code> renseignent respectivement sur l'instance qui a déclenché l'événement et le type d'événement concerné.
+	Le paramètre <code>data</code> contient les données éventuellement transmises par le déclencheur.
+	A l'intérieur de la fonction de rappel <code>this</code> représente l'instance à l'écoute de l'événement.</p>
+
+<h2>.removeListener(<span>core, events, fn</span>)</h2>
+<p>Retire de l'instance le gestionnaire d'événements <code>fn</code>.
+	Le paramètre <code>core</code> permet de renseigner l'instance concernée.
+	Le paramètre <code>events</code> permet de lister le ou les événements concernés, sous forme de chaîne (en utilisant la virgule comme séparateur) ou de tableau.</p>
+<p>Ici également, à l'exeption de <code>fn</code>, tous les paramètres sont optionnels.
+	Par exemple, si <code>core</code> et <code>events</code> sont omis, alors tous les gestionnaires de l'instance sont retirés.</p>
+
+<h2>.triggerEvent(<span>event, data</span>)</h2>
+<p>Permet à l'instance de déclencher l'événement <code>event</code>.
+	Le paramètre <code>data</code> permet de transmettre des données au gestionnaire (en second paramètre).</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<a id="trigger-event" href="#">Trigger event</a> /
+<a id="remove-listener" href="#">Remove listener</a>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var listen = new $.Core(); listen.whoAmI = 'Listen';
+var trigger = new $.Core(); trigger.whoAmI = 'Trigger';
+
+var myEvent = 'SomeEvent', myData = 0;
+
+listen.addListener(trigger, myEvent, function (event, data) {
+	log('this=' + this.whoAmI + // this === listen
+		' / event.core=' + event.core.whoAmI + // event.core = trigger
+		' / event.type=' + event.type + // event.type = 'SomeEvent'
+		' / data=' + data); // data = 0, 1, 2, ...
+});
+$.dom.on(document.getElementById('trigger-event'), 'click', function (e) {
+	trigger.triggerEvent(myEvent, myData++);
+	e.preventDefault();
+});
+$.dom.on(document.getElementById('remove-listener'), 'click', function (e) {
+	listen.removeListener(trigger, myEvent);
+	e.preventDefault();
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test-->
+<hr />
+<h2>Core.extendAsync(<span>{ name1: fn1, name2: fn2, ... }</span>)<br />
+	Core.extendAsync(<span>name, fn</span>)</h2>
+<p>Etend le prototype de la classe <code>Core</code> avec des méthodes asynchrones.
+	Les fonctions <code>fn</code> sont encapsulées dans la méthode <code>.then</code> et ajoutées à l'objet prototype de la classe <code>Core.prototype</code>.</p>
+
+<h2>Core.extendProto(<span>{ name1: fn1, name2: fn2, ... }</span>)<br />
+	Core.extendProto(<span>name, fn</span>)</h2>
+<p>Etend le prototype de la classe <code>Core</code> avec des méthodes synchrones.
+	Les fonctions <code>fn</code> sont simplement ajoutées à l'objet prototype de la classe <code>Core.prototype</code>.</p>
+
+<h2>Core.extendStatic(<span>{ name1: fn1, name2: fn2, ... }</span>)<br />
+	Core.extendStatic(<span>name, fn</span>)</h2>
+<p>Ajoute simplement les fonctions <code>fn</code> (ou tout autre type de données) comme propriétés de la classe <code>Core</code>.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="extend-async" style="cursor:pointer">Test Async: </div>
+<div id="extend-proto" style="cursor:pointer">Test Proto: </div>
+<div id="extend-static" style="cursor:pointer">Test Static: </div>
+
+	</div>
+	<script>ut2(function(log) {
+
+var addHtml = function (id, html) {
+	document.getElementById(id).innerHTML += ' / ' + html;
+};
+
+// Add asynchronous method
+$.Core.extendAsync('testPushMsg', function (id, msg) {
+	addHtml(id, msg);
+	// Call the method '.done' after 1 sec
+	var _this = this;
+	setTimeout(function () { _this.done(); }, 1000);
+});
+// Add synchronous method
+$.Core.extendProto('testProtoMsg', function (id) {
+	// Get the message from an instance property
+	this.myMsg = (this.myMsg || 0) + 1;
+	addHtml(id, this.myMsg);
+});
+// Instantiate Core
+var core = new $.Core();
+$.dom.on(document.getElementById('extend-async'), 'click', function (e) {
+	e.preventDefault();
+	for (var i = 1; i <= 5; i++) core.testPushMsg(this.id, i); // new method !
+});
+$.dom.on(document.getElementById('extend-proto'), 'click', function (e) {
+	e.preventDefault();
+	for (var i = 1; i <= 5; i++) core.testProtoMsg(this.id); // new method !
+});
+
+// Add static method
+$.Core.extendStatic('testStaticMsg', function (id, msg) {
+	addHtml(id, msg);
+});
+$.dom.on(document.getElementById('extend-static'), 'click', function (e) {
+	e.preventDefault();
+	for (var i = 1; i <= 5; i++) $.Core.testStaticMsg(this.id, i); // new method !
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test-->
+<hr />
+<h2>Core.module(<span>Name, stopArgsPropagation</span>)</h2>
+<p>Crée un module enfant <code>Name</code> qui hérite des fonctionnalités de son parent <code>Core</code>.
+	La fonction retourne la classe enfant créée et l'expose également en tant que propriété de sa classe parent <code>Core[Name]</code>.
+	La classe enfant peut à son tour créer un sous-module <code>Core[Name].module(OtherName)</code> et ainsi de suite.</p>
+<p>Pour initialiser l'instance d'un module, il faut définir une méthode particulière comme suit <code>.extendProto('builder', function(){})</code>.
+	Si elle existe, cette méthode est invoquée automatiquement et recoit les arguments passés à l'instantiation.
+	Les arguments sont également propagés au <code>'builder'</code> du module parent, à moins que le paramètre <code>stopArgsPropagation</code> soit renseigné à <code>true</code>.</p>
+<p>L'utilisation combinée des fonctions <code>.module</code>, <code>.extendAsync</code>, <code>.extendProto</code> et <code>.extendStatic</code>
+	permet de développer des modules de manière très souple et robuste. Ici, <em>module</em> rime avec <em>modulaire&nbsp;!</em></p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+// Create a module inherited from Core
+$.Core.module('Sub1');
+// Create a module inherited from Sub1
+$.Core.Sub1.module('Sub2', true); // Sub2 stop propagate arguments to Sub1 builder
+// Create a module inherited from Sub2
+$.Core.Sub1.Sub2.module('Sub3');
+
+// Create $.Core.Sub1.prototype.buildCoreSub1
+$.Core.Sub1.extendProto('builder', function (arg) { this.SUB1 = arg; });
+// Create $.Core.Sub1.Sub2.prototype.buildCoreSub1Sub2
+$.Core.Sub1.Sub2.extendProto('builder', function (arg) { this.SUB2 = arg; });
+// Create $.Core.Sub1.Sub2.Sub3.prototype.buildCoreSub1Sub2Sub3
+$.Core.Sub1.Sub2.Sub3.extendProto('builder', function (arg) { this.SUB3 = arg; });
+
+// Instantiate the new modules
+var s1 = new $.Core.Sub1('arg1'),
+	s2 = new $.Core.Sub1.Sub2('arg2'),
+	s3 = new $.Core.Sub1.Sub2.Sub3('arg3');
+
+// Check the module name, path and args propagation
+log('Name=' + s1.constructor.moduleName + ' / Path=' + s1.constructor.modulePath);
+log('SUB1=' + s1.SUB1 + '<br />');
+
+log('Name=' + s2.constructor.moduleName + ' / Path=' + s2.constructor.modulePath);
+log('SUB2=' + s2.SUB2 + ' / SUB1=' + s2.SUB1 + '<br />');
+
+log('Name=' + s3.constructor.moduleName + ' / Path=' + s3.constructor.modulePath);
+log('SUB3=' + s3.SUB3 + ' / SUB2=' + s3.SUB2 + ' / SUB1=' + s3.SUB1 + '<br />');
+
+	});</script>
+</div>
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

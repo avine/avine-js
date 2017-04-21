@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>$.Core - Introduction - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../index.css" />
+
+	<script src="../avine-js.js"></script>
+	<script src="../unit-test.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../prism/prism.css" />
+	<script src="../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../index.html" class="logo" style="width:32px;"><img src="../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>$.Core <span>- Les bases</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines">La classe <code>$.Core</code> permet de réaliser facilement des chaînes de traitements asynchrones complexes, sans passer par des fonctions de rappel imbriquées.
+			Grâce à sa syntaxe procédurale simple et robuste, le code gagne en clarté et maintenabilité.
+			Consulter l'<a href="Core.html">API de la classe $.Core</a>.</h4>
+
+		<p><a href="#" class="ut-trigger">masquer/afficher les extraits de code.</a></p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>Traitements asynchrones et fonctions de rappel imbriquées</h2>
+<p>Comme vous le savez certainement, Javascript permet d'effectuer des traitements asynchrones.
+	Cela signifie que l'interpréteur Javascript peut initer un traitement et poursuivre l'exécution du programme sans attendre le résultat de ce traitement.
+	A l'obtention du résultat, le programme exécute généralement une fonction de rappel asynchrone, pour l'exploiter.</p>
+<p>Dans le code d'exemple suivant, la fonction <code>then(fn, done)</code> exécute la fonction <code>fn</code> immédiatement et le traitement asynchrone <code>done</code> au bout d'une seconde.
+	Pour matérialiser le traitement asynchrone, la fonction <code>done</code> est simplement encapsulée dans un <code>setTimeout</code>.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<style>
+.square {
+	background-color: #999; color: #fff;
+	width: 180px; height: 40px; line-height: 40px; margin: 0 auto;
+	cursor: pointer; text-align: center; text-shadow: none;
+}
+</style>
+
+<div id="core-nested" class="square">Test nested functions</div>
+
+	</div>
+	<button class="ut-run">Click to launch</button>
+	<script>ut2(function(log) {
+
+function then(fn, done) {
+	fn(); // Immediate
+	setTimeout(function () { done(); }, 1000); // Asynchronous
+}
+var elem = document.getElementById('core-nested');
+
+then(function () {
+	$.dom.css(elem, "background-color", "#66d9ef"); // blue
+}, function () {
+
+	then(function () {
+		$.dom.css(elem, "background-color", "#a6e22e"); // green
+	}, function () {
+
+		then(function () {
+			$.dom.css(elem, "background-color", ""); // default
+		}, function () {
+
+		});
+	});
+});
+
+	});</script>
+</div>
+
+<p>Cela fonctionne, mais on se rend bien compte qu'en augmentant le nombre de traitements asynchrones en chaînes,
+	on augmente d'autant l'imbrication des fonctions de rappel, rendant le code moins lisible et de plus en plus difficile à maintenir...</p>
+<p>La classe <code>$.Core</code> apporte une réponse élégante au problème d'imbrications multiples.</p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>Le paradigme: <span>new $.Core()</span></h2>
+
+<p>La classe <code>$.Core</code> permet de créer une pile d'appels.
+	La méthode <code>.then</code> permet d'empiler les fonctions de rappel les unes à la suite des autres, mais seule la première fonction enregistrée est exécutée automatiquement par l'instance de la classe qui gère la pile.</p>
+<p>Pour que la pile fonctionne et que les fonctions en attente soient également exécutées, il nous faut imposer à chaque fonction de rappel <em>d'envoyer un message</em> lorsqu'elle a terminé son traitement.
+	C'est le rôle joué par la méthode <code>.done</code>.
+	Une fois le message reçu, la pile exécute la fonction suivante enregistrée et ainsi de suite...</p>
+<p>En résumé, pour être qualifiée, chaque fonction enregistrée dans la pile doit respecter la contrainte de ne pas briser la chaine des appels, en invoquant toujours la méthode <code>.done</code> au moment qu'elle juge opportun.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="core-avine" class="square">Test $.Core</div>
+
+	</div>
+	<button class="ut-run">Click to launch</button>
+	<script>ut2(function(log) {
+
+function delay(fn) {
+	setTimeout(function () { fn(); }, 1000); // Asynchronous
+}
+var elem = document.getElementById('core-avine');
+
+// Instantiate the class and push 3 "then" functions in the stack
+var core = new $.Core().then(function () {
+
+	$.dom.css(elem, "background-color", "#66d9ef"); // blue
+	// Invoke the method "done" to execute the next function in the stack
+	delay(function () { core.done(); });
+
+}).then(function () {
+
+	$.dom.css(elem, "background-color", "#a6e22e"); // green
+	delay(function () { core.done(); });
+
+}).then(function () {
+
+	$.dom.css(elem, "background-color", ""); // default
+	delay(function () { core.done(); });
+
+});
+
+	});</script>
+</div>
+
+<p>En conclusion, grâce à la classe <code>$.Core</code>, on peut écrire avec une syntaxe procédurale simple, de longues chaînes de traitements asynchrones complexes sans passer par des fonctions imbriquées.
+	Le code obtenu reste lisible, facile à maintenir et à faire évoluer.
+	La syntaxe de base permettant d'exploiter la classe <code>$.Core</code> ressemble finalement au code suivant&nbsp;:</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<script>ut2(function(log) {
+
+var core = new $.Core().then(function () {
+	// Do something...
+	this.done();
+
+}).then(function () {
+	// Do something...
+	this.done();
+
+}).then(function () {
+	// Do something...
+	this.done();
+
+});
+
+	});</script>
+</div>
+
+<p class="msg-info">Les méthodes <code>.fail</code>, <code>.doneWhen</code> et <code>.thenDone</code> ont fondamentalement le même rôle que la méthode <code>.done</code>.
+	Elles servent toutes à rendre la main à la pile d'appel, mais de différentes manières.</p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>Ordre d'exécution des fonctions de rappel</h2>
+<p>Il est important de bien comprendre ce qui passe dans le cas où l'une des fonctions enregistrées, ajoute elle-même une fonction dans la pile, en invoquant la méthode <code>.then</code>.</p>
+<p>En réalité, chaque fonction enregistrée possède sa propre pile d'appels dédiée, qui est en fait une <em>sous-pile</em> de la pile d'appels principale.
+	L'instruction <code>.then(fn)</code> ajoute naturellement la fonction <code>fn</code> à la sous-pile dédiée à la fonction en cours d'exécution.
+	Ainsi les fonctions enregistrées s'exécutent dans l'ordre naturellement attendu.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+new $.Core().then(function () {
+	log("1) main-1.1");
+
+	// Just record 2 "then" functions...
+	this.then(function () {
+		log("3) deep-1");
+		this.done(); // Go to step 4)
+
+	}).then(function () {
+		log("4) deep-2");
+		this.done(); // Go to step 5)
+
+	});
+
+	log("2) main-1.2");
+	this.done(); // Go to step 3)
+
+}).then(function () {
+	log("5) main-2");
+	this.done();
+
+});
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>A propos du contexte</h2>
+<p>Comme nous l'avons dit plus haut, chaque fonction enregistrée dans la pile doit respecter la contrainte de ne pas briser la chaine des appels, en invoquant toujours la méthode <code>.done</code>.
+	Typiquement le code de la fonction doit contenir un appel à <code>this.done();</code>.</p>
+<p>Le problème est que le contexte <code>this</code> peut très facilement être perdu, si par exemple la fonction enregistrée contient elle-même une fonction anonyme imbriquée.
+	Il existe plusieurs manières de récupérer le contexte afin d'invoquer la méthode <code>.done</code> simplement.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<button class="ut-run">Click to launch</button>
+	<script>ut2(function(log) {
+
+var core = new $.Core().then(function () {
+	// Using a copy of this
+	var _this = this;
+	setTimeout(function () { log('Step 1'); _this.done(); }, 1000);
+
+}).then(function () {
+	// Using the name of the Core instance
+	setTimeout(function () { log('Step 2'); core.done(); }, 1000);
+
+}).then(function () {
+	// Using function binding. Best practice !
+	setTimeout(function () { log('Step 3'); this.done(); }.bind(this), 1000);
+
+}).then(function (result, done, fail) {
+	// Using the done parameter. Best practice !
+	setTimeout(function () { log('Step 4'); done(); }, 1000);
+
+});
+
+	});</script>
+</div>
+
+
+
+<p>Consulter l'<a href="Core.html">API de la classe $.Core</a>.</p>
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Slideshow plugin - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="favicon.ico" />
+
+	<link rel="stylesheet" type="text/css" href="../../index.css" />
+	<link rel="stylesheet" type="text/css" href="demo.css" />
+
+	<script src="../../avine-js.js"></script>
+	<script src="../../easing.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="slideshow.css" />
+	<script src="slideshow.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+
+
+
+<script>
+$.dom.ready(function(){
+
+	$('#slideshow-4').slideshow({
+		fade: 300,
+		autoSlide: 2500,
+		autoStop: true,
+		autoHeight: 200,
+		navigContainer: {
+			prev: false,
+			next: false,
+			counter: false,
+			anchors: '#slideshow-4-anchors'
+		}
+	});
+
+});
+</script>
+
+<div id="slideshow-4-anchors" class="demo-slides-tabs">
+	<a href="#anchor4-1">Lorem</a>
+	<a href="#anchor4-2">Quisque</a>
+	<a href="#anchor4-3">Duis</a>
+</div>
+<ul id="slideshow-4" class="reset demo-slides-container">
+	<li id="anchor4-1">
+		<h4><img src="../../resource/1.png" alt="" class="slide" /> Slide 1</h4>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies convallis nunc non auctor.
+			Vestibulum nec pretium eros. Donec et ullamcorper lectus. Morbi placerat interdum semper.
+			Vivamus at neque id ipsum laoreet euismod.</p>
+	</li><li id="anchor4-2">
+		<h4><img src="../../resource/2.png" alt="" class="slide" /> Slide 2</h4>
+		<p>Quisque et orci eu augue ornare porta. Maecenas scelerisque blandit ipsum, eget condimentum nibh vestibulum eget. Maecenas gravida molestie dui eget sodales. Aenean fermentum convallis eleifend. Praesent elit enim, rutrum at imperdiet at, dapibus et magna. Nam sapien lorem, eleifend vel sagittis pellentesque, vulputate quis ante. Duis vulputate, ipsum vitae gravida porttitor, arcu sapien ultrices velit, at bibendum lacus risus ut erat.</p>
+	</li><li id="anchor4-3">
+		<h4><img src="../../resource/3.png" alt="" class="slide" /> Slide 3</h4>
+		<p>Duis non elit eu dui sagittis lobortis. Sed aliquam urna feugiat sem ornare id placerat lectus placerat. Fusce non neque at metus bibendum semper. Pellentesque eu diam at tortor tincidunt vehicula. Nulla diam ipsum, faucibus eu dapibus et, suscipit vel quam. Aliquam dictum libero eget tellus faucibus convallis. Nulla elementum volutpat diam, non tincidunt nibh convallis id. </p>
+	</li>
+</ul>
+
+
+
+	</div>
+</body>
+</html>

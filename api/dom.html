@@ -1,0 +1,1298 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>$.dom - API / Documentation - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../index.css" />
+
+	<script src="../avine-js.js"></script>
+	<script src="../easing.js"></script>
+	<script src="../unit-test.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../prism/prism.css" />
+	<script src="../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../index.html" class="logo" style="width:32px;"><img src="../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>$.dom <span>- API / Documentation</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines">AvineJS permet d'interagir avec le DOM sans se soucier des incompatibilités inter-navigateurs <em>(cross-browser)</em>.
+			Dans la pratique, vous n'aurez-pas nécessairement besoin d'utiliser <code>$.dom</code> car presque toutes ses fonctions sont encapsulées dans la fonction de haut niveau <code>$()</code> abordée plus loin.</h4>
+
+		<div id="index"><h4>Index</h4></div>
+
+		<p><a href="#" class="ut-trigger">masquer/afficher les extraits de code.</a></p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.duration(<span>t</span>)</h2>
+<p>Retourne une durée en millisecondes.
+	Le paramètre <code>t</code> est optionnel et vaut par défaut <em>500</em>.
+	Les alias <code>"slow"</code> et <code>"fast"</code> sont acceptés et valent respectivement <em>1000</em> et <em>200</em>.
+	A l'exception de la valeur <em>0</em>, la durée <code>t</code> ne peut être inférieure à la constante <code>dom.duration.MIN</code> qui vaut <em>17</em> (~ 60 FPS).</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = [1500, "slow", undefined, "fast", 15, 0];
+for (var i = 0; i < test.length; i++) log(
+	'<b>' + test[i] + ':</b> ' + $.dom.duration(test[i])
+);
+
+	});</script>
+</div>
+
+<p class="msg-info">La fonction <code>log()</code> utilisée dans les exemples de scripts est interne à cette documentation en ligne.
+	Elle permet simplement d'écrire des messages liés au code testé dans sa zone dédiée, c'est-à-dire juste en dessous.</p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.isElement(<span>element, allowText, includeNode</span>)</h2>
+<p>Détermine si le noeud du DOM <code>element</code> est une balise de <i>contenu</i> comme une <code>&lt;div&gt;</code>, une <code>&lt;img&gt;</code>, ...
+	par opposition aux noeuds tels que <code>&lt;script&gt;</code> et <code>&lt;style&gt;</code> qui contiennent des <i>métadonnées</i>.</p>
+<p>Les balises de type métadonnée sont listées dans la propriété <code>dom.isElement.excludeNode</code>, qui vaut <code>['script', 'style', 'link', 'meta']</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var test = ['div', 'span', 'script', 'style'];
+for (var i = 0; i < test.length; i++) log(
+	'<b>' + test[i] + ':</b> ' + $.dom.isElement(document.createElement(test[i]))
+);
+
+	});</script>
+</div>
+
+<p>Par défaut, la fonction retourne <code>false</code> pour les noeuds textes (c'est-à-dire non encapsulés dans une balise), à moins que le paramètre <code>allowText</code> ne soit renseigné à <code>true</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var test = document.createTextNode('Hello world!');
+
+log('<b>False:</b> ' + $.dom.isElement(test));
+log('<b>True:</b> ' + $.dom.isElement(test, true));
+
+	});</script>
+
+</div>
+
+<p>Le paramètre optionnel <code>includeNode</code>, renseigné sous forme de tableau ou de chaîne, permet de réduire la liste des balises de type métadonnée.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var test = document.createElement('script');
+
+log('<b>False:</b> ' + $.dom.isElement(test));
+log('<b>True:</b> ' + $.dom.isElement(test, undefined, ['script'])); // Include the script tag
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.isVisible(<span>element</span>)</h2>
+<p>Détermine si le noeud <code>element</code> est visible, en testant la valeur de certaines de ses propriétés CSS.
+	Il sera considéré comme <strong>non visible</strong> si l'une des règles suivantes est vrai :</p>
+<ul>
+	<li><code>display: none</code></li>
+	<li><code>visibility: hidden</code></li>
+	<li><code>opacity: 0</code></li></ul>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area" style="height:1em">
+
+<div id="is-visible-0">I am visible !</div>
+<div id="is-visible-1" style="display:none;">Oups !</div>
+<div id="is-visible-2" style="visibility:hidden;">Oups !</div>
+<div id="is-visible-3" style="opacity:0; filter:alpha(opacity=0);">Oups !</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+for (var i = 0; i < 4; i++) {
+	var elem = 'is-visible-' + i;
+	log('<b>' + elem + ':</b> ' + $.dom.isVisible(document.getElementById(elem)));
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.text(<span>element, text</span>)</h2>
+<p>Retourne ou renseigne le contenu textuel du noeud <code>element</code>.
+	Le paramètre <code>text</code> est optionnel et permet d'utiliser la fonction comme <em>"setter"</em> ou <em>"getter"</em>.</p>
+<p class="msg-info">Il n'existe pas de fonction <em>$.dom.html()</em>, car la méthode d'accès au contenu HTML d'un noeud est universelle&nbsp;: <code>element.innerHTML</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="text"><u>Hello</u> <i>world!</i></div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var elem = document.getElementById('text');
+
+// Get current value ("Hello world!" without <u> and <i> tags)
+var current = $.dom.text(elem);
+
+// Set new value
+$.dom.text(elem, current);
+
+log(elem.outerHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;'))
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.css(<span>element</span>)<br />
+	dom.css(<span>element, style, value</span>)<br />
+	dom.css(<span>element, styles</span>)<br /></h2>
+<p>Retourne ou renseigne la valeur des attributs CSS du noeud <code>element</code>.
+	La fonction accepte plusieurs signatures.
+	Si vous utilisez le paramètre <code>style</code>, le paramètre <code>value</code> (optionnel) permet d'utiliser la fonction comme <em>"setter"</em> ou <em>"getter"</em>.
+	Si vous utilisez le paramètre <code>styles</code> (sous forme d'objet), la fonction peut réaliser en même temps des opérations de <em>"setter"</em> et de <em>"getter"</em>.</p>
+<p class="msg-info">Lorsqu'une propriété CSS est modifiée, sa valeur précédente est stockée et récupérable grâce à la fonction <code>dom.previousStyle</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="css-0">Hello world!</div>
+<div id="css-1" style="color:olive">Stéphane</div>
+<div id="css-2" style="color:indigo">Francel</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+for (var elem = [], i = 0; i < 3; i++) elem.push(document.getElementById("css-" + i));
+
+$.dom.css(elem[0], 'color', 'crimson'); // Setter
+
+log('<b>css-1 (olive):</b> ' + $.dom.css(elem[1], 'color')); // Getter
+
+log('<b>css-2 (indigo):</b> ' + $.tool.stringify(
+	$.dom.css(elem[2], {
+		"background-color": "PowderBlue", // Setter
+		color: undefined // Getter
+	})
+));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.previousStyle(<span>element, property</span>)</h2>
+<p>Retourne pour le noeud <code>element</code>, la valeur précédente de sa propriété CSS <code>property</code>, si celle-ci a été modifiée par la fonction <code>dom.css</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="previous-style" style="color:crimson">Become olive !</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var elem = document.getElementById("previous-style");
+$.dom.css(elem, 'color', 'olive');
+
+log('<b>New color (olive):</b> ' + $.dom.css(elem, 'color'));
+log('<b>Previous color (crismon):</b> ' + $.dom.previousStyle(elem, 'color'));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.zIndex(<span>element</span>)</h2>
+<p>Chaque appel à la fonction affecte au noeud <code>element</code> une valeur de <code>z-index</code> toujours supérieure, en commençant à <code>9999</code>.
+	Cette fonction est utilisée par exemple par la fonction <code>dom.drag</code> et assure que l'élément déplacé est toujours au premier plan.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="z-index-0">Always</div>
+<div id="z-index-1">higher!</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+for (var i = 0; i < 2; i++) {
+	var zIndex = document.getElementById("z-index-" + i);
+	$.dom.zIndex(zIndex); // apply z-index
+	log(zIndex.outerHTML.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.data(<span>element, name, value</span>)</h2>
+<p>Permet d'associer tout type de donnée directement dans le noeud <code>element</code> sous forme de paires clé/valeur.
+	Le paramètre <code>value</code> est optionnel et permet d'utiliser la fonction comme <em>"setter"</em> ou <em>"getter"</em>.</p>
+<p>Si le paramètre <code>name</code> est omis alors la fonction retourne la liste de toutes les paires clé/valeur sous forme d'object.
+	Dans ce cas, les clés sont accessibles au format <em>"camelCase"</em>.</p>
+<p>Sur le plan technique, la fonction réserve une propriété DOM de l'élément pour y stocker les données.
+	Si la clé est disponible en tant qu'attribut <code>data-*</code> alors la fonction récupère sa valeur.</p>
+<p class="msg-info">Vous pouvez détruire une clé <code>name</code> en fixant sa <code>value</code> à <code>null</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="data" data-my-location="Paris">Associate data to this element !</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var elem = document.getElementById('data');
+// Setter
+$.dom.data(elem, 'my-website', 'AvineJS');
+$.dom.data(elem, 'my-name', { firstName: 'Stéphane', lastName: 'Francel' });
+
+// Getter
+log('<b>my-website </b>: ' + $.tool.stringify($.dom.data(elem, 'my-website')));
+log('<b>my-name </b>: ' + $.tool.stringify($.dom.data(elem, 'my-name')));
+log('<b>my-location </b>: ' + $.tool.stringify($.dom.data(elem, 'my-location')));
+
+var data = $.dom.data(elem), prop = [], p;
+for (p in data) prop.push(p);
+log('<b>List of data keys </b>: ' + prop.join(', '));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.prop(<span>element, prop, value</span>)</h2>
+<p>Retourne ou renseigne la propriété DOM <code>prop</code> du noeud <code>element</code>.
+	Le paramètre <code>value</code> permet d'utiliser la fonction comme <em>"setter"</em> ou <em>"getter"</em>.</p>
+<p>Dans le cas où le paramètre <code>value</code> est renseigné, la fonction affecte la nouvelle valeur et retourne la précédente.</p>
+<p class="msg-info">Il n'existe pas de fonction Avine <em>$.dom.attr()</em>, car les méthodes d'accès aux attributs sont universelles&nbsp;:
+	<code>element.getAttribute</code> et <code>element.setAttribute</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="prop">Pretty property !</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var elem = document.getElementById("prop");
+
+log('<b>Init "Hello" and get previous:</b> ' + $.dom.prop(elem, 'test', "Hello"));
+log('<b>Get current:</b> ' + $.dom.prop(elem, 'test'));
+log('<b>Set "World!" and get previous:</b> ' + $.dom.prop(elem, 'test', 'World!'));
+log('<b>Get current:</b> ' + $.dom.prop(elem, 'test'));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.className(<span>element, value</span>)</h2>
+<p>Retourne ou renseigne la classe CSS du noeud <code>element</code>.
+	Le paramètre <code>value</code> permet d'utiliser la fonction comme <em>"setter"</em> ou <em>"getter"</em>.</p>
+<p>Dans le cas où le paramètre <code>value</code> est renseigné, la fonction affecte la nouvelle valeur et retourne la précédente.</p>
+<p class="msg-info">Sur le plan technique, la fonction invoque simplement le code suivant: <br /><code>dom.prop(element, 'className', value);</code></p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div class="such class" id="class-name">Such a class!</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var elem = document.getElementById("class-name");
+
+log('<b>Get current:</b> ' + $.dom.className(elem));
+log('<b>Set new and get previous:</b> ' + $.dom.className(elem, 'great class'));
+log('<b>Get new current:</b> ' + $.dom.className(elem));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.hasClass(<span>element, css</span>)</h2>
+<p>Détermine si les classes <code>css</code> sont présentes dans le noeud <code>element</code>.
+	La fonction accepte 2 signatures.
+	Vous pouvez renseigner le paramètre <code>css</code> sous la forme d'une chaîne de caractères, ou d'un tableau de chaînes.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div class="a good class" id="has-class">A good class!</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var elem = document.getElementById("has-class"),
+	test = ["good", "bad", "good bad", "a class", ["a", "class"]];
+for (var i = 0; i < test.length; i++) log(
+	'<b>' + $.tool.stringify(test[i]) + ':</b> ' + $.dom.hasClass(elem, test[i])
+);
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.addClass(<span>element, css</span>)</h2>
+<p>Ajoute une ou plusieurs classes <code>css</code> au noeud <code>element</code>.
+	La fonction accepte 2 signatures.
+	Vous pouvez renseigner le paramètre <code>css</code> sous la forme d'une chaîne de caractères, ou d'un tableau de chaînes.</p>
+<p>La fonction retroune <code>true</code> si toutes les classes ont bien été ajoutées, et <code>false</code> sinon.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div class="add" id="add-class">Add class!</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var elem = document.getElementById("add-class"),
+	test = ["one", "and more", ["great", "class"], "one"];
+for (var i = 0; i< test.length; i++) log(
+	'<b>' + $.tool.stringify(test[i]) + ':</b> ' + $.dom.addClass(elem, test[i])
+);
+log('<b>className = </b>' + $.dom.className(elem));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.removeClass(<span>element, css</span>)</h2>
+<p>Retire une ou plusieurs classes <code>css</code> du noeud <code>element</code>.
+	La fonction accepte 2 signatures.
+	Vous pouvez renseigner le paramètre <code>css</code> sous la forme d'une chaîne de caractères, ou d'un tableau de chaînes.</p>
+<p>La fonction retroune <code>true</code> si toutes les classes ont bien été supprimées, et <code>false</code> sinon.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div class="remove a b c d e" id="remove-class">Remove class!</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+var elem = document.getElementById("remove-class"),
+	test = ["a", "b c", ["d", "e"], "oups"];
+for (var i = 0; i< test.length; i++) log(
+	'<b>' + $.tool.stringify(test[i]) + ':</b> ' + $.dom.removeClass(elem, test[i])
+);
+log('<b>className = </b>' + $.dom.className(elem));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.toggleClass(<span>element, css</span>)</h2>
+<p>Alterne une ou plusieurs classes <code>css</code> au noeud <code>element</code>.
+	La fonction accepte 2 signatures.
+	Vous pouvez renseigner le paramètre <code>css</code> sous la forme d'une chaîne de caractères, ou d'un tableau de chaînes.</p>
+<p>La fonction retroune le nombre de classes qui ont été ajoutées suite à l'appel de la fonction.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<style>.toggle-me { color:red }</style>
+
+<div class="toggle addon" style="cursor:pointer" id="toggle-class">Click me!</div>
+
+	</div>
+	<script>ut2(function() {
+
+var elem = document.getElementById("toggle-class");
+$.dom.on(elem, "click", function() {
+	var count = $.dom.toggleClass(elem, "addon toggle-me");
+	$.dom.text(elem, 'className="' + $.dom.className(elem) + '" ; Added count=' + count);
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.animate(<span>element, properties, duration, easing, callback</span>)</h2>
+<p>Permet d'animer les propriétés CSS du noeud <code>element</code> comme <code>left</code>, <code>border</code>,
+	et même des propriétés complexes commes <code>color</code> ou encore <code>box-shadow</code>.
+	Attention, en interne la fonction fait appel à une classe <code>Animate</code> et l'appel à <code>$.dom.animate()</code> retourne en fait une instance de cette classe.</p>
+<p>Pour lancer/stopper l'animation utilisez les méthodes <code>.start()</code> et <code>.stop()</code>.
+	La fluidité du rendu dépend de l'intervalle de temps laissé entre chaque pas de l'animation.
+	Celui-ci est défini par la constante <code>dom.duration.MIN</code>.</p>
+<p>Une autre méthode consiste à utiliser la méthode <code>.step()</code> pour réaliser l'animation pas-à-pas
+	(dans ce cas, il vous incombe de gérer l'intervalle de temps laissé entre chaque pas...).
+	Les propriétés d'instance <code>.loops</code> et <code>.pointer</code> vous permettent alors de déterminer respectivement le nombre total de pas à effectuer et l'étape en cours.</p>
+<ul><li><code>properties</code>: les propriétés de l'élément à animer sous forme d'objet.</li>
+	<li><code>duration</code>: durée de l'animation en millisecondes.</li>
+	<li><code>easing</code>: fonction de "easing".
+		Les fonctions doivent avoir été inclues par <code>avine.asset("easing", {})</code>.
+		Voir le fichier <a href="../easing.js">easing.js</a> de Avine.</li>
+	<li><code>callback</code>: fonction de rappel exécutée à l'issue de l'animation.</li>
+</ul>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<style> #animate {
+	width:50%; background-color:#ccc; text-align:center;
+	cursor:pointer; position:relative; left:0; font-size:12px; line-height:24px;
+	user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
+} </style>
+
+<div id="animate">Move it!</div>
+
+	</div>
+	<script>ut2(function() {
+
+var animate = document.getElementById("animate"), step1, step2;
+step1 = $.dom.animate(animate, {
+	left: "200px", "font-size": "24px", "color": "#ff0000"
+}, 1500, "easeInBack", function () {
+	(step2 = step2 || $.dom.animate(animate, {
+		left: "0px", "font-size": "12px", "color": "#000"
+	}, 1500, "easeOutBack")).start();
+});
+$.dom.on(animate, "click", function () {
+	if (step1.stopped) return step1.start();
+	if (step2 && step2.stopped) return step2.start();
+	if (!step1.pointer && (!step2 || !step2.pointer)) return step1.start();
+	if (step1.pointer) return step1.stop();
+	if (step2 && step2.pointer) return step2.stop();
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.parents(<span>element</span>)</h2>
+<p>Retourne un tableau contenant la liste des ascendants du noeud <code>element</code>, jusqu'à l'élément racine <code>document.documentElement</code>.</p>
+<p class="msg-info">Il n'existe pas de fonction Avine <em>$.dom.parent()</em>, car la méthode de récupération du noeud parent est universelle&nbsp;: <code>element.parentNode</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div>P3<div>P2<div>P1<div id="parents">P0</div></div></div></div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var p = document.getElementById("parents"), test = $.dom.parents(p);
+for (var i = 0; i < 3; i++) { // Stop after 3 levels
+	log(test[i].outerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+}
+
+	});</script>
+</div>
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.children(<span>element, pos, includeNode</span>)</h2>
+<p>Retourne un tableau contenant les enfants directs du noeud <code>element</code>.
+	Le paramètre <code>pos</code> permet de spécifier l'index (en commençant par zero) de l'élément recherché.
+	Les alias <code>first</code> et <code>last</code> sont également supportés.</p>
+<p>Par défaut, seuls les enfants validés par la fonction <code>dom.isElement</code> sont retournés, ce qui exclus d'emblée les noeuds textes.
+	Il en est de même pour les balises de type métadonnée comme <code>&lt;script&gt;</code> et <code>&lt;style&gt;</code>, mais il est possible de les retourner en ajoutant leurs types dans la liste <code>includeNode</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="children">
+	#Text
+	<div>Child 1</div>
+	<span>Child 2</span>
+	<div>Child 3</div>
+	<script>var i;</script>
+	<style>p {}</style>
+</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var elem = document.getElementById("children"), logArray = function (test, title) {
+	log('<b>' + title + '</b>');
+	for (var i = 0; i < test.length; i++) {
+		log(test[i].outerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+	}
+};
+logArray( $.dom.children(elem), 'Test 1:' );
+logArray( $.dom.children(elem, 'first'), '\nTest 2:' );
+logArray( $.dom.children(elem, undefined, ['script']), '\nTest 3:' );
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.prev(<span>element, includeNode</span>)</h2>
+<p>Retourne l'élément précédent immédiatement le noeud <code>element</code> dans la liste des enfants de son noeud parent,
+	ou <code>null</code> si l'élément spécifié est le premier dans cette liste.</p>
+<h2>dom.next(<span>element, includeNode</span>)</h2>
+<p>Retourne l'élément suivant immédiatement le noeud <code>element</code> dans la liste des enfants de son noeud parent,
+	ou <code>null</code> si l'élément spécifié est le dernier dans cette liste.</p>
+<p>L'élément retourné doit valider la fonction <code>dom.isElement</code>.
+	Le paramètre <code>includeNode</code> permet de réduire la liste des balises de type métadonnée, comme dans la fonction <code>dom.children</code>.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div>
+	<div>First</div>
+	#Text
+	<div id="prev-next">Middle</div>
+	#Text
+	<div>Last</div>
+</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var elem = document.getElementById("prev-next"),
+	prev1 = $.dom.prev(elem), // First
+	prev2 = $.dom.prev(prev1), // null
+	next1 = $.dom.next(elem), // Last
+	next2 = $.dom.next(next1); // null
+
+var logArray = function (test, title) {
+	log('<b>---- ' + title + ' ----</b>');
+	if ($.dom.isElement(test)) {
+		log(test.outerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+	} else if (null === test) {
+		log("null");
+	}
+};
+logArray( prev1, 'Prev 1' );
+logArray( prev2, '\Prev 2' );
+logArray( next1, 'Next 1' );
+logArray( next2, 'Next 2' );
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.prevAll(<span>element, includeNode</span>)</h2>
+<p>Retourne un tableau des éléments précédent immédiatement le noeud <code>element</code> dans la liste des enfants de son noeud parent,
+	ou un tableau vide si l'élément spécifié est le premier dans cette liste.</p>
+<h2>dom.nextAll(<span>element, includeNode</span>)</h2>
+<p>Retourne un tableau des éléments suivant immédiatement le noeud <code>element</code> dans la liste des enfants de son noeud parent,
+	ou un tableau vide si l'élément spécifié est le dernier dans cette liste.</p>
+<p>Les éléments retournés doivent valider la fonction <code>dom.isElement</code>.
+	Le paramètre <code>includeNode</code> permet de réduire la liste des balises de type métadonnée, comme dans la fonction <code>dom.children</code>.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div>
+	<div>Prev 2</div>
+	<div>Prev 1</div>
+	#Text
+	<div id="prev-next-all">Middle</div>
+	#Text
+	<div>Next 1</div>
+	<div>Next 2</div>
+</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var elem = document.getElementById("prev-next-all");
+
+var logArray = function (test, title) {
+	log('<b>---- ' + title + ' ----</b>');
+	for (var i = 0; i < test.length; i++)
+		log(test[i].outerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+};
+logArray( $.dom.prevAll(elem), 'prevAll' );
+logArray( $.dom.nextAll(elem), 'nextAll' );
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.remove(<span>element</span>)</h2>
+<p>Retire du DOM le noeud <code>element</code> et le retourne.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="remove">A <span id="remove-child">B</span> C</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var getContent = function(element) {
+	return element.outerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}, test = [
+	document.getElementById("remove"),
+	document.getElementById("remove-child")
+];
+log('<b>Before: </b>' + getContent( test[0] ));
+log('<b>Removed: </b>' + getContent( $.dom.remove(test[1]) ));
+log('<b>After: </b>' + getContent( test[0] ));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.replace(<span>newElement, element</span>)</h2>
+<p>Remplace le noeud <code>element</code> par le noeud <code>newElement</code>, et retourne l'élément remplacé.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="replace">A <span id="replace-child">B</span> C</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var getContent = function(element) {
+	return element.outerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+},
+test = [
+	document.getElementById("replace"),
+	document.getElementById("replace-child"),
+	document.createElement('strong')
+];
+test[2].innerHTML = 'New';
+
+log('<b>Before: </b>' + getContent( test[0] ));
+log('<b>Replaced: </b>' + getContent( $.dom.replace(test[2], test[1]) ));
+log('<b>After: </b>' + getContent( test[0] ));
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.require.scripts(<span>urls, onLoad, onError, again</span>)<br />
+	dom.require.styles(<span>urls, onLoad, onError, again</span>)<br />
+	dom.require.images(<span>urls, onLoad, onError</span>)</h2>
+<p>Charge en parallèle les ressources listées dans le paramètre <code>urls</code>, puis exécute la fonction de rappel <code>onLoad</code> si tout s'est bien déroulé ou <code>onError</code> sinon.</p>
+<p>Le paramètre <code>urls</code> peut être renseigné sous la forme d'un tableau ou d'une chaîne, s'il n'y a qu'une seule ressource à charger.</p>
+<p>Techniquement, le chargement est réalisé en créant un noeud du DOM et en l'insérant si nécessaire dans la balise <code>&lt;head&gt;</code> du document.</p>
+<p>A l'intérieur des fonctions de rappel <code>onLoad</code> et <code>onError</code>, <code>this</code> représente le noeud du DOM ayant servi au chargement.
+	Si plusieurs ressources ont été chargées, celles-ci sont alors disponibles sous la forme d'un tableau <code>this[0]</code>, <code>this[1]</code>, ...</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="require" class="require-demo-1 require-demo-2 require-demo-3">Hello world!</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+// Each script X.js defines the global variable window.requireDemoX
+$.dom.require.scripts('require/scripts/1.js', function () {
+	log(window.requireDemo1 + ' loaded from ' + this.src);
+});
+$.dom.require.scripts(['require/scripts/2.js', 'require/scripts/3.js'], function () {
+	log(window.requireDemo2 + ' loaded from ' + this[0].src);
+	log(window.requireDemo3 + ' loaded from ' + this[1].src);
+});
+
+$.dom.require.styles('require/styles/1.css', function () {
+	log('1.css loaded and has added class .require-style-1 { color:blue }');
+});
+$.dom.require.styles(['require/styles/2.css', 'require/styles/3.css'], function () {
+	log('2.css loaded and has added class .require-style-2 { background-color:#ddd }');
+	log('3.css loaded and has added class .require-style-3 { font-style:italic }');
+});
+
+$.dom.require.images('require/images/1.png', function () {
+	log('1.png loaded');
+	document.getElementById('require').appendChild(this);
+});
+$.dom.require.images(['require/images/2.png', 'require/images/3.png'], function () {
+	log('2.png and 3.png loaded');
+	document.getElementById('require').appendChild(this[0]);
+	document.getElementById('require').appendChild(this[1]);
+});
+
+	});</script>
+</div>
+
+<p>Le paramètre boolean <code>again</code> permet de spécifier si les ressources doivent éventuellement être rechargées.
+	Il est disponible pour les méthodes <code>.scripts</code> et <code>.styles</code> et sa valeur par défaut est <code>false</code>.
+	Cela permet par exemple d'avoir la garantie que les bibliothèques Javascript ne seront chargées qu'une seule fois dans la page.</p>
+<p class="msg-info">Si une ressource est demandée une seconde fois et n'est pas rechargée (<code>again=false</code>), alors à l'intérieur de la fonction de rappel <code>onLoad</code>, <code>this</code> ne contient pas le noeud du DOM correspondant.
+	La fontion de rappel reçoit en premier paramètre <code>skipped</code>, qui indique le nombre de ressources qui n'ont pas été rechargées.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area"></div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+setTimeout(function () {
+	$.dom.require.scripts([
+		'require/scripts/3.js', // 3.js was already loaded in the previous code example
+		'require/scripts/4.js'
+	], function (skipped) {
+		log(skipped + ' resource skipped');
+		log(window.requireDemo4 + ' loaded from ' + this.src); // "this" contains only 4.js
+	});
+	$.dom.require.scripts('require/scripts/3.js', function (skipped) {
+		log(skipped + ' resource skipped');
+		log('script loaded again from ' + this.src);
+	}, undefined, true); // again
+}, 500); // Wait for the previous code example...
+
+	});</script>
+</div>
+
+<p>La méthode <code>.images</code> quant à elle, ne dispose pas du paramètre <code>again</code> et fonctionne techniquement avec <code>again=true</code>.
+	Cela ne génère pas pour autant de nouvel accès réseau, en considérant que les images sont stockées dans le cache du navigateur.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="require-again-images"></div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+setTimeout(function () {
+	var div = document.getElementById('require-again-images');
+	$.dom.require.images([
+		'require/images/2.png', // 2.png was already loaded
+		'require/images/3.png' // 3.png was already loaded
+	], function (skipped) {
+		log(skipped + ' resource skipped');
+		div.appendChild(this[0]); // still available in "this"
+		div.appendChild(this[1]); // still available in "this"
+	});
+}, 1000); // Wait for the previous code example...
+
+	});</script>
+</div>
+
+<p>Les fonctions <code>dom.require.scripts.loaded()</code>, <code>dom.require.styles.loaded()</code> et <code>dom.require.images.loaded()</code> retournent la liste des resources ayant été chargées.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area"></div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+setTimeout(function () {
+
+	log('<b>Scripts:</b>');
+	log($.dom.require.scripts.loaded().join('\n'));
+
+	log('<b>Styles:</b>');
+	log($.dom.require.styles.loaded().join('\n'));
+
+	log('<b>Images:</b>');
+	log($.dom.require.images.loaded().join('\n'));
+
+}, 1500); // Wait for the previous code example...
+
+	});</script>
+</div>
+
+<p>En cas d'erreur au chargement, la fonction de rappel <code>onError</code> reçoit en plus du paramètre <code>skipped</code>, un second paramètre <code>error</code>.
+	Ce dernier contient le nombre de ressources qui n'ont pu être chargées.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="require-error"></div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+setTimeout(function () {
+	var div = document.getElementById('require-error');
+	$.dom.require.images([
+		'require/images/2.png',
+		'require/images/oups.png'
+	], undefined, function (skipped, error) {
+		log('2.png loaded');
+		div.appendChild(this[0]);
+
+		log(error + ' resource could not be loaded...');
+		log('The resource is ' + this[1]);
+	});
+}, 2000); // Wait for the previous code example...
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.on(<span>element, events, fn, once</span>)</h2>
+<p>Assigne le gestionnaire d'événements <code>fn</code> au noeud cible <code>element</code>.
+	Le paramètre <code>events</code> permet de lister le ou les événements concernés, sous forme de chaîne (en utilisant la virgule comme séparateur) ou de tableau
+	(par exemple <code>'click, mouseout'</code> est équivalent à <code>['click', 'mouseout']</code>).</p>
+<p>Si la propriété <code>window.Touch</code> est détecté, la fonction s'adapte automatiquement aux mobiles en ajoutant les événements reconnus pour ce type de support.
+	Par exemple, si le gestionnaire doit être assigné à l'événement <code>mousedown</code>, il est alors également assigné à l'événement <code>touchstart</code>.</p>
+<p>Pour que le gestionnaire ne soit invoqué qu'une seule fois, il faut renseigner le paramètre boolean <code>once</code> à <code>true</code>.</p>
+<p>L'événement est passé en paramètre à la fonction de rappel <code>fn</code> et à l'intérieur de celle-ci, <code>this</code> représente le noeud <code>element</code>, cible de l'événement.</p>
+<p class="msg-info">La propriété <code>dom.listeners</code> contient tous les gestionnaires d'événements qui ont été assignés dans la page.</p>
+
+<h2>dom.off(<span>element, events, fn</span>)</h2>
+<p>Retire le gestionnaire d'événements <code>fn</code> du noeud cible <code>element</code>.
+	Le paramètre <code>events</code> permet de lister le ou les événements concernés, sous forme de chaîne (en utilisant la virgule comme séparateur) ou de tableau.</p>
+
+<h2>dom.trigger(<span>element, event, detail, canBubble</span>)</h2>
+<p>Déclenche l'événement <code>event</code> sur le noeud cible <code>element</code>.
+	Le paramètre <code>event</code> permet de renseigner l'événement concerné.
+	Le paramètre <code>detail</code> permet de transmettre des données au gestionnaire (en second paramètre).</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<p><a href="#" id="add-event1">Event1: "click" or "mouseout" (always)</a> /
+	<a href="#" id="remove-event1">Remove "click" event1</a> /
+	<a href="#" id="trigger-event1">Trigger "mouseout" event1</a></p>
+<p><a href="#" id="add-event2">Event2: "mouseover" (once)</a></p>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var add1 = document.getElementById("add-event1"),
+	add2 = document.getElementById("add-event2"),
+	remove1 = document.getElementById("remove-event1"),
+	trigger1 = document.getElementById("trigger-event1");
+
+var fn = function (e, detail) {
+	log('<b>"' + e.type + '" on "#' + this.id + '"</b>');
+	if (detail) log('Detail:"' + detail);
+	e.preventDefault();
+};
+$.dom.on(add1, 'click, mouseout', fn);
+$.dom.on(add2, 'mouseover', fn, true); // Add event once
+
+$.dom.on(remove1, 'click', function (e) {
+	$.dom.off(add1, 'click', fn);
+	log('<b>"click" removed on "#remove-event1"</b>');
+	e.preventDefault();
+});
+$.dom.on(trigger1, 'click', function (e) {
+	$.dom.trigger(add1, 'mouseout', "Triggered event !");
+	e.preventDefault();
+});
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.cloneNode(<span>element, childs, events</span>)</h2>
+<p>Clone le noeud <code>element</code>.
+	Les paramètres boolean <code>childs</code> et <code>events</code> indiquent respectivement si les noeuds enfants et les événements assignés doivent être clonés.</p>
+<p class="msg-info">Si le noeud possède un attribute HTML <code>id</code>, celui-ci est alors supprimé du clone.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<div id="clone-source" style="cursor:pointer">Hello world!</div>
+
+<style>#clone-container em { color: olive; }</style>
+
+<div id="clone-container"></div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var source = document.getElementById('clone-source');
+$.dom.on(source, 'click', function (e) {
+	log('"' + e.type + '" on "' + (this.id || 'Unknown') + '"');
+	e.preventDefault();
+});
+
+var cloneCounter = 1, cloneSource = function (info, childs, events) {
+	var target = $.dom.cloneNode(source, childs, events); // Clone source element
+	target.innerHTML += ' <em>(clone ' + cloneCounter++ + ': ' + info + ')</em>' // Add html info
+	return target;
+};
+
+var clones = [
+	cloneSource('Childs and events'),
+	cloneSource('Only childs', true, false),
+	cloneSource('Only events', false, true),
+	cloneSource('Not childs and not events', false, false)
+],
+container = document.getElementById('clone-container');
+for (var i = 0; i < clones.length; i++) {
+	container.appendChild(clones[i]);
+	log(clones[i].outerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+}
+log('--------');
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.drag(<span>element, settings, callback</span>)</h2>
+<p>Permet de faire glisser le noeud <code>element</code> à la souris (ou au doigt sur un navigateur mobile).
+	Le paramètre <code>settings</code> renseigné sous forme d'objet, permet de configurer le déplacement et vaut par défaut :</p>
+<ul>
+	<li><code>position</code>: <code>'absolute'</code><br />
+		Positionnement CSS appliqué à <code>element</code>.</li>
+	<li><code>cursor</code>: <code>'move'</code><br />
+		Curseur CSS appliqué au <code>trigger</code>.</li>
+	<li><code>trigger</code>: <code>element</code><br />
+		Elément du DOM qui déclenche et contrôle le déplacement.
+		Par défaut, il s'agit de l'élément lui-même.</li>
+	<li><code>direction</code>: <code>false</code><br />
+		Limite le déplacement et accepte les valeurs <code>'horizontal'</code> ou <code>'vertical'</code>.</li>
+	<li><code>zIndexOnTop</code>: <code>true</code><br />
+		Assure que l'élément déplacé est toujours au premier plan, en jouant sur son <code>zIndex</code>.</li>
+	<li><code>follow</code>: <code>false</code><br />
+		Permet (sur navigateur non mobile) de continuer le déplacement même après avoir relâché le clic de la souris.
+		Dans ce cas, il faut cliquer à nouveau sur le <code>trigger</code> pour arrêter le déplacement.</li>
+	<li><code>start</code>: <code>false</code><br />
+		Fonction de rappel invoquée au début du déplacement.</li>
+	<li><code>progress</code>: <code>false</code><br />
+		Fonction de rappel invoquée à chaque étape du déplacement.</li>
+</ul>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area" style="-webkit-user-select:none;">
+
+<style> .drag { padding:5px; background-color:#ccc; } </style>
+
+<div id="drag-trigger">Drag trigger</div><br />
+<div id="drag-target" class="drag">Drag me !</div><br /><br />
+
+	</div>
+	<script>ut2(function(log) {
+
+var target = document.getElementById('drag-target'),
+	trigger = document.getElementById('drag-trigger');
+
+$.dom.drag(target, { trigger: trigger });
+
+	});</script>
+</div>
+
+<p>Le paramètre <code>direction</code> permet de limiter le déplacement à l'horizontale ou à la verticale.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area" style="-webkit-user-select:none;">
+
+<div id="drag-horizontal" class="drag">Drag horizontal !</div><br /><br />
+<div id="drag-vertical" class="drag">Drag vertical !</div><br /><br />
+
+	</div>
+	<script>ut2(function(log) {
+
+var horizontal = document.getElementById('drag-horizontal'),
+	vertical = document.getElementById('drag-vertical');
+
+$.dom.drag(horizontal, { direction: 'horizontal' });
+$.dom.drag(vertical, { direction: 'vertical' });
+
+	});</script>
+
+</div>
+
+<p>La fonction <code>progress</code> est invoquée à chaque étape du déplacement.
+	A l'intérieur de celle-ci, <code>this</code> représente l'élément déplacé.
+	La fonction accepte deux paramètres.
+	Le premier permet d'accéder en lecture et écriture à la prochaine position relative, qui est sur le point d'être affectée à l'élément.
+	Le second fournit sous forme d'objet les propriétés suivantes :</p>
+<ul>
+	<li><code>settings</code>: Configuration du déplacement.</li>
+	<li><code>prev</code>: Coordonnées actuelle de l'élement.</li>
+	<li><code>next</code>: Prochaines coordonnées de l'élement.</li>
+	<li><code>delta</code>: Distance qui sera parcourue par l'élement.</li>
+</ul>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area" style="-webkit-user-select:none;">
+
+<style>
+.drag-container { height:70px; border:1px dotted red; }
+.drag-item { width:35px; height:35px; border-radius:35px; background-color:orange; }
+</style>
+
+<div id="drag-inside-container" class="drag-container">
+	<div id="drag-inside-item" class="drag-item"></div>
+</div>
+
+	</div>
+	<script>ut2(function(log) {
+
+$.dom.drag(document.getElementById('drag-inside-item'), {
+	follow: true,
+	start: function (o) {
+		$.dom.css(this, 'background-color', 'green');
+	},
+	progress: function (o, pos) {
+		var c = $.dom.coords(document.getElementById('drag-inside-container'));
+		if (o.next.left <= c.left || o.next.right >= c.right) delete pos.left;
+		if (o.next.top <= c.top || o.next.bottom >= c.bottom) delete pos.top;
+	}
+}, function (o) {
+	$.dom.css(this, 'background-color', 'orange');
+});
+
+	});</script>
+
+</div>
+
+<p>Le paramètre <code>callback</code> permet d'exécuter une fonction de rappel à l'issue du déplacement.
+	A l'intérieur de la fonction, <code>this</code> représente l'élément déplacé.
+	La fonction accepte un paramètre qui fournit sous forme d'objet les propriétés suivantes :</p>
+<ul>
+	<li><code>settings</code>: Configuration du déplacement.</li>
+	<li><code>from</code>: Coordonnées initiales de l'élement.</li>
+	<li><code>to</code>: Coordonnées d'arrivée de l'élement.</li>
+</ul>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area" style="-webkit-user-select:none;">
+
+<div id="drag-callback-item" class="drag">Callback</div><br /><br />
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var item = document.getElementById('drag-callback-item');
+
+$.dom.drag(item, {}, function (o) {
+	log('<b>left=</b> ' + (o.to.left - o.from.left) + 'px / ' +
+		'<b>top=</b> ' + (o.to.top - o.from.top) + 'px'
+	);
+});
+
+	});</script>
+</div>
+
+<p>Les événements suivants sont déclenchés aux différentes étapes du déplacement :
+	<code>avnDrag.start</code>, <code>avnDrag.progress</code> et <code>avnDrag.end</code>.</p>
+
+
+<!-- Un_it test
+<hr />
+<h2>dom.ajax(<span>url, param</span>)</h2>
+<p>Envoie une requête AJAX.</p> -->
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.selector(<span>query, root</span>)</h2>
+<p>Parcours le DOM à partir du noeud <code>root</code> et retourne un tableau des éléments qui correspondent au sélecteur CSS <code>query</code>.
+	Le <code>root</code> par défaut est le noeud racine <code>document</code>.</p>
+<p>Par défaut, la fonction utilise un moteur interne pour rechercher les éléments.
+	Ce moteur supporte les sélecteurs CSS suivants: <code>*</code>, <code>a + b</code>, <code>a ~ b</code>, <code>a &gt; b</code> et <code>a b</code>.</p>
+<p>Il existe également un sélecteur exotique: <code>§</code> (non standard).
+	Celui-ci permet rechercher les éléments en remontant vers la racine du document.</p>
+<p>La propriété <code>dom.selector.stats</code> contient la liste chronologique des requêtes et leurs temps de calcul.
+	La fonction <code>dom.selector.viewStats(sort)</code> permet d'afficher les performances dans la console.
+	Si le paramètre optionnel <code>sort</code> vaut <code>true</code> alors les performances sont ordonnées en fonction du temps de calcul.</p>
+<p>Si la directive de configuration <code>avine.context.querySelectorAll</code> vaut <code>true</code>,
+	alors la recherche utilise la fonction native <code>root.querySelectorAll</code> si celle-ci est disponible dans l'implémentation du navigateur.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<style> .selector-item { border:1px dotted olive; margin:3px; padding:3px; } </style>
+
+<div class="selector-item" id="selector">
+	<div>#</div>
+	<div class="selector-item">
+		<div>#</div>
+		<strong>#</strong>
+		<span class="selector-item">Catch me !</span>
+	</div>
+</div>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var test = $.dom.selector('div + div > div ~ span', $.dom.selector('#selector')[0]);
+for (var i = 0; i < test.length; i++) {
+	log(test[i].outerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+	log('')
+}
+
+var stats = $.dom.selector.stats,
+	last = stats[stats.length - 1];
+
+log('<b>Query:</b> ' + last.query);
+log('<b>Time:</b> ' + last.time + 'ms');
+log('<b>Items:</b> ' + last.items);
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>dom.ready(<span>fn, all</span>)</h2>
+<p>Exécute la fonction de rappel <code>fn</code> une fois le DOM chargé.
+	Si le paramètre boolean <code>all</code> est renseigné à <code>true</code>,
+	alors la fonction n'est exécutée qu'après chargement de toutes les ressources référencées dans la page
+	(comme les images, les vidéos, ...).</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<div class="ut-area">
+
+<script>
+function testReady(msg) {
+	var isReady = !!document.getElementById('ready'); // Try to get the DOM element
+	testReady.results.push(
+		'<b>' + msg + ':</b> ' + (isReady ? 'Success' : 'Failure')
+	);
+}
+testReady.results = [];
+</script>
+
+<script>
+testReady('Before DIV'); // Failure
+$.dom.ready(function () { testReady('Before DIV (using $.dom.ready)'); }); // Success :)
+</script>
+
+<div id="ready">Are you ready ?</div>
+
+<script>
+testReady('After DIV'); // Success
+</script>
+
+	</div>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+for (var i = 0; i < testReady.results.length; i++) {
+	log(testReady.results[i]);
+}
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test
+<hr />
+<h2>dom.xx(<span>yy</span>)</h2>
+<p></p>
+<div class="ut">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<div class="ut-area">
+
+<script>
+	var test = [], samp = [];
+	document.write('<samp>' + samp.join('\n') + '</samp>');
+</script>
+
+	</div>
+</div> -->
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

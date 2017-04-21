@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>escape</title>
+
+	<style>
+		body {
+			margin: 0;
+			background-color: #ddd;
+			font: 12px/18px Arial;
+		}
+		#container {
+			max-width: 900px;
+			margin: 7em auto 0 auto;
+			padding: 1%;
+		}
+		#container > * {
+			box-sizing: border-box;
+			float: left;
+			width: 48%;
+			margin: 1%;
+		}
+		#container > pre {
+			width: 98%;
+			padding: 10px;
+			border-radius: 0;
+			border: 1px solid #bbb;
+			box-shadow: 2px 2px 2px rgba(0,0,0, .1) inset;
+		}
+		#container > *, #container > pre, #container > pre > code {
+			font-size: 1em;
+			line-height: 1.5em !important;
+		}
+		.area {
+			width: 100%;
+			padding: 10px;
+			box-sizing: border-box;
+			box-shadow: 2px 2px 2px rgba(0,0,0, .1) inset;
+			border: 1px solid #bbb;
+			background-color: #fff;
+			font-family: Consolas, Monaco, 'Andale Mono', monospace;
+			font-size: 1em;
+			outline: none;
+			resize: none;
+		}
+		h1, h2, h3 {
+			text-align: center;
+			text-shadow: 0 1px 0 #eee;
+			font-weight: 500;
+		}
+		h1 {
+			position: fixed;
+			z-index: 2;
+			top: 0;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			box-shadow: 0 0 10px rgba(0,0,0,.2);
+			border-bottom: 1px solid #777;
+			background-color: rgba(120,120,120, .85);
+			color: #555;
+			text-shadow: 0 1px 1px #aaa;
+			font-size: 2.5em;
+			line-height: 2.5em;
+		}
+		h2 {
+			margin: .25em;
+			color: #777;
+		}
+		h3 {
+			clear: left;
+			margin: 0;
+			padding: 1em 0;
+			color: #aaa;
+		}
+		p {clear: left;
+			text-align: center;
+		}
+		a {
+			color: #aaa !important;
+			text-decoration: none;
+		}
+	</style>
+
+	<link rel="stylesheet" type="text/css" href="plugin/unit/prism/prism.css" />
+</head>
+<body>
+
+	<h1>escape</h1>
+
+	<div id="container">
+		<div>
+			<h2>source</h2>
+			<textarea class="area" id="source" placeholder="Your source code..." autofocus></textarea>
+		</div><div>
+			<h2>target</h2>
+			<textarea class="area" id="target" readonly></textarea>
+		</div>
+		<pre><code class="language-markup" id="markup"></code></pre>
+	</div>
+
+	<h3><a href="http://js.avine.fr/">2015 &copy; Avine</a></h3>
+
+	<script>
+		var source = document.getElementById('source'),
+			target = document.getElementById('target'),
+			markup = document.getElementById('markup');
+
+		var escape = function (string) {
+			return (string || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		};
+
+		setInterval(function () {
+			var length = source.value.split('\n').length + 2, maxLength = 30;
+			if (length > maxLength) length = maxLength;
+			markup.parentNode.style.height = target.style.height = source.style.height = 1.5 * length + 'em';
+
+			markup.innerHTML = target.value = escape(source.value);
+			Prism.highlightElement(markup);
+		}, 100);
+	</script>
+
+	<script src="plugin/unit/prism/prism.js"></script>
+</body>
+</html>

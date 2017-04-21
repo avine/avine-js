@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Introduction - API / Documentation - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../index.css" />
+
+	<script src="../avine-js.js"></script>
+	<script src="../unit-test.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../prism/prism.css" />
+	<script src="../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../index.html" class="logo" style="width:32px;"><img src="../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>Introduction <span>- API / Documentation</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines">AvineJS est un framework modulaire, extensible et bien organisé.</h4>
+
+		<p><a href="#" class="ut-trigger">masquer/afficher les extraits de code.</a></p>
+
+
+
+<hr />
+<h2>Espace de noms</h2>
+<p>AvineJS ajoute à l'espace de noms Javascript l'entrée <code>avine</code> (ou <code>window.avine</code>).
+	Les différentes <em>fonctionnalités</em> du framework sont disponibles en temps que propriétés de l'objet <code>avine</code>&nbsp;:</p>
+
+<ul>
+	<li><code>tool</code> est un objet offrant un ensemble de fonctions utilitaires.</li>
+	<li><code>dom</code> est un objet offrant un ensemble de fonctions dédiées à la manipulation le DOM.</li>
+	<li><code>Core</code> est une classe offrant une syntaxe procédurale pour réaliser des chaînes de traitements asynchrones.</li>
+	<li><code>$</code> est une fonction qui combine <code>dom</code> et <code>Core</code> et permet de manipuler le DOM en travaillant par collections d'éléments.</li>
+</ul>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+for (var p in window.avine) log(p);
+
+	});</script>
+</div>
+
+<p class="msg-info">La classe <code>Core</code> implémente l'héritage et est donc extensible.
+	Elle possède une classe enfant&nbsp;: <code>Core.$</code>.
+	La fonction <code>$()</code> est en quelque sorte une <em>enveloppe</em> qui retourne simplement une instance <code>new Core.$()</code>.</p>
+
+<p>La fonction <code>$</code> est une fonction de haut niveau, dédiée à la manipulation du DOM.
+	A ce titre, elle possède deux alias dans l'espace de noms principal&nbsp;: <code>$</code> (ou <code>window.$</code>) et <code>avn</code>.</p>
+
+<p>Pour simplifier l'écriture du code, la fonction <code>$</code> possède également un alias de chaque <em>fonctionnalité</em> de <code>avine</code>.
+	Par exemple, <code>$.tool</code> est un alias de <code>avine.tool</code>.
+	Ainsi, vous pouvez écrire tout le code AvinsJS en utilisant l'unique variable <code>$</code>.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+log($.tool === avine.tool);
+
+	});</script>
+</div>
+
+<p>Mais, la variable <code>$</code> est souvent utilisée par les frameworks et peut donc faire l'objet de collisions dans l'espace de noms.
+	C'est pourquoi AvineJS possède en interne, une copie de la valeur (éventuelle) de cette variable avant de l'avoir affecté.
+	Pour restaurer <code>$</code> à cette valeur, il suffit d'exécuter le code <code>avine.$.restore('$')</code>.</p>
+
+<p>Pour écrire du code entièrement portable, il faut toujours passer par l'espace de noms dédié <code>avine</code>.
+	Par exemple, la fonction <code>$</code> est disponible dans <code>avine.$</code>.
+	Vous pouvez également importer dans l'espace de nom Javascript d'autres alias de la fonction <code>$</code>, avec la fonction <code>avine.$.expose</code>.</p>
+
+<p>Le code suivant expose puis restaure la valeur de la variable <code>_$_</code>&nbsp;:</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function (log) {
+
+window._$_ = 'foo';
+
+log(window._$_); // foo
+
+avine.$.expose('_$_');
+log('_$_' in window && window._$_ === avine.$); // true
+
+avine.$.restore('_$_');
+log(window._$_); // foo
+
+	});</script>
+</div>
+
+
+
+<hr />
+<h2>Premiers pas...</h2>
+<p>Pour utiliser AvineJS, il faut inclure le fichier <strong>avine-js.js</strong> dans vos pages Web.
+	Pour profiter des fonctions de "easing" dans les animations, il faut également ajouter le fichier <strong>easing.js</strong>.</p>
+
+<pre><code class="language-markup">&lt;!-- Required --&gt;
+&lt;script src="http://js.avine.fr/avine-js.js"&gt;&lt;/script&gt;
+&lt;!-- Optionnal --&gt;
+&lt;script src="http://js.avine.fr/easing.js"&gt;&lt;/script&gt;
+</code></pre>
+
+
+
+<hr />
+<h2>Conventions</h2>
+<p>Dans cette documentation, l'espace de noms <code>avine</code> est sous-entendu.
+	Par exemple, la fonction <code>avine.tool.cleanString</code> est simplement nommée <code>tool.cleanString</code>.</p>
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

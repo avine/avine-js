@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Slideshow plugin - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="favicon.ico" />
+
+	<!-- Demo styles -->
+	<link rel="stylesheet" type="text/css" href="../../index.css" />
+	<link rel="stylesheet" type="text/css" href="demo.css" />
+
+	<!-- AvineJS Core -->
+	<script src="../../avine-js.js"></script>
+
+	<!-- Easing functions -->
+	<script src="../../easing.js"></script>
+
+	<!-- Avine Slideshow plugin -->
+	<link rel="stylesheet" type="text/css" href="slideshow.css" /><!-- optional -->
+	<script src="slideshow.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../prism/prism.css" />
+	<script src="../../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../../index.html" class="logo" style="width:32px;"><img src="../../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>Slideshow plugin <span>- AvineJS</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines"><em>Slideshow</em> permet de générer des Carrousels animés avec différentes méthodes de navigation, mais également une navigation en onglets (Tabs).</h4>
+
+<!-- Slideshow instances -->
+<script>
+$.dom.ready(function(){
+
+	$('#slideshow-1').slideshow();
+
+	$('#slideshow-2').slideshow({
+		start: 1,
+		fade: 250,
+		autoSlide: 4000,
+		autoStop: true,
+		navigCss: 'demo-slides-navig',
+		textPrev: 'Précédent',
+		textNext: 'Suivant',
+		textResume: 'Reprendre'
+
+	}).on('slideshowPageChanged', function (e) {
+		console.log(e.detail);
+	});
+
+	$('#slideshow-3').slideshow({
+		fade: 250,
+		autoSlide: 3000,
+		autoStop: true,
+		navigCss: 'demo-slides-navig',
+		navigContainer: {
+			prev: false,
+			next: false,
+			counter: true,
+			anchors: '.demo-slides-anchors'
+		}
+	});
+
+	$('#slideshow-4').slideshow({
+		fade: 300,
+		autoSlide: 2500,
+		autoStop: true,
+		autoHeight: 200,
+		navigContainer: {
+			prev: false,
+			next: false,
+			counter: false,
+			anchors: '#slideshow-4-anchors'
+		}
+	});
+
+});
+</script>
+
+<script>
+$.dom.ready(function () {
+
+	$('#slideshow-5').slideshow({
+		fade: 600,
+		autoSlide: 2500,
+		autoStop: true,
+		navigPos: 'bottom',
+		navigCss: 'demo-slides-anchors',
+		navigContainer: {
+			anchors: true
+		}
+	});
+
+}, true); // Wait for resources laoded
+</script>
+
+
+
+<hr />
+<h2>Le code HTML</h2>
+<p>Le code HTML, est une simple liste non-ordonnée contenant les différents slides.
+	Le Slideshow Javascript a été conçu sur le principe d'amélioration progressive.
+	N'hésitez-pas à désactiver Javascript dans votre navigateur à tout moment, pour tester le rendu en mode dégradé (qui n'est pas si dégradé que ça...).</p>
+
+<pre><code class="language-markup">&lt;ul id="slideshow-x"&gt;
+	&lt;li&gt;[Content]&lt;/li&gt;
+	&lt;li&gt;[Content]&lt;/li&gt;
+	&lt;li&gt;[Content]&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<div class="online-demo">
+
+<div style="margin-left:20px;">
+	<ul class="reset">
+		<li><h4>Slide 1</h4></li>
+		<li><h4>Slide 2</h4></li>
+		<li><h4>Slide 3</h4></li>
+	</ul>
+</div>
+
+</div>
+
+<p>Notez que l'on peut en fait appliquer le slideshow à n'importe quelle autre structure HTML.
+	Le principe est simple : le slideshow est appliqué à tous les enfants directs du nœud racine ciblé.</p>
+
+
+
+<hr />
+<h2>Le code Javascript</h2>
+<p>Voici le code Javascript permettant d'appliquer le Slideshow à une partie du document HTML.<br />
+	Hum... Les habitués de jQuery y verront un air de déjà vu.
+	A noter que la méthode "slideshow" est en réalité une extension et ne fait donc pas partie du "core" du framework.</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+// Attendre que le DOM soit construit
+$.dom.ready(function(){
+
+	// Appliquer le slideshow à l'élément dont l'id vaut "slideshow-1"
+	$('#slideshow-1').slideshow();
+
+});
+&lt;/script&gt;
+</code></pre>
+
+
+
+<!-- # -->
+<hr />
+<h2>Le rendu par défaut</h2>
+<p>Appliquons donc le slideshow à la liste dont l'id vaut : <em>"slideshow-1"</em> et voyons le résultat.</p>
+
+<div class="online-demo">
+
+<ul id="slideshow-1" class="reset">
+	<li>
+		<h4><img src="../../resource/1.png" alt="" class="slide" /> Slide 1</h4>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies convallis nunc non auctor. Vestibulum nec pretium eros. Donec et ullamcorper lectus. Morbi placerat interdum semper. Vivamus at neque id ipsum laoreet euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean nulla nunc, rhoncus eu vehicula eu, vestibulum nec leo. Suspendisse potenti. Morbi feugiat eros sit amet mi vestibulum semper.</p>
+	</li><li>
+		<h4><img src="../../resource/2.png" alt="" class="slide" /> Slide 2</h4>
+		<p>Quisque et orci eu augue ornare porta. Maecenas scelerisque blandit ipsum, eget condimentum nibh vestibulum eget. Maecenas gravida molestie dui eget sodales. Aenean fermentum convallis eleifend. Praesent elit enim, rutrum at imperdiet at, dapibus et magna. Nam sapien lorem, eleifend vel sagittis pellentesque, vulputate quis ante. Duis vulputate, ipsum vitae gravida porttitor, arcu sapien ultrices velit, at bibendum lacus risus ut erat.</p>
+	</li><li>
+		<h4><img src="../../resource/3.png" alt="" class="slide" /> Slide 3</h4>
+		<p>Duis non elit eu dui sagittis lobortis. Sed aliquam urna feugiat sem ornare id placerat lectus placerat. Fusce non neque at metus bibendum semper. Pellentesque eu diam at tortor tincidunt vehicula. Nulla diam ipsum, faucibus eu dapibus et, suscipit vel quam. Aliquam dictum libero eget tellus faucibus convallis. Nulla elementum volutpat diam, non tincidunt nibh convallis id. </p>
+	</li>
+</ul>
+
+</div>
+
+<p>Hum, c'est un bon début, non ? <a href="basic.html">Voir le Slideshow minimaliste</a>.</p>
+
+
+
+<!-- # -->
+<hr />
+<h2>Un rendu avancé avec mise en forme css...</h2>
+<p>Appliquons maintenant le slideshow à la liste dont l'id vaut : <em>"slideshow-2"</em>.
+	Cette fois, quelques comportements intéressants sont ajoutés.
+	On commence au deuxième slide et la transition est animée.
+	Le défilement des slides est automatique mais s'interrompt lorsque la souris passe au dessus du Slideshow.
+	Notez que l'apparence de la barre de navigation est adaptée en renseignant dans l'instance le paramètre <em>navigCss: 'demo-slides-navig'</em>.
+	L'apparence des slides quant à elle, est obtenue simplement en appliquant la classe css <em>"demo-slides-container"</em> à chaque balise &lt;li&gt;.</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+$.dom.ready(function(){
+
+	$('#slideshow-2').slideshow({
+		start: 1,
+		fade: 250,
+		autoSlide: 4000,
+		autoStop: true,
+		navigCss: 'demo-slides-navig',
+		textPrev: 'Précédent',
+		textNext: 'Suivant',
+		textResume: 'Reprendre'
+	});
+
+});
+&lt;/script&gt;
+</code></pre>
+
+<div class="online-demo">
+
+<ul id="slideshow-2" class="reset">
+	<li class="demo-slides-container">
+		<h4><img src="../../resource/1.png" alt="" class="slide" /> Slide 1</h4>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies convallis nunc non auctor. Vestibulum nec pretium eros. Donec et ullamcorper lectus. Morbi placerat interdum semper. Vivamus at neque id ipsum laoreet euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean nulla nunc, rhoncus eu vehicula eu, vestibulum nec leo. Suspendisse potenti. Morbi feugiat eros sit amet mi vestibulum semper.</p>
+	</li><li class="demo-slides-container">
+		<h4><img src="../../resource/2.png" alt="" class="slide" /> Slide 2</h4>
+		<p>Quisque et orci eu augue ornare porta. Maecenas scelerisque blandit ipsum, eget condimentum nibh vestibulum eget. Maecenas gravida molestie dui eget sodales. Aenean fermentum convallis eleifend. Praesent elit enim, rutrum at imperdiet at, dapibus et magna. Nam sapien lorem, eleifend vel sagittis pellentesque, vulputate quis ante. Duis vulputate, ipsum vitae gravida porttitor, arcu sapien ultrices velit, at bibendum lacus risus ut erat.</p>
+	</li><li class="demo-slides-container">
+		<h4><img src="../../resource/3.png" alt="" class="slide" /> Slide 3</h4>
+		<p>Duis non elit eu dui sagittis lobortis. Sed aliquam urna feugiat sem ornare id placerat lectus placerat. Fusce non neque at metus bibendum semper. Pellentesque eu diam at tortor tincidunt vehicula. Nulla diam ipsum, faucibus eu dapibus et, suscipit vel quam. Aliquam dictum libero eget tellus faucibus convallis. Nulla elementum volutpat diam, non tincidunt nibh convallis id. </p>
+	</li>
+</ul>
+
+</div>
+
+
+
+<!-- # -->
+<hr />
+<h2>Et en bonus... un classique du genre</h2>
+<p>Dans les exemples précédents, les éléments de la barre de navigation étaient insérés dans une balise "fourre-tout", ajoutée automatiquement au-dessus où en-dessous des slides.
+	Cette fois, seul le "compteur" est conservé, alors que les boutons "précédent" et "suivant" ne sont pas affichés.
+	Les boutons des "ancres" sont quant à eux insérés dans une balise spécifiée et dont la classe vaut : <em>"demo-slides-anchors"</em>.</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+$.dom.ready(function(){
+	$('#slideshow-3').slideshow({
+		fade: 250,
+		autoSlide: 3000,
+		autoStop: true,
+		navigCss: 'demo-slides-navig',
+		navigContainer: {
+			prev: false,
+			next: false,
+			counter: true,
+			anchors: '.demo-slides-anchors'
+		}
+	});
+});
+&lt;/script&gt;
+</code></pre>
+
+<div class="online-demo">
+
+<ul id="slideshow-3" class="reset demo-slides-container demo-slides-container-alt">
+	<li>
+		<h4><img src="../../resource/1.png" alt="" class="slide" /> Slide 1</h4>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies convallis nunc non auctor. Vestibulum nec pretium eros. Donec et ullamcorper lectus. Morbi placerat interdum semper. Vivamus at neque id ipsum laoreet euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean nulla nunc, rhoncus eu vehicula eu, vestibulum nec leo. Suspendisse potenti. Morbi feugiat eros sit amet mi vestibulum semper.</p>
+	</li><li>
+		<h4><img src="../../resource/2.png" alt="" class="slide" /> Slide 2</h4>
+		<p>Quisque et orci eu augue ornare porta. Maecenas scelerisque blandit ipsum, eget condimentum nibh vestibulum eget. Maecenas gravida molestie dui eget sodales. Aenean fermentum convallis eleifend. Praesent elit enim, rutrum at imperdiet at, dapibus et magna. Nam sapien lorem, eleifend vel sagittis pellentesque, vulputate quis ante. Duis vulputate, ipsum vitae gravida porttitor, arcu sapien ultrices velit, at bibendum lacus risus ut erat.</p>
+	</li><li>
+		<h4><img src="../../resource/3.png" alt="" class="slide" /> Slide 3</h4>
+		<p>Duis non elit eu dui sagittis lobortis. Sed aliquam urna feugiat sem ornare id placerat lectus placerat. Fusce non neque at metus bibendum semper. Pellentesque eu diam at tortor tincidunt vehicula. Nulla diam ipsum, faucibus eu dapibus et, suscipit vel quam. Aliquam dictum libero eget tellus faucibus convallis. Nulla elementum volutpat diam, non tincidunt nibh convallis id. </p>
+	</li>
+</ul>
+<div class="demo-slides-anchors"></div>
+
+</div>
+
+
+
+<!-- # -->
+<hr />
+<h2>Et pour finir, une navigation en onglets...</h2>
+<p>Jusqu'à présent, les boutons des "ancres" étaient générés automatiquement.
+	Cette fois, ils sont fournis en dur dans la structure html de la page.
+	Ainsi, il est possible de définir un contenu personnalisé pour chaque bouton...</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+$.dom.ready(function(){
+	$('#slideshow-4').slideshow({
+		fade: 300,
+		autoSlide: 2500,
+		autoStop: true,
+		autoHeight: 200,
+		navigContainer: {
+			prev: false,
+			next: false,
+			counter: false,
+			anchors: '#slideshow-4-anchors'
+		}
+	});
+});
+&lt;/script&gt;
+</code></pre>
+
+<div class="online-demo">
+
+<div id="slideshow-4-anchors" class="demo-slides-tabs">
+	<a href="#anchor4-1">Lorem</a>
+	<a href="#anchor4-2">Quisque</a>
+	<a href="#anchor4-3">Duis</a>
+</div>
+<ul id="slideshow-4" class="reset demo-slides-container">
+	<li id="anchor4-1">
+		<h4><img src="../../resource/1.png" alt="" class="slide" /> Slide 1</h4>
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies convallis nunc non auctor. Vestibulum nec pretium eros. Donec et ullamcorper lectus. Morbi placerat interdum semper. Vivamus at neque id ipsum laoreet euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean nulla nunc, rhoncus eu vehicula eu, vestibulum nec leo. Suspendisse potenti. Morbi feugiat eros sit amet mi vestibulum semper.</p>
+	</li><li id="anchor4-2">
+		<h4><img src="../../resource/2.png" alt="" class="slide" /> Slide 2</h4>
+		<p>Quisque et orci eu augue ornare porta. Maecenas scelerisque blandit ipsum, eget condimentum nibh vestibulum eget. Maecenas gravida molestie dui eget sodales. Aenean fermentum convallis eleifend. Praesent elit enim, rutrum at imperdiet at, dapibus et magna. Nam sapien lorem, eleifend vel sagittis pellentesque, vulputate quis ante. Duis vulputate, ipsum vitae gravida porttitor, arcu sapien ultrices velit, at bibendum lacus risus ut erat.</p>
+		<p>Duis non elit eu dui sagittis lobortis. Sed aliquam urna feugiat sem ornare id placerat lectus placerat. Fusce non neque at metus bibendum semper. Pellentesque eu diam at tortor tincidunt vehicula. Nulla diam ipsum, faucibus eu dapibus et, suscipit vel quam. Aliquam dictum libero eget tellus faucibus convallis. Nulla elementum volutpat diam, non tincidunt nibh convallis id. </p>
+	</li><li id="anchor4-3">
+		<h4><img src="../../resource/3.png" alt="" class="slide" /> Slide 3</h4>
+		<p>Duis non elit eu dui sagittis lobortis. Sed aliquam urna feugiat sem ornare id placerat lectus placerat. Fusce non neque at metus bibendum semper. Pellentesque eu diam at tortor tincidunt vehicula. Nulla diam ipsum, faucibus eu dapibus et, suscipit vel quam. Aliquam dictum libero eget tellus faucibus convallis. Nulla elementum volutpat diam, non tincidunt nibh convallis id. </p>
+	</li>
+</ul>
+
+</div>
+
+
+
+<!-- # -->
+<hr />
+<h2>Et encore un pour la route, le carrousel en images...</h2>
+<p>La particularité cette fois, c'est que nous devons attendre le chargement complet des images avant de rendre le carrousel.
+	Cela en raison que les dimensions des images ne sont pas renseignées dans le code HTML.
+	En conséquence les images doivent avoir été chargées pour que la hauteur du slideshow soit correctement calculée.
+	Pour cela, il faut fixer à true le second paramètre de la méthode ready.
+</p>
+
+<pre><code class="language-markup">&lt;script&gt;
+$.dom.ready(function(){
+    $('#slideshow-5').slideshow({
+        fade: 600,
+        autoSlide: 2500,
+        autoStop: true,
+        navigPos: 'bottom',
+        navigCss: 'demo-slides-anchors',
+        navigContainer: {
+            anchors: true
+        }
+	});
+}, true); // Wait for resources laoded
+&lt;/script&gt;
+</code></pre>
+
+<div class="online-demo">
+
+	<div id="slideshow-5" class="demo-slides-images">
+		<img src="resource/1.jpg" alt="" />
+		<img src="resource/2.jpg" alt="" />
+		<img src="resource/3.jpg" alt="" />
+	</div>
+
+</div>
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

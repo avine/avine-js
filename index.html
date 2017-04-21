@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+	<title>AvineJS framework</title>
+
+	<meta name="Description" content="AvineJS est un framework Javascript élégant, dont la syntaxe simple et robuste, permet d'écrire rapidement du code Javascript puissant et performant." />
+	<meta name="Keywords" content="Javascript, framework, asynchronous, JS, DOM, Plugin" />
+
+	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="index.css" />
+
+	<script src="avine-js.js"></script>
+	<script src="easing.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="prism/prism.css" />
+	<script src="prism/prism.js"></script>
+
+	<style>
+		#ball {
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 32px;
+			height: 32px;
+			cursor: pointer;
+		}
+		div#ball {
+			border-radius: 32px;
+			box-shadow: -2px 2px 3px #999;
+			background-color: #0094ff;
+		}
+	</style>
+
+	<!-- Google analytics -->
+	<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-32130565-1']);
+	_gaq.push(['_setDomainName', 'avine.fr']);
+	_gaq.push(['_trackPageview']);
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+</head>
+<body>
+
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="logo.html" class="logo logo-script">
+				<img src="images/logo/A-64.png" alt="A" class="logo-a" />
+				<img src="images/logo/V-64.png" alt="V" class="logo-v" />
+				<img src="images/logo/I-64.png" alt="I" class="logo-i" />
+				<img src="images/logo/N-64.png" alt="N" class="logo-n" />
+				<img src="images/logo/E-64.png" alt="E" class="logo-e" />
+			</a>
+			<!--<noscript>
+				<style>.logo-script { display:none; }</style>
+				<div class="logo"><img src="images/logo/logo-64.png" alt="Avine" id="logo" /></div>
+			</noscript>-->
+			<div class="slogan"><h1>AvineJS <span>- Javascript framework</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+<script>
+	$.dom.ready(function() {
+		$('.logo img').each(function() {
+			var $logo = $(this);
+			$logo.data('start-from', $logo.css('left'));
+		}).loop().delay(5000).animate({
+			left: '0px'
+		}, 1500, 'easeOutCubic').delay(5000).then(function () {
+
+			var anim = function (selector) {
+				var $l = $(selector);
+				return $l.animate({
+					left: $l.data('start-from')
+				}, 1500, 'easeOutCubic');
+			};
+			this.doneWhen(anim('.logo-a'), anim('.logo-v'), anim('.logo-i'), anim('.logo-n'), anim('.logo-e'));
+		});
+	}, true);
+</script>
+
+<h4 class="headlines">AvineJS est un framework Javascript élégant, dont la syntaxe simple et robuste, permet d'écrire rapidement du code Javascript puissant et performant.</h4>
+
+
+<h5>Cliquez sur la balle pour voir AvineJS en action...</h5>
+
+<div class="online-demo" style="height:100px">
+
+	<!--<img src="resource/ball.png" id="ball" />-->
+	<div id="ball"></div>
+
+</div>
+
+<div id="demo"><script>
+// Attendre que le DOM soit construit
+$.dom.ready(function () {
+	// Gestionnaire d'événement
+	var animation = function () {
+		// A l'intérieur du gestionnaire, "this" représente la balle
+		var ball = this, $ball = $(this),
+			// Récupérer ses dimensions, ainsi que celles de son conteneur parent
+			size = $.dom.coords(ball), garden = $.dom.coords($ball.parent().get(0));
+		// Cacher la balle puis modifier sa couleur puis la faire réaparaître
+		$ball.hide(250).then(function () {
+			this.css('background-color', '#ff006e').done();
+		}).show(250).then(function () {
+			// Lancer la balle puis continuer...
+			this.doneWhen(
+				// Déplacement horizontal
+				$(ball).animate({ left: (garden.width - size.width) + 'px' }, 2000),
+				// Déplacement vertical
+				$(ball).animate({
+					"bottom": (garden.height - size.height) + 'px',
+					"box-shadow": "#ddd -30px 30px 6px 5px"
+				}, 500, 'easeOutCubic').animate({
+					"bottom": '0px',
+					"box-shadow": "#999 -2px 2px 3px 0px"
+				}, 1500, 'easeOutBounce')
+			);
+		}).then(function() {
+			// Attendre un peu puis redonner à la balle sa couleur initiale !
+			this.delay(500).animate({
+				'background-color': this.previousStyle('background-color')
+			}, 1000).delay(500).done();
+		// Pour finir renvoyer la balle à son point de départ
+		}).animate({ left: '0px' }, 1000, 'easeOutBack').then(function () {
+			this.click(animation, true).done();
+		});
+	};
+	// Assigner une fois le gestionnaire d'événement en réponse en clic dans la balle
+	$('#ball').click(animation, true);
+});
+</script></div>
+
+<p class="center"><a href="#" class="code" id="toggle-source">Code source</a></p>
+<pre id="source"><code class="language-markup"></code></pre>
+
+<script>
+var code = $('#demo').html().replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\t/g, '    ');
+$('#source').css('display', 'none').children().html(code);
+$('#toggle-source').click(function (e) {
+	var source = $('#source');
+	source['none' == source.css('display') ? 'show' : 'hide'](200);
+	e.preventDefault();
+});
+</script>
+<noscript><p class="msg-alert">Autorisez l'exécution de <b>Javascript</b> dans votre navigateur pour profiter de AvineJS&nbsp;!</p></noscript>
+
+
+
+<hr />
+<h2>Showcase</h2>
+<p>Découvrez AvineJS avec 3 plugins étonnamment flexibles et basés sur ce puissant framework.
+	<em>Slideshow</em> génère des Carrousels animés.
+	<em>Overlay</em> génère des fenêtres interactives.
+	<em>Loading</em> permet d'afficher un retour visuel au chargement de données asynchrone.</p>
+
+<h3 class="goto-page"><a href="plugin/slideshow/demo.html" title="Carrousels animés">Slideshow</a></h3>
+<h3 class="goto-page"><a href="plugin/overlay/demo.html" title="Fenêtres interactives">Overlay</a></h3>
+<h3 class="goto-page"><a href="plugin/loading/demo.html" title="Retour visuel au chargement de données">Loading</a></h3>
+<div class="clear"></div>
+
+<p>En bonus, appréciez les possibilités du framework AvineJS avec <em>Quest</em>,
+	un jeu basé uniquement sur la manipulation du DOM (sans balise canvas) écrit en HTML, CSS et... Javascript&nbsp;!</p>
+<h3 class="goto-page"><a href="plugin/quest/index.html" title="Avine Quest">Quest</a></h3>
+<div class="clear"></div>
+
+
+
+<hr />
+<h2>API / Documentation</h2>
+<p>Maîtrisez les rouages de AvineJS grâce à sa documentation en ligne.
+	Les fonctions principales sont expliquées en détail et accompagnées d'exemples de codes directement exécutés.
+	Et pour aller encore plus loin, n'hésitez-pas à retrousser les manches et consultez le code source particulièrement clair.
+	Pour comprendre la structure du framework, consultez <a href="api/introduction.html">l'introduction</a>.</p>
+
+<style>.soon { color:#6187B3; font-weight:normal; font-size:12px; }</style>
+<h3 class="goto-page"><a href="api/tool.html" title="Fonctions utilitaires">$.tool</a></h3>
+<h3 class="goto-page"><a href="api/dom.html" title="Manipulation du DOM">$.dom</a></h3>
+<h3 class="goto-page"><a href="api/Core.html" title="Syntaxe procédurale pour les traitements asynchrones">$.Core</a></h3>
+<h3 class="goto-page"><a href="api/Require.html" title="Préchargement de ressources">$.Core.Require()</a></h3>
+<h3 class="goto-page"><a href="api/$.html" title="Manipulation du DOM avancée">$()</a> <span class="soon">(*)</span></h3>
+<div class="clear"></div>
+
+<p class="soon" style="text-align:right;">(*) en cours de rédaction...</p>
+
+
+
+<hr />
+<h2>Compatibilité</h2>
+<p>AvineJS est compatible avec les principaux navigateurs du marché (dont Internet Explorer à partir de la version 7) et distribué sous licence Open source.
+	Alors téléchargez-le sans plus attendre pour le tester par vous-même...</p>
+
+<p><img src="resource/browsers/firefox.png" title="Firefox" alt="" />
+	<img src="resource/browsers/chrome.png" title="Chrome" alt="" />
+	<img src="resource/browsers/ie.png" title="Internet Explorer 7+" alt="" />
+	<img src="resource/browsers/safari.png" title="Safari" alt="" />
+	<img src="resource/browsers/opera.png" title="Opera" alt="" /></p>
+
+
+
+<p class="download"><a href="http://js.avine.fr/avine-js.js">Télécharger avine-js.js</a></p>
+
+
+
+<hr />
+<h2>Contact</h2>
+<p>Si comme je l'espère vous appréciez AvineJS, n'hésitez-pas à me contacter <img src="images/e.png" />
+	pour me faire part de vos impressions, remarques et questions éventuelles.</p>
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>

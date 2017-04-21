@@ -1,0 +1,81 @@
+/* Avine. Copyright (c) 2013-2015 Stéphane Francel (http://avine.fr). Dual licensed under the MIT and GPL Version 2 licenses. */
+
+body {
+	-webkit-text-size-adjust: none; /* iPhone */
+}
+
+.avn-overlay-source {
+
+}
+
+.avn-overlay-target {
+	overflow: visible;
+	padding: 1em;
+	box-shadow: .5em .5em 1em #333;
+	border-radius: 5px;
+	border: 4px solid #333;
+	background-color: #fff;
+	font-size: inherit;
+}
+
+.avn-overlay-content {
+
+}
+
+.avn-overlay-tooltip {
+	border-width: 1px;
+	box-shadow: .2em .2em .4em #666;
+}
+
+.avn-overlay-close {
+	position: absolute;
+	top: -12px;
+	right: -12px;
+	width: 24px;
+	height: 24px;
+	background: url(images/overlay-close.png) no-repeat center center;
+	overflow: hidden;
+	text-indent: 99px;
+	white-space: nowrap;
+}
+
+.avn-overlay-blur {
+	display: none;
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #000;
+}
+
+.avn-overlay-drag {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 1em;
+}
+
+.avn-overlay-title {
+	margin: -.8em -.8em .5em -.8em;
+	border-radius: 5px;
+	border: 1px solid #666;
+	padding: .5em;
+	background-color: #999;
+	color: #fff;
+	text-shadow: 0 1px 0 #666;
+}
+
+.avn-overlay-action {
+	margin-top: .5em;
+	padding: .5em 1em 0 1em;
+	border-top: 1px solid #999;
+	text-align: center;
+}
+
+.avn-overlay-confirm,
+.avn-overlay-reset{
+	margin: 0 1em;
+}

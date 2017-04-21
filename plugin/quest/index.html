@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+	<title>Quest - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="index.css" />
+
+	<script src="../../avine-js.js"></script>
+	<script src="../../easing.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="quest.css" />
+	<script src="quest.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="dashboard.css" />
+	<script src="dashboard.js"></script>
+
+	<style>
+		#area {
+			max-width: 400px;
+			max-height: 400px;
+		}
+	</style>
+	<script>
+	$.dom.ready(function () {
+
+		// Quest
+		window.$area = $('#area').quest();
+
+		// Dashboard
+		window.$dashboard = $('#dashboard').on('mouseover', function (e) {
+			if (e.mouseEventJustHappened) $(this).toggleClass('dashboard-flip');
+		});
+		$dashboard.dashboard('start', function () {
+			this.add($area.quest('getStatus'), 'Dashboard'); // Follow quest status in dashboard
+		});
+
+		// Avine title
+		$('#header span').loop()
+			.delay(2000).animate({ "text-shadow": "0px 1px 8px #333" }, 300)
+			.delay( 100).animate({ "text-shadow": "0px 1px 0px #fff" }, 200);
+	});
+	</script>
+</head>
+<body>
+	<h1 id="header"><span>Avine</span> Quest</h1>
+
+	<div id="area"></div>
+	<div id="dashboard"></div>
+
+	<p>Feel all the power of AvineJS framework with <em>Quest</em>,
+		a game based only on DOM manipulation written in HTML, CSS and Javascript&nbsp;!</p>
+
+	<!--<a class="icons-copyright" target="_blank" href="http://www.iconbeast.com/">Icons author</a>-->
+
+	<div id="footer"><a href="../../index.html">AvineJS &copy; 2013-2015</a></div>
+</body>
+</html>

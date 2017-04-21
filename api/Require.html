@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Core.Require() - API / Documentation - AvineJS framework</title>
+
+	<link rel="shortcut icon" href="../favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../index.css" />
+
+	<script src="../avine-js.js"></script>
+	<script src="../unit-test.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="../prism/prism.css" />
+	<script src="../prism/prism.js"></script>
+</head>
+<body>
+	<div id="header" class="logo-32">
+		<div class="wrapper">
+			<a href="../index.html" class="logo" style="width:32px;"><img src="../images/logo/logo-64.png" alt="Avine" id="logo" /></a>
+			<div class="slogan"><h1>Core.Require() <span>- API / Documentation</span></h1></div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<h4 class="headlines">
+			Le module <code>avine.Core.Require</code> est une sous-classe, qui hérite des puissantes fonctionnalités de <code>avine.Core</code>.
+			Il permet de charger des ressources diverses comme les images, les feuilles de styles ou encore les scripts, en tenant compte des dépendances éventuelles.
+			Ce module est basé sur les fonctionnalités de l'objet <code>dom.require</code>.</h4>
+
+		<div id="index"><h4>Index</h4></div>
+
+		<p><a href="#" class="ut-trigger">masquer/afficher les extraits de code.</a></p>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>new $.Core.Require(<span>baseUrl</span>)</h2>
+<p>Instancie une nouvelle pile d'appels dédiée au chargement de ressources.
+	Le paramètre optionnel <code>baseUrl</code> permet de spécifier un préfixe commun à toutes les URLs.
+	Ce préfixe est stocké dans la propriété <code>baseUrl</code> de l'instance.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var require = new $.Core.Require('require/');
+
+log(require.baseUrl);
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.setBaseUrl(<span>baseUrl</span>)</h2>
+
+<p>Renseigne le préfixe commun à toutes les URLs des ressources à charger.</p>
+
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+var require = new $.Core.Require().setBaseUrl('require/');
+
+log(require.baseUrl);
+
+	});</script>
+</div>
+
+
+
+<!-- Un_it test -->
+<hr />
+<h2>.scripts(<span>urls1, urls2, ..., urlsN, again</span>)<br />
+	.styles(<span>urls1, urls2, ..., urlsN, again</span>)<br />
+	.images(<span>urls1, urls2, ..., urlsN</span>)</h2>
+
+<p>Charge en parallèle les ressources listées en paramètre <code>urls1</code>, puis traite celles listées en paramètre <code>urls2</code>, et ainsi de suite...</p>
+<p>A chaque étape, les ressources listées en paramètre <code>urlsN</code> doivent donc être indépendantes les unes des autres.
+	Par contre, les ressources chargées en <code>urlsN+1</code> peuvent exploiter les données des ressources précédemment chargées.</p>
+
+<p>Les deux syntaxes suivantes sont équilvalentes. La seconde est simplement plus concise.</p>
+<ul>
+	<li><code>.scripts(urls1).scripts(urls2).scripts(urls3)</code></li>
+	<li><code>.scripts(urls1, urls2, urls3)</code></li>
+</ul>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+new $.Core.Require('require/scripts/')
+	.scripts('1a.js') // requireDemo1a = 'Hello'
+	.scripts('1b.js') // requireDemo1b = requireDemo1a + ' world!'
+	.onComplete(function () {
+		log(requireDemo1b);
+	});
+
+new $.Core.Require('require/scripts/').scripts(
+	'2a.js', // requireDemo2a = 'Javascript'
+	'2b.js' // requireDemo2b = requireDemo2a + ' is cool!'
+).onComplete(function () {
+	log(requireDemo2b);
+});
+
+	});</script>
+</div>
+
+<p class="msg-info">Pour en savoir plus sur le format des paramètres <code>urlsN</code> et <code>again</code> se reporter à la fonction <a href="dom.html#dom.require.scripts">dom.require</a>.</p>
+
+<p>En utilisant judicieusement la méthode <code>.when</code>, il est possible d'optimiser le temps de chargement des bibliothèques Javascript, tout en respectant les dépendances.</p>
+<div class="ut2">
+	<pre class="ut-code"></pre>
+	<samp class="ut-samp"></samp>
+	<script>ut2(function(log) {
+
+new $.Core().when(
+
+	new $.Core.Require('require/scripts/').scripts('1a.js', '1b.js'),
+	new $.Core.Require('require/scripts/').scripts('2a.js', '2b.js'),
+
+	// 3a.js contains: requireDemo3a = 'Stéphane'
+	// 3b.js contains: requireDemo3b = 'Francel'
+	// 3c.js contains: requireDemo3c = requireDemo3a + ' ' + requireDemo3b
+	new $.Core.Require('require/scripts/').scripts(['3a.js', '3b.js'], '3c.js')
+
+).onComplete(function () {
+	log(requireDemo1b);
+	log(requireDemo2b);
+	log(requireDemo3c);
+});
+
+	});</script>
+</div>
+
+
+
+		<div id="footer"><a href="http://avine.fr/">Avine &copy; 2013-2015</a></div>
+	</div>
+</body>
+</html>
